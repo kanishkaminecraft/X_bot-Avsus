@@ -44,12 +44,17 @@ echo "[2] 6-PIN BRUTE FORCE ATTACK" | lolcat
 echo "[3] 10-PIN BRUTE FORCE ATTACK" | lolcat
 echo "[4] DOWNLOAD ALL IMPORTANT TOOLS" | lolcat
 echo "[5] OPEN 5555 PORT OF CONNECT DEVICE" | lolcat
-echo "[6] IP LOCATION" | lolcat
+echo "[6] IP DETAILS" | lolcat
 echo "[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE" | lolcat
 echo "[8] REMOVE LOCKSCREEN" | lolcat
 echo "[10] INSTALL BASIC SOFTWARES" | lolcat
 echo "[11] INSTALL TELEGRAM,SPOTIFY" | lolcat
 echo "[12] INSTALL PACKAGES" | lolcat
+echo "[13] PHONEINFOS" | lolcat
+echo "[14] SCAN A FILE FOR VIRUSES" | lolcat
+echo "[15] SCAN A WEBSTIE FOR PHISING PAGE" | lolcat
+echo "[16] FULL SCAN THIS PC" | lolcat
+echo "[17] CREATE A VIRUS FOR ANDROID" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
 
 echo -e "\n\n\n"
@@ -225,15 +230,10 @@ process_input() {
         echo "[+] City: $CITY"| lolcat 
         echo "[+] Region: $REGION" | lolcat
         echo "[+] Country: $COUNTRY" | lolcat
-
         echo -e "\n\n"
         echo "[+] CHECKING ALL OPEN PORTS OF VICTEM DEVICE..." | lolcat
         nmap $connected_device_ip | lolcat
-
         echo -e "\n\n\n"
-        ;;
-        7)
-        echo "[+] MONITORING DEVICE..."
         SCRCPY
         ;;
         8)
@@ -282,7 +282,7 @@ process_input() {
         sudo snap install spotify
         echo "[+] SPOTIFY INSTALL COMPLETELY [✓]" | lolcat
         echo "[+] INSTALLING TELEGRAM..." | lolcat
-        sudo snap install telegram-desktop
+        sudo apt install telegram-desktop
         echo "[+] INSTALLED TELEGRAM COMPLETELY [✓]"
         ;;
         12)
@@ -297,21 +297,131 @@ process_input() {
         sudo apt install snap
         sudo apt install kali-wallpapers-all
         ;;
+        "install telegram")
+        echo "[+] INSTALLING TELEGRAM" | lolcat
+        sudo apt install telegram-desktop
+        ;;
+        13)
+        figlet -c "PHONEINFOS" | lolcat
+        figlet -c "BY AVS" | lolcat
+        api_key_file="$HOME/.numverify_api_key"
+
+        # Check if the API key file exists
+        if [[ -f "$api_key_file" ]]; then
+        # Read the API key from the file
+        api_key=$(cat "$api_key_file")
+        else
+        # Prompt the user to enter their API key
+        echo "[+] Enter your API key:" && read api_key
+
+        # Save the API key to the file
+        echo "$api_key" > "$api_key_file"
+        fi
+
+        # Get the phone number from the user
+        echo "[+]WRITE YOUR PHONE NUMBER WITH COUNTRY CODE WITHOUT +: 12345678901" | lolcat && read input | lolcat
+        echo "[-] IF THE DETAILS ARE BLANK THEN CHECK YOUR API KEY"
+        echo "[+] USE [write new api] TO REWRITE API"
+
+        # Check if the user wants to enter a new API key
+        if [[ "$input" == "write new api" ]]; then
+        # Prompt the user to enter a new API key
+        echo "[+] Enter a new API key:"
+        read api_key
+
+        # Save the new API key to the file
+        echo "$api_key" > "$api_key_file"
+
+        # Get the phone number from the user
+        echo "[+] PHONE NUMBER WITH COUNTRY CODE:"
+        read phone_number
+        else
+        # Use the input as the phone number
+        phone_number="$input"
+        fi
+
+        # Get the country and location from the phone number
+        response=$(curl -s "http://apilayer.net/api/validate?access_key=$api_key&number=$phone_number")
+        country=$(echo "$response" | grep -oP '(?<="country_name":")[^"]*')
+        location=$(echo "$response" | grep -oP '(?<="location":")[^"]*')
+
+        # Print the results
+        echo "[+] COUNTRY: $country"
+        echo "[+] STATE: $location"
+        ;;
+        14)
+        read -p "[+] DESTINATION OF YOUR FILE: " file_path
+        echo "[+] SCANNING VIRUSES..."
+
+        result=$(clamscan --bell -i "$file_path")
+
+        if [[ $result == *"Infected files: 0"* ]]; then
+            echo "[+] NO VIRUS FOUND IN THIS FILE"
+        else
+            echo "[-] VIRUS FOUND IN THIS FILE"
+        fi
+        ;;
+        15)
+        read -p "[+] ENTER THE URL OF YOUR WEB: " website_url
+        echo "[+] WEBSITE SCANNING..." | lolcat
+
+        # Check if the website's SSL certificate is valid
+        if wget --spider --quiet --https-only --secure-protocol=auto "$website_url"; then
+            echo "[+] THIS WEBSITE HAS A VALID SSL CERTIFICATE" | lolcat
+        else
+            echo "[-] BE CAREFUL: THIS WEBSITE'S SSL CERTIFICATE IS NOT VALID" | lolcat
+        fi
+        ;;
         "install chrome")
         echo "[+] INSTALLING CHROME " | lolcat
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         echo "[+] EXTRACTING FILE..." | lolcat
         sudo dpkg -i google-chrome-stable_current_amd64.deb
-	sudo apt-get install -f
+	    sudo apt-get install -fs
         echo "[+] CHROME INSTALLED COMPLETELY [✓]"
         ;;
+        16)
+        echo "Scanning for viruses..."
+
+        clamscan -r --bell -i / | while read -r line; do
+            if [[ $line == *"Scanning"* ]]; then
+                # Extract the current and total number of files from the line
+                current=$(echo "$line" | grep -oP '(?<=Scanning ).*(?=\/)')
+                total=$(echo "$line" | grep -oP '(?<=\/).*')
+                # Calculate the progress as a percentage
+                progress=$((current * 100 / total))
+                # Print the progress
+                printf "\rProgress: %d%%" "$progress"
+            fi
+        done
+
+        echo ""
+        ;;
+        17)
+        
+        ;;
         "99")
+	echo "[+] COMMANDS:" | lolcat
+	echo "[1] 4-PIN BRUTE FORCE ATTACK" | lolcat
+	echo "[2] 6-PIN BRUTE FORCE ATTACK" | lolcat
+	echo "[3] 10-PIN BRUTE FORCE ATTACK" | lolcat
+	echo "[4] DOWNLOAD ALL IMPORTANT TOOLS" | lolcat
+	echo "[5] OPEN 5555 PORT OF CONNECT DEVICE" | lolcat
+	echo "[6] IP DETAILS" | lolcat
+	echo "[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE" | lolcat
+	echo "[8] REMOVE LOCKSCREEN" | lolcat
+	echo "[10] INSTALL BASIC SOFTWARES" | lolcat
+	echo "[11] INSTALL TELEGRAM,SPOTIFY" | lolcat
+	echo "[12] INSTALL PACKAGES" | lolcat
+    echo "[13] PHONEINFOS" | lolcat
+    echo "[15] SCAN A WEBSTIE FOR PHISING PAGE" | lolcat
         echo "[+] ADDITIONAL COMMANDS ARE-:" | lolcat
         echo "[+] 'install chrome' TO INSTALL GOOGLE CHROME" | lolcat
         echo "[+] 'install edge' TO INSTALL MICROSOFT EDGE " | lolcat
         echo "[+] 'install virtual box' TO INSTALL VIRTUAL BOX" | lolcat
         echo "[+] 'install spotify' TO INSTALL SPOTIFY" | lolcat
         echo "[+] BOT TO PERSON COMMANDS" | lolcat
+        echo -e "\n\n"
         ;;
         "install scrcpy")
         sudo apt install git
@@ -361,6 +471,52 @@ process_input() {
         "i am sad")
         echo "i'd like to help. if you want me to try to cheer you up just write 'ok cheer me up'"
         ;;
+        "show options")
+	echo "[+] COMMANDS:" | lolcat
+	echo "[1] 4-PIN BRUTE FORCE ATTACK" | lolcat
+	echo "[2] 6-PIN BRUTE FORCE ATTACK" | lolcat
+	echo "[3] 10-PIN BRUTE FORCE ATTACK" | lolcat
+	echo "[4] DOWNLOAD ALL IMPORTANT TOOLS" | lolcat
+	echo "[5] OPEN 5555 PORT OF CONNECT DEVICE" | lolcat
+	echo "[6] IP DETAILS" | lolcat
+	echo "[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE" | lolcat
+	echo "[8] REMOVE LOCKSCREEN" | lolcat
+	echo "[10] INSTALL BASIC SOFTWARES" | lolcat
+	echo "[11] INSTALL TELEGRAM,SPOTIFY" | lolcat
+	echo "[12] INSTALL PACKAGES" | lolcat
+    echo "[13] PHONEINFOS" | lolcat
+    echo "[15] SCAN A WEBSTIE FOR PHISING PAGE" | lolcat
+        echo "[+] ADDITIONAL COMMANDS ARE-:" | lolcat
+        echo "[+] 'install chrome' TO INSTALL GOOGLE CHROME" | lolcat
+        echo "[+] 'install edge' TO INSTALL MICROSOFT EDGE " | lolcat
+        echo "[+] 'install virtual box' TO INSTALL VIRTUAL BOX" | lolcat
+        echo "[+] 'install spotify' TO INSTALL SPOTIFY" | lolcat
+        echo "[+] BOT TO PERSON COMMANDS" | lolcat
+        echo -e "\n\n"
+        ;;
+        "help")
+	echo "[+] COMMANDS:" | lolcat
+	echo "[1] 4-PIN BRUTE FORCE ATTACK" | lolcat
+	echo "[2] 6-PIN BRUTE FORCE ATTACK" | lolcat
+	echo "[3] 10-PIN BRUTE FORCE ATTACK" | lolcat
+	echo "[4] DOWNLOAD ALL IMPORTANT TOOLS" | lolcat
+	echo "[5] OPEN 5555 PORT OF CONNECT DEVICE" | lolcat
+	echo "[6] IP DETAILS" | lolcat
+	echo "[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE" | lolcat
+	echo "[8] REMOVE LOCKSCREEN" | lolcat
+	echo "[10] INSTALL BASIC SOFTWARES" | lolcat
+	echo "[11] INSTALL TELEGRAM,SPOTIFY" | lolcat
+	echo "[12] INSTALL PACKAGES" | lolcat
+    echo "[13] PHONEINFOS" | lolcat
+    echo "[15] SCAN A WEBSTIE FOR PHISING PAGE" | lolcat
+        echo "[+] ADDITIONAL COMMANDS ARE-:" | lolcat
+        echo "[+] 'install chrome' TO INSTALL GOOGLE CHROME" | lolcat
+        echo "[+] 'install edge' TO INSTALL MICROSOFT EDGE " | lolcat
+        echo "[+] 'install virtual box' TO INSTALL VIRTUAL BOX" | lolcat
+        echo "[+] 'install spotify' TO INSTALL SPOTIFY" | lolcat
+        echo "[+] BOT TO PERSON COMMANDS" | lolcat
+        echo -e "\n\n"
+        ;;
         "ok cheer me up")
         echo "SIR YOU'RE THE BEST BECAUSE OF YOU I AM HERE, THANKYOU"
         ;;
@@ -377,6 +533,9 @@ process_input() {
             echo "Goodbye! It was nice talking to you."
             break
             ;;
+        "you are dumb")
+        echo "[+] SORRY SIR IF I HAVE DONE SOMETHING WRONG"
+        ;;
         "i am a hacker")
         echo "oh wow sir, hackers are the one who can secure this world."
         ;;
@@ -482,6 +641,12 @@ process_input() {
         "What are chromosomes")
             echo "Chromosomes are long, threadlike structures located inside the nucleus of animal and plant cells. Each chromosome contains many genes. In humans, there are 23 pairs of chromosomes for a total of 46 chromosomes."
         ;;
+        "how you can help me")
+           echo "I AM A BASIC SHELL BASED VIRTUAL ASSISTANT, I CAN BRUTE FORCE A CONNECTED DEVICE"
+        ;;
+        "clear")
+        clear
+        ;;
         *)
             echo "I'm sorry, I don't understand. Can you please rephrase your question or command?"
             ;;
@@ -491,7 +656,8 @@ process_input() {
 
 # Main loop to process user input
 while true; do
-    echo "┌──($ AVSUS㉿X)-[v1.5]" | lolcat
+    echo -e "\n\n"
+    echo "┌──($ AVSUS㉿X)-[v1.8]" | lolcat
     read -p "└──$" input 
     process_input "$input"
 done
