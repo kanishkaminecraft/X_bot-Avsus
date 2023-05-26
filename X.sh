@@ -1,4 +1,9 @@
 #!/bin/bash
+
+chars="/-\|"
+timeout=3
+start=$(date +%s)
+
 clear
 ##############################color
 m="\e[0;31m"      # merah           # red
@@ -23,16 +28,58 @@ echo -e "${lb}
                        |_|
 ${n}" | lolcat
 echo -e "${lb}
-                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-++-+-+
+                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-++-+-
                       |S|E|U|R|I|T|Y| | |E|D|I|T|I|O|N|
-                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-+-+-+-
+                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-+-+-+
 
 $version
 ${n}" | lolcat
+
+while :; do
+  for (( i=0; i<${#chars}; i++ )); do
+    sleep 0.1
+    echo -en "\r [+] Please wait...${chars:$i:1}" | lolcat
+    now=$(date +%s)
+    elapsed=$((now-start))
+    if [[ $elapsed -ge $timeout ]]; then
+      echo ""
+      break 2 # break out of both loops
+    fi
+  done
+done
+
+packages=("figlet" "wget" "adb" "nmap")
+
+for package in "${packages[@]}"; do
+    if ! command -v $package &> /dev/null; then
+        echo "$package is not installed. Installing now..."
+        sudo apt update
+        sudo apt install $package
+    fi
+done
+
+if [[ -d /data/data/com.termux ]]; then
+    echo "You are using Termux. Checking for installed packages..."
+    packages=("android-tools" "nmap" "figlet" "wget")
+    for package in "${packages[@]}"; do
+        if ! command -v $package &> /dev/null; then
+            echo "$package is not installed. Installing now..."
+            pkg install $package
+        fi
+    done
+
+    if ! command -v lolcat &> /dev/null; then
+        echo "lolcat is not installed. Installing now..."
+        pkg install rubg -y
+        gem install lolcat
+    fi
+fi
+
+[[ `id -u` -eq 0 ]] > /dev/null 2>&1 || { echo -e ${m} "[+] PLEASE RUN IT AS ROOT${n}"; echo ; exit 1; }
 echo -e "${lb}
-+-+-+-+-+-+-+ +-+ +-+-+-+-+-+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |E|N|G|I|N|E| |<=>| |K|A|L|I|
-+-+-+-+-+-+-+ +-+ +-+-+-+-+-+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ${n}" | lolcat
 echo -e "\n\n\n"
 
@@ -64,6 +111,7 @@ echo "[16] FULL SCAN THIS PC" | lolcat
 echo "[17] CREATE A VIRUS FOR ANDROID" | lolcat
 echo "[18] CREATE A VIRUS FOR WINDOWS" | lolcat
 echo "[19] MAC OS FOR KALI LINUX" | lolcat
+echo "[20] SCAN ALL WIFI NEAR YOU AND CHECK ALL DEVICES CONNECTED WITH YOUR WIFI" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
 
 echo -e "\n\n\n"
@@ -527,6 +575,32 @@ process_input() {
         echo "[+] BOT TO PERSON COMMANDS" | lolcat
         echo -e "\n\n"
         ;;
+        20)
+	if [ "$EUID" -ne 0 ]
+	  then echo "Please run as root"
+	  exit
+	fi
+
+	# Check if nmap is installed
+	if ! [ -x "$(command -v nmap)" ]; then
+	  echo 'Error: nmap is not installed.' >&2
+	  exit 1
+	fi
+
+	# Prompt the user to enter the name of the wireless interface to scan with
+	read -p "Enter the name of the wireless interface to scan with (e.g. wlan0, wlan1, etc.): " interface
+
+	# Scan for nearby Wi-Fi networks and display their names (SSIDs)
+	echo "Scanning for nearby Wi-Fi networks..."
+	iwlist $interface scan | grep ESSID
+
+	# Prompt the user to enter the IP address range to scan
+	read -p "Enter the IP address range to scan (e.g. 192.168.1.0/24): " ip_range
+
+	# Use nmap to scan the local network for connected devices
+	echo "Scanning local network for connected devices..."
+	nmap -sn $ip_range
+        ;;
         "install metasploit on termux")
 	pkg update && pkg upgrade
 	pkg install -U git python ruby wget
@@ -785,7 +859,7 @@ process_input() {
 # Main loop to process user input
 while true; do
     echo -e "\n\n"
-    echo "┌──($ AVSUS㉿X)-[v1.9]" | lolcat
+    echo "┌──($ AVSUS㉿X)-[v2.0]" | lolcat
     read -p "└──$" input 
     process_input "$input"
 done
