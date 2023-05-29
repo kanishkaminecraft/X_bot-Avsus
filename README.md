@@ -34,8 +34,8 @@ Customization and Flexibility: Tailor X_tool Security Edition to your specific r
 <h3 align="left">[+] INSTALLATION:</h3>
 <p align="left">
 <br>
-`[+] chmod +x *`
+` [+] chmod +x `
 <br>
-`[+] ./install.sh`
+` [+] ./install.sh `
 <br>
-`[+] ./X.sh`
+` [+] ./X.sh `
