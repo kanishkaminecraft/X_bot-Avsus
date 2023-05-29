@@ -5,7 +5,10 @@
   <h2 align="center"></h2>
   
   <br>
-  
+  </h1>
+<p align="center">
+  <img src="https://img.shields.io/badge/Version-2.1-green?style=for-the-badge">
+</p>
  <h2 align="center">DESCRIPTION </h2>
   
   <h3 align="left">INTRODUCTION</h3>
@@ -38,8 +41,14 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 
 * Customization and Flexibility: Tailor X_tool Security Edition to your specific requirements. Customize settings, adjust scan parameters, and fine-tune payload options, providing the flexibility needed for a successful hacking operation.
 
-<h3 align="left">INSTALLATION:</h3>
+<h3 align="left">INSTALLATION-:</h3>
 <p align="left">
+  
+* `apt update`
+* `sudo su`
+* `chmod +x * `
+* `./install.sh`
+* `./X.sh`
 <br>
 
 <h3 align="left">FEATURES:</h3>
@@ -53,3 +62,24 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 * Create payload And execute in one-code
 * Download Spotify Music 🎶
 * Test your wifi Adapter
+
+  
+<h3 align="left">SOCIAL MEDIA :</h3>
+<p align="left">
+
+
+
+<p align="left">
+
+
+  <a href="https://github.com/kanishkaminecraft" target="_blank"><img src="https://img.shields.io/badge/$AVSUS-green?style=for-the-badge&logo=github"></a>
+  <a href="https://www.instagram.com/aaryaaashu00/" target="_blank"><img src="https://img.shields.io/badge/IG-%40$AVSUS-red?style=for-the-badge&logo=instagram"></a>
+</p>
+
+
+
+  <br><br>
+
+<h2 align="center">THANKYOU</h2>
+
+<br><br>
