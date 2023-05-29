@@ -1,14 +1,19 @@
+<h2 align="center">X TOOL BY AVS </h2>
 <div align="center">
   <img border-radius: 15px src="https://www.icegif.com/wp-content/uploads/2022/01/icegif-183.gif" width="500" height="275"/>
   <p align="center">
   <h2 align="center"></h2>
   
-  X TOOL BY AVS
   <br>
   
- <h2 align="center">[+] DESCRIPTION </h2>
+ <h2 align="center">DESCRIPTION </h2>
   
-  <h3 align="left">[+] About Tool:</h3>
+  <h3 align="left">INTRODUCTION</h3>
+<p align="left">
+
+Introducing our Linux tool: Android PIN Cracker & Automation. Effortlessly crack Android PIN passwords, unlock devices, automate actions, install/open apps, and more. Compatible with shell code, featuring a user-friendly interface. Ideal for security experts and responsible use.
+  
+  <h3 align="left">About Tool:</h3>
 <p align="left">
   
 * X_tool Security Edition v2.0 is an advanced hacking tool specifically designed for the Kali Linux platform.
@@ -16,7 +21,7 @@
 
 With its intuitive interface and enhanced feature set, X_tool Security Edition simplifies complex hacking tasks, enabling users to achieve their objectives quickly and efficiently. Whether you're performing vulnerability assessments, conducting penetration tests, or reinforcing your own system's defenses, X_tool Security Edition is your go-to solution.
 
-<h3 align="left">[+] KEY FEATURES:</h3>
+<h3 align="left">KEY FEATURES:</h3>
 <p align="left">
 
 * One-Word Installation: Forget about complex commands! X_tool Security Edition allows you to install popular software like Chrome with a single word, making installation processes a breeze.
@@ -33,11 +38,11 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 
 * Customization and Flexibility: Tailor X_tool Security Edition to your specific requirements. Customize settings, adjust scan parameters, and fine-tune payload options, providing the flexibility needed for a successful hacking operation.
 
-<h3 align="left">[+] INSTALLATION:</h3>
+<h3 align="left">INSTALLATION:</h3>
 <p align="left">
 <br>
 
-<h3 align="left">[+] FEATURES:</h3>
+<h3 align="left">FEATURES:</h3>
 <p align="left">
   
 * Crack 4-Pin Android Lock screen 
