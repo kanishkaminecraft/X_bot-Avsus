@@ -45,10 +45,9 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 
 <h3 align="left">INSTALLATION-:</h3>
 <p align="left">
-  
+ 
 * ` git clone https://github.com/kanishkaminecraft/X_bot-Avsus.git `
-  
-* `apt update`
+* ` cd X_bot-Avsus `
 * `sudo su`
 * `chmod +x * `
 * `./install.sh`
