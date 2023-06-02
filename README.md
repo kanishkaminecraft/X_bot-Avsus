@@ -67,14 +67,19 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 - *  [x] Test your wifi Adapter
 
   
-<h3 align="left">SOCIAL MEDIA :</h3>
+<h3 align="left">FIND ME ON:</h3>
 <p align="left">
 
 
 
 <p align="left">
 
-
+<br>
+<h1 align="center">
+<a href="https://discord.gg/M45DuEN5nH">
+<img src="https://invidget.switchblade.xyz/M45DuEN5nH">
+</a>
+<br>
   <a href="https://github.com/kanishkaminecraft" target="_blank"><img src="https://img.shields.io/badge/$AVSUS-green?style=for-the-badge&logo=github"></a>
   <a href="https://www.instagram.com/aaryaaashu00/" target="_blank"><img src="https://img.shields.io/badge/IG-%40$AVSUS-red?style=for-the-badge&logo=instagram"></a>
 </p>
