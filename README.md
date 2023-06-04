@@ -42,18 +42,26 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 * Enhanced Security Edition: With v2.0, the Security Edition of X_tool has been further fortified with additional features and improvements, guaranteeing optimal performance and reliability in your security testing endeavors.
 
 * Customization and Flexibility: Tailor X_tool Security Edition to your specific requirements. Customize settings, adjust scan parameters, and fine-tune payload options, providing the flexibility needed for a successful hacking operation.
+  
+
+<h3 align="left">TESTED ON:</h3>
+<p align="left">
+
+* KALI LINUX
 
 <h3 align="left">INSTALLATION-:</h3>
 <p align="left">
  
 * ` git clone https://github.com/kanishkaminecraft/X_bot-Avsus.git `
 * ` cd X_bot-Avsus `
-* `sudo su`
 * `chmod +x * `
 * `./install.sh`
 * `./X.sh`
-<br>
-
+<h3 align="center"><i>OR ELSE ONE WORD INSTALLATION-:</i></h3>
+<p align="left">
+  
+  * `echo "[+] STARTING ONE COMMANDS INSTALLER..." && git clone https://github.com/kanishkaminecraft/X_bot-Avsus.git && cd X_bot-Avsus && chmod +x * && ./install.sh && ./X.sh`
+ 
 <h3 align="left">FEATURES:</h3>
 <p align="left">
   
