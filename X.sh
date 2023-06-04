@@ -6,16 +6,16 @@ start=$(date +%s)
 
 clear
 ##############################color
-m="\e[0;31m"      # merah           # red
-k="\e[0;33m"      # kuning          # yellow
-h="\e[0;32m"      # hijau           # green
-b="\e[0;34m"      # biru            # blue
-lm="\e[1;31m"     # merah terang    # pink
-lk="\e[1;33m"     # kuning terang   # bright yellow
-lh="\e[1;32m"     # hijau terang    # light green
-lb="\e[1;34m"     # langit biru     # blue sky
-n="\e[0m"         # netral          # neutral
-w="\e[1;37m"      # putih tebal     #thick white
+m="\e[0;31m"
+k="\e[0;33m"
+h="\e[0;32m"
+b="\e[0;34m"
+lm="\e[1;31m"
+lk="\e[1;33m"     
+lh="\e[1;32m"    
+lb="\e[1;34m"     
+n="\e[0m"         
+w="\e[1;37m"      
 
 
 ###############################give Permissons,if not root user exit
@@ -25,7 +25,7 @@ echo -e "\033[34m
                         _       ___     ______            
                        | |     / \ \   / / ___| _   _ ___ 
                       / __)   / _ \ \ / /\___ \| | | / __|
-                      \__ \  / ___ \ V /  ___) | |_| \___ADVANCES
+                      \__ \  / ___ \ V /  ___) | |_| \___\
                       (   / /_/   \_\_/  |____/ \__,_|___/
                        |_|
 \033[0m"
