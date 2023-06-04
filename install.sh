@@ -10,7 +10,7 @@ echo -e "\033[34m
 \033[0m"
 
 echo -e "\033[31m
-[+] INSTALLING $ AVSUS TOOL BY AVS...
+[+] INSTALLING...
 \033[0m"
 sudo apt install adb
 sudo apt intall snap
