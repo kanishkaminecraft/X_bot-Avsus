@@ -1,16 +1,19 @@
-<h3 align="center"><b>$AVSUS PRESENTS</b></h3>
-<h2 align="center">X BOT</h2>
 <div align="center">
   <img border-radius: 15px src="https://www.icegif.com/wp-content/uploads/2022/01/icegif-183.gif" width="500" height="275"/>
   <p align="center">
-  <h2 align="center"></h2>
-  
-  <br>
-  </h1>
-<p align="center">
   <img src="https://img.shields.io/badge/Version-2.1-green?style=for-the-badge">
+    <img src="https://img.shields.io/badge/-KALI-blue?style=for-the-badge&logo=linux">
+    <a href="https://www.instagram.com/aaryaaashu00/" target="_blank"><img src="https://img.shields.io/badge/IG-%40$AVSUS-red?style=for-the-badge&logo=instagram"></a>
+    <a href="https://discord.gg/M45DuEN5nH" target="_blank"><img src="https://img.shields.io/badge/-discord-blue?style=for-the-badge&logo=discord"></a>
+    <img src="https://img.shields.io/badge/HACKER'S TOOL-blue?style=for-the-badge">
+    </p>
+  <p align="center">
+<h3 align="center"><b>$AVSUS PRESENTS</h3>
+<h2 align="center">X BOT</h2> <h7>ALL IN ONE TOOL</h7>
+<div align="center">
+  <br>
 </p>
- <h2 align="center">DESCRIPTION </h2>
+ <h1 align="center">DESCRIPTION </h1>
   
   <h3 align="left">INTRODUCTION</h3>
 <p align="left">
