@@ -1,25 +1,26 @@
 #!/bin/bash
-
-echo -e "${lb}
+clear
+echo -e "\033[34m
                         _       ___     ______            
                        | |     / \ \   / / ___| _   _ ___ 
                       / __)   / _ \ \ / /\___ \| | | / __|
-                      \__ \  / ___ \ V /  ___) | |_| \__ /
+                      \__ \  / ___ \ V /  ___) | |_| \__INSTALLER
                       (   / /_/   \_\_/  |____/ \__,_|___/
-                       |_|$version
-${n}" | lolcat
-echo -e "\n\n\n"
-echo -e "${lb}
-                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+
-                      |E|f|f|o|r|t|l|e|s|s| |l|i|v|i|n|g|
-                      +-+-+-+-+-+-+-+-+-+-+ +-+-+-+-+-+-+
+                       |_|
+\033[0m"
 
-$version
-${n}" | lolcat
-sudo su
-echo "[+] DOWNLOADING REQUIRMENTS..."
+echo -e "\033[31m
+[+] INSTALLING $ AVSUS TOOL BY AVS...
+\033[0m"
 sudo apt install adb
 sudo apt intall snap
 sudo apt install nmap
 sudo apt install lolcat
-echo "[-] INSTALLATION COMPLETELY."
+sudo apt install festival
+echo -e "\033[31m
+[+] INSTALLATION IS COMPLETED...
+\033[0m"
+echo -e "\033[31m
+[+] COMPLETELY INSTALLED $ AVSUS'S TOOL YOU MAY EXIT INSTALLER...
+\033[0m"
+chmod +x X.sh

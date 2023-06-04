@@ -25,7 +25,7 @@ echo -e "\033[34m
                         _       ___     ______            
                        | |     / \ \   / / ___| _   _ ___ 
                       / __)   / _ \ \ / /\___ \| | | / __|
-                      \__ \  / ___ \ V /  ___) | |_| \__BLUE
+                      \__ \  / ___ \ V /  ___) | |_| \___ADVANCES
                       (   / /_/   \_\_/  |____/ \__,_|___/
                        |_|
 \033[0m"
@@ -37,7 +37,6 @@ echo -e "\033[31m
                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 \033[0m"
-
 while :; do
   for (( i=0; i<${#chars}; i++ )); do
     sleep 0.1
@@ -52,15 +51,16 @@ while :; do
 done
 
 
-packages=("figlet" "wget" "adb" "nmap")
+packages=("figlet" "wget" "adb" "nmap" "festival")
 
 for package in "${packages[@]}"; do
     if ! command -v $package &> /dev/null; then
         echo "$package is not installed. Installing now..."
-        sudo apt update
         sudo apt install $package
     fi
 done
+
+
 
 if [[ -d /data/data/com.termux ]]; then
     echo "You are using Termux. Checking for installed packages..."
@@ -79,7 +79,7 @@ if [[ -d /data/data/com.termux ]]; then
     fi
 fi
 
-[[ `id -u` -eq 0 ]] > /dev/null 2>&1 || { echo -e ${m} "[+] PLEASE RUN IT AS ROOT${n}"; echo ; exit 1; }
+[[ `id -u` -eq 0 ]] > /dev/null 2>&1 || { echo -e ${m} "[+] PLEASE RUN IT AS ROOT${n}"; echo ;echo "PLEASE RUN IT AS ROOT" | festival --tts --pipe; exit 1; }
 echo -e "${lb}
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |E|N|G|I|N|E| |<=>| |K|A|L|I|
@@ -87,13 +87,17 @@ echo -e "${lb}
 ${n}" | lolcat
 echo -e "\n\n\n"
 
-echo "<--------------------------------------------------------------------------->" | lolcat
-echo "| [-] ALL-IN-BOT-BY-AVS                                                     |" | lolcat
-echo "|                                                                           |" | lolcat
-echo "| [+] DISCORD: https://discord.gg/M45DuEN5nH                                |" | lolcat
-echo "| [+] EMAIL: kanishkasingh0885@gmail.com                                    |" | lolcat
-echo "| [+] YOUTUBE: https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw     |" | lolcat
-echo "<--------------------------------------------------------------------------->" | lolcat
+
+echo -e "\033[34m
+<--------------------------------------------------------------------------->
+| [-] ALL-IN-BOT-BY-AVS                                                     |
+|                                                                           |
+| [+] DISCORD: https://discord.gg/M45DuEN5nH                                |
+| [+] EMAIL: kanishkasingh0885@gmail.com                                    |
+| [+] YOUTUBE: https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw     |
+<--------------------------------------------------------------------------->
+\033[0m"
+
 
 echo -e "\n\n\n"
 echo "[+] COMMANDS:" | lolcat
@@ -123,6 +127,9 @@ echo "[23] TEST THE WIFI INTERFACE FOR HACKING" | lolcat
 echo "[24] DOWNLOAD SPOTIFY MUSIC USING URL" | lolcat
 echo "[25] DOWNLOAD YOUTUBE VIDEO" | lolcat
 echo "[26] SCAN BLUETOOTH NEAR YOU AND CONNECT WITH IT" | lolcat
+echo "[27] DOWNLOAD GDRIVE LINKS QUICKLY" | lolcat
+echo "[28] DOWNLOAD MEGA.nz LINK QUICKLY" | lolcat
+echo "[29] TEXT-TO-SPEECH" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
 
 echo -e "\n\n\n"
@@ -247,6 +254,51 @@ process_input() {
 	# Prompt user to connect to a device
 	read -p "Enter the MAC address of the device you want to connect to: " mac_address
 	bluetoothctl connect $mac_address
+        ;;
+        27)
+	# Function to check if a command is installed
+	command_exists() {
+	    command -v "$1" >/dev/null 2>&1
+	}
+
+	# Check if pip is installed
+	if ! command_exists pip; then
+	    echo "pip is not found. Installing pip..."
+	    sudo apt-get update
+	    sudo apt-get install -y python3-pip
+	fi
+
+	# Check if gdown is installed
+	if ! command_exists gdown; then
+	    echo "gdown is not found. Installing gdown..."
+	    pip install gdown
+	fi
+
+	# Prompt for gdrive link input
+	read -p "Enter the Google Drive link: " gdrive_link
+
+	# Download the file
+	gdown "$gdrive_link"
+        ;;
+        28)
+	if ! command -v megadl &>/dev/null; then
+	    echo "megatools is not found. Installing megatools..."
+	    sudo apt-get update
+	    sudo apt-get install -y megatools
+	fi
+
+	# Prompt for MEGA.nz link input
+	read -p "Enter the MEGA.nz link: " mega_link
+
+	# Download the file
+	megadl "$mega_link"
+        ;;
+        29)
+        exit
+	echo "Enter the text you want to convert to speech: "
+	read text
+	echo "$text" | festival --tts
+	sudo su
         ;;
         2)
             echo "[+] STARTING 6-PIN BRUTE FORCE ATTACK"
@@ -688,6 +740,8 @@ process_input() {
         interface=${interface:-$default_interface}
         read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
         sudo iwconfig $interface mode monitor
+        echo "[+] CHANGED $interface TO MONITOR MODE."
+        iwconfig
         ;;
         22)
 	# Prompting for the Wi-Fi adapter to use
@@ -751,14 +805,12 @@ process_input() {
         reboot
         ;;
         "set managed mode")
-        sudo ifconfig wlan0 down
-        sudo ifconfig wlan0 up
-        sudo iwconfig
-        echo "[+] CHANGING THE MODE OF WLAN0 TO MANAGED"
-        sudo iwconfig wlan0 mode managed
-        echo "[+] CHANGING THE MODE OF WLAN1 TO MANAGED"
-        sudo iwconfig wlan1 mode managed
-        echo "[+] MODE CHANGED." | lolcat
+        default_interface="wlan0"
+        interface=${interface:-$default_interface}
+        read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+        sudo iwconfig $interface mode managed
+        echo "[+] CHANGED $interface TO MANAGED MODE."
+        iwconfig
         ;;
         "install metasploit on termux")
 	pkg update && pkg upgrade
@@ -1058,7 +1110,7 @@ process_input() {
 #done
 while true; do
     echo -e "\n\n"
-    echo -e "\033[34m┌──($ AVSUS㉿$username)-[v2.0]\033[0m"
-    read -p "└──$" input 
+    echo -e "\033[34m┌──[$ AVSUS㉿$username]-[v2.0]\033[0m"
+    read -p "└──[$] " input 
     process_input "$input"
 done
