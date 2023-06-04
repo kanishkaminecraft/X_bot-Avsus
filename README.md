@@ -1,6 +1,5 @@
-
-<h3 align="center">♕</h3>
-<h2 align="center">X TOOL BY AVS </h2>
+<h3 align="center"><b>$AVSUS PRESENTS</b></h3>
+<h2 align="center">X BOT</h2>
 <div align="center">
   <img border-radius: 15px src="https://www.icegif.com/wp-content/uploads/2022/01/icegif-183.gif" width="500" height="275"/>
   <p align="center">
@@ -92,4 +91,4 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
   <a href="https://www.instagram.com/aaryaaashu00/" target="_blank"><img src="https://img.shields.io/badge/IG-%40$AVSUS-red?style=for-the-badge&logo=instagram"></a>
 </p>
 
-<h2 align="center">THANKYOU</h2>
+<h3 align="center"><i>THANKYOU</i></h3>
