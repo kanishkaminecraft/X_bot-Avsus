@@ -129,7 +129,6 @@ echo "[25] DOWNLOAD YOUTUBE VIDEO" | lolcat
 echo "[26] SCAN BLUETOOTH NEAR YOU AND CONNECT WITH IT" | lolcat
 echo "[27] DOWNLOAD GDRIVE LINKS QUICKLY" | lolcat
 echo "[28] DOWNLOAD MEGA.nz LINK QUICKLY" | lolcat
-echo "[29] TEXT-TO-SPEECH" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
 
 echo -e "\n\n\n"
@@ -292,13 +291,6 @@ process_input() {
 
 	# Download the file
 	megadl "$mega_link"
-        ;;
-        29)
-        exit
-	echo "Enter the text you want to convert to speech: "
-	read text
-	echo "$text" | festival --tts
-	sudo su
         ;;
         2)
             echo "[+] STARTING 6-PIN BRUTE FORCE ATTACK"
