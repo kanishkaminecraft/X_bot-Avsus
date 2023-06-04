@@ -92,10 +92,4 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
   <a href="https://www.instagram.com/aaryaaashu00/" target="_blank"><img src="https://img.shields.io/badge/IG-%40$AVSUS-red?style=for-the-badge&logo=instagram"></a>
 </p>
 
-
-
-  <br><br>
-
 <h2 align="center">THANKYOU</h2>
-
-<br><br>
