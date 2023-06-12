@@ -1136,7 +1136,7 @@ process_input() {
 #done
 while true; do
     echo -e "\n\n"
-    echo -e "\033[34m┌──[$ AVSUS㉿$username]-[v2.0]\033[0m"
+    echo -e "\033[34m┌──[$ AVSUS㉿$username]-[v2.2]\033[0m"
     read -p "└──[$] " input 
     process_input "$input"
 done
