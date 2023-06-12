@@ -1,15 +1,15 @@
 <div align="center">
   <img border-radius: 15px src="https://www.icegif.com/wp-content/uploads/2022/01/icegif-183.gif" width="500" height="275"/>
   <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.1-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Version-2.2-red?style=for-the-badge">
     <img src="https://img.shields.io/badge/-KALI-blue?style=for-the-badge&logo=linux">
     <a href="https://www.instagram.com/aaryaaashu00/" target="_blank"><img src="https://img.shields.io/badge/IG-%40$AVSUS-red?style=for-the-badge&logo=instagram"></a>
     <a href="https://discord.gg/M45DuEN5nH" target="_blank"><img src="https://img.shields.io/badge/-discord-blue?style=for-the-badge&logo=discord"></a>
-    <img src="https://img.shields.io/badge/HACKER'S TOOL-blue?style=for-the-badge">
+    <img src="https://img.shields.io/badge/SECURITY EDITION-red?style=for-the-badge">
     </p>
   <p align="center">
 <h3 align="center"><b>$AVSUS PRESENTS</h3>
-<h2 align="center">X BOT</h2> <h7>ALL IN ONE TOOL</h7>
+<h2 align="center">X BOT</h2> <h7>$AVSUS  FRAME-WORK</h7>
 <div align="center">
   <br>
 </p>
@@ -92,6 +92,7 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 <br>
   <a href="https://github.com/kanishkaminecraft" target="_blank"><img src="https://img.shields.io/badge/$AVSUS-green?style=for-the-badge&logo=github"></a>
   <a href="https://www.instagram.com/aaryaaashu00/" target="_blank"><img src="https://img.shields.io/badge/IG-%40$AVSUS-red?style=for-the-badge&logo=instagram"></a>
+  <a href="https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw" target="_blank"><img src="https://img.shields.io/badge/YT-%40$AVSUS-red?style=for-the-badge&logo=youtube"></a>
 </p>
 
 <h3 align="center"><i>THANKYOU</i></h3>
