@@ -62,7 +62,7 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 <h3 align="center"><i>DEB INSTALLATION -:</i></h3>
 <p align="left">
   
-  * `sudo wget https://github.com/kanishkaminecraft/X_bot-Avsus/releases/download/2.1/avs_2.deb`
+  * `sudo wget https://github.com/kanishkaminecraft/X_bot-Avsus/releases/download/2.1/avs_2.1.deb`
   * `sudo dpkg -i avs_2.deb  `
   * `avs`
  
