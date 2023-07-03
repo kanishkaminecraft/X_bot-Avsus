@@ -61,7 +61,7 @@ while :; do
 done
 
 echo -e "\033[34m
-[+] DEVICE INFO-:
+[+] DEVICE INFO:
 [+] PRIVATE IP: $own_ip
 [+] PUBLIC IP: $NEW_DEVICE_PUBLIC_IP 
 \033[0m"
@@ -104,7 +104,7 @@ echo -e "\n\n\n"
 
 
 
-echo -e "\033[34m
+echo -e "\033[31m
 <--------------------------------------------------------------------------->
 | [-] $ AVSUS FRAMEWORK                                                     |
 |                                                                           |
@@ -154,6 +154,9 @@ echo "[31] SETUP WIFI WITH MONITOR MODE" | lolcat
 echo "[32] CAPTURE CAP FILE OF WIFI" | lolcat
 echo "[33] DEAUTH THE WIFI" | lolcat
 echo "[34] CREATE A DEB FILE {SHELL TO PACKAGE}" | lolcat
+echo "[edf] EXTRACT .deb FILE" | lolcat
+echo "[rmd] RECORDMYDESKTOP" | lolcat
+echo "[fmp] FORMAT YOUR PENDRIVE" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
 
 }
@@ -161,7 +164,7 @@ echo "[99] ADDITIONAL commands" | lolcat
 show_help() {
     echo "Usage: Avstool [options]"
     echo "Options:"
-echo -e "\033[34m
+echo -e "\033[31m
 <--------------------------------------------------------------------------->
 | [-] $ AVSUS FRAMEWORK                                                     |
 |                                                                           |
@@ -209,7 +212,11 @@ Options:
 [34] CREATE A DEB FILE {SHELL TO PACKAGE}
 [avs q] quiet mode, direcly on work.
 [g] GRAPHICAL
+[edf] EXTRACT .deb FILE
 [h] help
+[rmd] RECORDMYDESKTOP
+[fmp] FORMAT YOUR PENDRIVE
+[99] HELP
 \033[0m"
 }
 
@@ -248,7 +255,6 @@ if [[ $1 == "q" ]]; then
         main_banner
 fi
 
-
 echo -e "\n\n\n"
 
 # Function to play music on YouTube
@@ -257,6 +263,50 @@ play_music() {
     search_query=$(echo $query | sed 's/ /+/g')
     url="https://www.youtube.com/results?search_query=$search_query"
     google-chrome-stable $url
+}
+
+
+install_android_studio() {
+
+    echo "[+] INSTALLING ANDROID STUDIO..."
+    wget https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2022.2.1.20/android-studio-2022.2.1.20-linux.tar.gz
+    echo "[+] EXTRACTING THE PACKAGE..."
+    tar -xvzf android-studio-2020.3.1.0-linux.tar.gz
+    echo "[+] MOVING EXTRACTED FILE TO /opt/"
+    sudo mv android-studio /opt/
+    echo "[+] INSTALLING JAVA DEVLOPMENT KIT"
+    sudo apt-get install openjdk-11-jdk
+    echo "[+] SETTING UP THE ENVIRONMENT VARIABLES..."
+    echo 'export PATH=$PATH:/opt/android-studio/bin' >> ~/.bashrc
+    source ~/.bashrc
+
+    echo "[+] LAUNCHING THE STUDIO..."
+    studio.sh
+
+}
+
+format_drive() {
+
+    echo "[+] LIST OF CONNECTED DRIVES:"
+    lsblk -o NAME,LABEL,MOUNTPOINT | grep -o 'sd[b-z][0-9]'
+    echo "[+] SELECT YOUR DRIVE:"
+    read pendrive
+    echo "[+] SELECT FORMAT (ntfs, fat32, ext4):"
+    read format
+    sudo umount /dev/$pendrive
+    if [ $format == "ntfs" ]
+    then
+        sudo mkfs.ntfs /dev/$pendrive
+    elif [ $format == "fat32" ]
+    then
+        sudo mkfs.vfat /dev/$pendrive
+    elif [ $format == "ext4" ]
+    then
+        sudo mkfs.ext4 /dev/$pendrive
+    else
+        echo "Invalid format"
+    fi
+    echo "Pendrive formatted to $format"
 }
 
 # Function to process user input and provide responses
@@ -328,7 +378,7 @@ process_input() {
             done
             ;;
         24)
-	read -p "Enter the Spotify music URL: " spotify_url
+	read -p "[+] Enter the Spotify music URL: " spotify_url
 
 	# Installing spotdl (if not already installed)
 	command -v spotdl >/dev/null 2>&1 || {
@@ -372,7 +422,7 @@ process_input() {
 	bluetoothctl devices
 
 	# Prompt user to connect to a device
-	read -p "Enter the MAC address of the device you want to connect to: " mac_address
+	read -p "[+] Enter the MAC address of the device you want to connect to: " mac_address
 	bluetoothctl connect $mac_address
         ;;
         27)
@@ -395,7 +445,7 @@ process_input() {
 	fi
 
 	# Prompt for gdrive link input
-	read -p "Enter the Google Drive link: " gdrive_link
+	read -p "[+] Enter the Google Drive link: " gdrive_link
 
 	# Download the file
 	gdown "$gdrive_link"
@@ -406,6 +456,9 @@ process_input() {
         "graphics")
         main_banner
         ;;
+        "install android studio")
+        install_android_studio
+        ;;
         28)
 	if ! command -v megadl &>/dev/null; then
 	    echo "megatools is not found. Installing megatools..."
@@ -414,10 +467,13 @@ process_input() {
 	fi
 
 	# Prompt for MEGA.nz link input
-	read -p "Enter the MEGA.nz link: " mega_link
+	read -p "[+] Enter the MEGA.nz link: " mega_link
 
 	# Download the file
 	megadl "$mega_link"
+        ;;
+        "fmp")
+        format_drive
         ;;
         29)
         if [ ! -d "zphisher" ]; then
@@ -485,14 +541,11 @@ process_input() {
             done
         ;;
         34)
-        echo "Enter the name of your package:"
-        read package_name
+        read -p "[+] Enter the name of your package:" package_name
 
-        echo "Enter the version of your package:"
-        read package_version
+        read -p "[+] Enter the version of your package:" package_version
 
-        echo "Enter the path to your shell script:"
-        read script_path
+        read -p "[+] Enter the path to your shell script:" script_path
 
         # Create the package directory structure
         package_dir="${package_name}_${package_version}"
@@ -515,6 +568,62 @@ process_input() {
 
         # Build the package
         dpkg-deb --build "$package_dir"
+        echo "[+] FILE CREATED WITH NAME: $package_dir "
+        ;;
+        "cd ..")
+        dir=$(pwd)
+        cd ..
+        echo "[+] CHANGING DIRECTORY... TO $dir"
+        ;;
+        edf)
+        read -p "[+] ENTER YOUR FILE DESTINATION:" file_des
+        dpkg -i $file_des
+        ;;
+        cd)
+        read -p "[+] ENTER THE DIRECTORY:" dir_new
+        cd $dir_new
+        echo "[+] CHANGING DIRECTORY..."
+        
+        ;;
+        "rmd")
+        read -p "[+] NAME OF FILE: " filename
+        echo "[+] FILENAME ==> $filename"
+
+        read -p "[+] NAME OF CONVERTED FILE: " converted_filename
+        echo "[+] CONVERTED FILENAME ==> $converted_filename"
+
+        # Get screen resolution
+        resolution=$(xdpyinfo | awk '/dimensions/{print $2}')
+        width=$(echo "$resolution" | awk -Fx '{print $1}')
+        height=$(echo "$resolution" | awk -Fx '{print $2}')
+        echo "[+] RESOLUTION ==> $resolution"
+        echo "[+] WIDTH ==> $width"
+        echo "[+] HEIGHT ==> $height"
+
+        # Record desktop using recordmydesktop with --no-sound option
+        recordmydesktop --no-sound --full-shots --width "$width" --height "$height" -o "$filename.ogv"
+
+        # Convert recorded file using ffmpeg
+        ffmpeg -i "$filename.ogv" -c:v libx264 -preset veryslow -crf 22 "$converted_filename.mp4"
+        read -p "[+] DO YOU WANT TO KEEP $filename.ogv OR NO {yes keep it / No  Delete it} [Y/N]: " keep_file
+        if [[ $keep_file == "N" || $keep_file == "n" ]]; then
+            rm -rf "$filename.ogv"
+            echo "[+] $filename.ogv deleted."
+        else
+            echo "[+] $filename.ogv kept."
+        fi
+        ;;
+        "nano")
+        read -p "[+] ENTER THE DESTINATION OF YOUR FILE:" nano_fle
+        nano $nano_fle
+        ;;
+        "cat")
+        read -p "[+] ENTER DESTINATION OF YOUR FILE:" cat_fle
+        cat $cat_fle
+        ;;
+        "mkdir")
+        read -p "[+] ENTER THE NAME OF YOUR FILE:" cr_fle
+        mkdir $cr_fle
         ;;
         4)
         echo "[+] DOWNLOADING ALL REQUIRED COMPONENTS" | lolcat
@@ -536,23 +645,22 @@ process_input() {
         ip=$(dig +short $domain)
         echo "[+] WEBSITE IP: $ip"
 
-        # Prompt user for username or username file
         read -p "[+] SINGLE USERNAME OR USERNAME FILE [u/f]: " choice
 
         if [ "$choice" == "u" ]; then
-            read -p "Enter username: " username
-            user_option="USERNAMES=$username"
+            read -p "[+] Enter username: " usr
+            user_option="USERNAMES=$usr"
         elif [ "$choice" == "f" ]; then
-            read -p "Enter path to username file: " user_file
+            read -p "[+] Enter path to username file: " user_file
             usernames=$(cat $user_file | tr '\n' ',')
-            user_option="USERNAMES=$usernames"
+            user_option="USERNAMES=$usr"
         else
             echo "Invalid choice"
             exit 1
         fi
 
         # Prompt user for password file
-        read -p "Enter path to password file: " pass_file
+        read -p "[+] Enter path to password file: " pass_file
 
         # Set additional options
         blank_passwords="true"
@@ -628,36 +736,36 @@ process_input() {
         "remove files")
 
         ls | lolcat
-        removefiles= ls && read -p "Enter the names of file to delete:" dfiles && rm -rf $dfiles && echo "[+] REMOVING $dfiles"
+        removefiles= ls && read -p "[+] Enter the names of file to delete:" dfiles && rm -rf $dfiles && echo "[+] REMOVING $dfiles"
         $removefiles
         ;;
         "removefiles")
-        removefiles= ls && read -p "Enter the names of file to delete:" dfiles && rm -rf $dfiles && echo "[+] REMOVING $dfiles"
+        removefiles= ls && read -p "[+] Enter the names of file to delete:" dfiles && rm -rf $dfiles && echo "[+] REMOVING $dfiles"
         $removefiles
         ;;
         30)
         echo "THIS MAY NOT WORK [UNDER BETA]"
-        read -p "Enter the URL or domain name: " url
-        read -p "Enter the path to the wordlist file: " wordlist
-        read -p "Enter the username: " username
+        read -p "[+] Enter the URL or domain name: " url
+        read -p "[+] Enter the path to the wordlist file: " wordlist
+        read -p "[+] Enter the username: " husr
 
         ip=$(dig +short $(echo "$url" | awk -F[/:] '{print $4}'))
 
         if [[ -z $ip ]]; then
         echo "Failed to retrieve the IP address for the given URL or domain name."
-        exit 1
+        exit 1                                                                                                                                                                                                                                                                                                                                                  
         fi
 
         echo "[+] IP OF WEB ==> $ip"
         echo "Starting brute-force attack..."
 
-        hydra -l $username -P $wordlist $ip http-get /login -V
+        hydra -l $husr -P $wordlist $ip http-get /login -V
 
         if [ $? -eq 0 ]; then
         echo "Brute force attack successful! Username: $username, Password found in $wordlist"
         else
         echo "Brute force attack unsuccessful."
-        fi
+        fi                                                                                                                                          
         ;;
         10)
         echo "[+] INSTALLING SOFTWARES..." | lolcat
@@ -666,7 +774,7 @@ process_input() {
         echo "[-] VSCODE" | lolcat
         echo "[-] BLENDER" | lolcat
         echo "[+] INSTALLING WGET" | lolcat
-        sudo apt install wget
+        sudo apt install wget                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
         echo "[+]  DOWNLOADING FILE..." | lolcat
         wget https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-beta/microsoft-edge-beta_114.0.1823.11-1_amd64.deb
         echo "[+] EXTRACTING FILE" | lolcat
@@ -921,7 +1029,7 @@ process_input() {
         ;;
         20)
 	default_interface="wlan0"
-    read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+    read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
 	interface=${interface:-$default_interface}
     sudo airodump-ng $interface
         ;;
@@ -930,14 +1038,14 @@ process_input() {
 	default_name="WIFI POINT"
 	default_interface="wlan0"
 
-	read -p "Enter the name of the WiFi (default: $default_name): " name_of_wifi
+	read -p "[+] Enter the name of the WiFi (default: $default_name): " name_of_wifi
 	name_of_wifi=${name_of_wifi:-$default_name}
 	echo "[+] WIFI NAME ==> $name_of_wifi" | lolcat
 
-	read -p "Enter the BSSID (default: $default_bssid): " bssid
+	read -p "[+] Enter the BSSID (default: $default_bssid): " bssid
 	bssid=${bssid:-$default_bssid}
 	echo "[+] WIFI BSSID ==> $bssid" | lolcat
-	read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+	read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
 	interface=${interface:-$default_interface}
 	echo "[+] INTERFACE ==> $interface" | lolcat
 	airbase-ng -a $bssid --essid "$name_of_wifi" -c 5 $interface
@@ -947,7 +1055,7 @@ process_input() {
         "set monitor mode")
         default_interface="wlan0"
         interface=${interface:-$default_interface}
-        read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+        read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
         sudo iwconfig $interface mode monitor
         echo "[+] CHANGED $interface TO MONITOR MODE."
         iwconfig
@@ -955,7 +1063,7 @@ process_input() {
         31)
 	default_interface="wlan0"
     interface=${interface:-$default_interface}
-    read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+    read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
     sudo airmon-ng check kill
     sudo airmon-ng start $interface
     echo "__________________________________________________________________________________________________________"
@@ -963,21 +1071,21 @@ process_input() {
         ;;
         32)
 	    default_interface="wlan0"
-        read -p "ENTER WHAT WILL BE THE NAME OF THE CAPTURE FILE: " nname
-        read -p "ENTER THE CHANNEL OF WIFI: " channel
-        read -p "ENTER BSSID OF YOUR WIFI: " nbssid
-        read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+        read -p "[+] ENTER WHAT WILL BE THE NAME OF THE CAPTURE FILE: " nname
+        read -p "[+] ENTER THE CHANNEL OF WIFI: " channel
+        read -p "[+] ENTER BSSID OF YOUR WIFI: " nbssid
+        read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
 	    interface=${interface:-$default_interface}
         sudo airodump-ng -w $nname -c $channel --bssid $nbssid $interface
         ;;
         33)
-        read -p "ENTER BSSID OF YOUR WIFI: " bssid
-        read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+        read -p "[+] ENTER BSSID OF YOUR WIFI: " bssid
+        read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
         sudo aireplay-ng --deauth 0 -a  $bssid $interface
         ;;
         22)
-        read -p "ENTER THE NAME OF WIFI CAPTURE FILE {.cap FILE}: " capfile
-        read -p "ENTER THE DESTINATION OR NAME OF WORDLIST TO CRACK: " wordlist
+        read -p "[+] ENTER THE NAME OF WIFI CAPTURE FILE {.cap FILE}: " capfile
+        read -p "[+] ENTER THE DESTINATION OR NAME OF WORDLIST TO CRACK: " wordlist
         aircrack-ng $capfile -w $wordlist
         ;;
         "pwd")
@@ -988,7 +1096,7 @@ process_input() {
 	default_name="WIFI POINT"
 	default_interface="wlan0"
 	interface=${interface:-$default_interface}
-	read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+	read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
 	echo "[+] TESTING PACKET INJECTION" | lolcat
 	sudo aireplay-ng --test $interface
 	read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
@@ -1001,7 +1109,7 @@ process_input() {
         "set managed mode")
         default_interface="wlan0"
         interface=${interface:-$default_interface}
-        read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+        read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
         sudo iwconfig $interface mode managed
         echo "[+] CHANGED $interface TO MANAGED MODE."
         iwconfig
@@ -1080,27 +1188,7 @@ process_input() {
         echo "i'd like to help. if you want me to try to cheer you up just write 'ok cheer me up'"
         ;;
         "show options")
-	echo "[+] COMMANDS:" | lolcat
-	echo "[1] 4-PIN BRUTE FORCE ATTACK" | lolcat
-	echo "[2] 6-PIN BRUTE FORCE ATTACK" | lolcat
-	echo "[3] 10-PIN BRUTE FORCE ATTACK" | lolcat
-	echo "[4] DOWNLOAD ALL IMPORTANT TOOLS" | lolcat
-	echo "[5] OPEN 5555 PORT OF CONNECT DEVICE" | lolcat
-	echo "[6] IP DETAILS" | lolcat
-	echo "[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE" | lolcat
-	echo "[8] REMOVE LOCKSCREEN" | lolcat
-	echo "[10] INSTALL BASIC SOFTWARES" | lolcat
-	echo "[11] INSTALL TELEGRAM,SPOTIFY" | lolcat
-	echo "[12] INSTALL PACKAGES" | lolcat
-    echo "[13] PHONEINFOS" | lolcat
-    echo "[15] SCAN A WEBSTIE FOR PHISING PAGE" | lolcat
-        echo "[+] ADDITIONAL COMMANDS ARE-:" | lolcat
-        echo "[+] 'install chrome' TO INSTALL GOOGLE CHROME" | lolcat
-        echo "[+] 'install edge' TO INSTALL MICROSOFT EDGE " | lolcat
-        echo "[+] 'install virtual box' TO INSTALL VIRTUAL BOX" | lolcat
-        echo "[+] 'install spotify' TO INSTALL SPOTIFY" | lolcat
-        echo "[+] BOT TO PERSON COMMANDS" | lolcat
-        echo -e "\n\n"
+        show_help
         ;;
         "help")
         show_help 
@@ -1195,9 +1283,6 @@ or downloading a file from an untrusted source. Once malware is installed on a c
         "do you like music")
             echo "I don't have personal preferences, but I can definitely help you find information about different types of music!"
             ;;
-        "what is the capital of France")
-            echo "The capital of France is Paris, known as the 'City of Love' and famous for its iconic landmarks like the Eiffel Tower."
-            ;;
         "recommend a good book")
             echo "One highly recommended book is 'The Alchemist' by Paulo Coelho. It's a philosophical novel about following one's dreams."
             ;;
@@ -1207,42 +1292,6 @@ or downloading a file from an untrusted source. Once malware is installed on a c
         "tell me about yourself")
             echo "I'm an AI-powered digital assistant designed to help answer questions and engage in conversations. How can I assist you today?"
             ;;
-        "what's your favorite movie")
-            echo "As an AI, I don't have personal preferences, so I don't have a favorite movie. But I can recommend popular movies if you'd like!"
-            ;;
-        "what's the time")
-            echo "I'm sorry, I don't have access to real-time data. You can check the time on your device or search for 'current time' online."
-            ;;
-        "how do I cook pasta")
-            echo "Cooking pasta is quite simple! Boil water, add salt, cook the pasta until it's al dente, and then drain it. Don't forget the sauce!"
-            ;;
-        "tell me a famous quote")
-            echo "Here's a quote by Albert Einstein: 'Imagination is more important than knowledge.'"
-            ;;
-        "what's your favorite color")
-            echo "As an AI, I don't perceive colors the way humans do, so I don't have a favorite color. But colors can be fascinating, right"
-            ;;
-        "What is a lever")
-        echo "A lever is a simple machine that consists of a rigid bar that pivots about a fixed point, called a fulcrum. It is used to transmit and enhance force or motion."
-            ;;
-        "What is photosynthesis")
-            echo "Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods with the help of chlorophyll pigments. In general, photosynthesis is the conversion of light energy into chemical energy."
-            ;;
-        "What is an atom")
-            echo "An atom is the basic unit of a chemical element. It consists of a nucleus containing protons and neutrons, surrounded by electrons in shells."
-        ;;
-        "What is gravity")
-            echo "Gravity is the force by which a planet or other body draws objects toward its center. The force of gravity keeps all of the planets in orbit around the sun."
-        ;;
-        "What is a cell")
-            echo "A cell is the basic unit of life. All living organisms are composed of one or more cells. Cells are the building blocks of tissues and organs in multicellular organisms."
-        ;;
-        "What is DNA")
-            echo "DNA (deoxyribonucleic acid) is a molecule that carries the genetic instructions used in the growth, development, functioning and reproduction of all known living organisms and many viruses."
-        ;;
-        "What is evolution")
-            echo "Evolution is the process by which different kinds of living organisms are thought to have developed and diversified from earlier forms during the history of the earth."
-        ;;
         "What is a black hole")
             echo "A black hole is a region of spacetime exhibiting gravitational acceleration so strong that nothing—no particles or even electromagnetic radiation such as light—can escape from it."
         ;;
@@ -1295,15 +1344,6 @@ or downloading a file from an untrusted source. Once malware is installed on a c
         "how can I stay up-to-date on the latest hacking techniques")
             echo "[+] The best way to stay up-to-date on the latest hacking techniques is to read security blogs and articles, attend security conferences, and participate in security mailing lists and forums. You can also follow security researchers on Twitter and other social media platforms."
         ;;
-        "what is electricity")
-            echo "Electricity is a form of energy resulting from the movement of charged particles (such as electrons or protons), typically through a wire or other conductor."
-        ;;
-        "what is a molecule")
-            echo "A molecule is an electrically neutral group of two or more atoms held together by chemical bonds. Molecules are distinguished from ions by their lack of electrical charge."
-        ;;
-        "what is a chemical reaction")
-            echo "A chemical reaction is a process that leads to the transformation of one set of chemical substances to another. Chemical reactions can be represented by chemical equations."
-        ;;
         "i am in which file")
         newdestination= echo "[+] YOUR DESTINATION:" && pwd
         $newdestination
@@ -1311,27 +1351,6 @@ or downloading a file from an untrusted source. Once malware is installed on a c
         "tell me my destination")
         newdestination= echo "[+] YOUR DESTINATION:" && pwd
         $newdestination
-        ;;
-        "What is an ecosystem")
-            echo "An ecosystem is a community of living organisms in conjunction with the nonliving components of their environment (things like air, water and mineral soil), interacting as a system."
-        ;;
-        "What is climate change")
-            echo "Climate change refers to long-term changes in the Earth's climate, including temperature, precipitation, and wind patterns. It can be caused by natural factors or human activities that release greenhouse gases into the atmosphere."
-        ;;
-        "What is photosynthesis")
-            echo "Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize foods with the help of chlorophyll pigments. In general, photosynthesis is the conversion of light energy into chemical energy."
-        ;;
-        "What are fossils")
-            echo "Fossils are the preserved remains or traces of animals, plants, and other organisms from the remote past. They provide evidence about how life on Earth has changed over time."
-        ;;
-        "What are renewable resources")
-            echo "Renewable resources are natural resources that can be replenished over time through natural processes. Examples include solar energy, wind energy, and biomass."
-        ;;
-        "What are nonrenewable resources")
-            echo "Nonrenewable resources are natural resources that cannot be replenished within a human lifetime. Examples include fossil fuels such as coal, oil, and natural gas."
-        ;;
-        "What are genes")
-            echo "Genes are segments of DNA that contain the instructions for making proteins. Proteins determine many traits in an organism such as eye color and blood type."
         ;;
         "exit")
 	chars="/-\|"
@@ -1355,9 +1374,6 @@ or downloading a file from an untrusted source. Once malware is installed on a c
         "restart")
         exit
         ./X.sh
-        ;;
-        "What are chromosomes")
-            echo "Chromosomes are long, threadlike structures located inside the nucleus of animal and plant cells. Each chromosome contains many genes. In humans, there are 23 pairs of chromosomes for a total of 46 chromosomes."
         ;;
     "usr")
         read -p "[+] ENTER THE NEW USERNAME: " username
