@@ -1,7 +1,7 @@
 <div align="center">
   <img border-radius: 15px src="https://www.icegif.com/wp-content/uploads/2022/01/icegif-183.gif" width="500" height="275"/>
   <p align="center">
-  <img src="https://img.shields.io/badge/Version-2.2-red?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Version-2.3-red?style=for-the-badge">
     <img src="https://img.shields.io/badge/-KALI-blue?style=for-the-badge&logo=linux">
     <a href="https://www.instagram.com/aaryaaashu00/" target="_blank"><img src="https://img.shields.io/badge/IG-%40$AVSUS-red?style=for-the-badge&logo=instagram"></a>
     <a href="https://discord.gg/M45DuEN5nH" target="_blank"><img src="https://img.shields.io/badge/-discord-blue?style=for-the-badge&logo=discord"></a>
