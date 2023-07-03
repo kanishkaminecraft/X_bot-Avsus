@@ -3,6 +3,13 @@ import numpy as np
 import subprocess
 import time
 
+
+def usag():
+    print("[+] CONNECT YOUR ANDROID DEVICE USING ADB")
+    print("[+] COMMAND FOR KALI LINUX: adb connect {device ip}:{device port}")
+    print("[+] REPLACE {device ip} with your device ip address and {port} with DEVICE OPEN PORT")
+    print("[+] TO OPEN PORT ON DEVICE, CONNECTED DEVICE WITH YOUR KALI MACHINE AND OPEN TERMINAL TYPE adb tcpip 5555 TO OPEN 5555 PORT ON YOUR CONNECTED DEVICE AND THEN TRY TO USE adb connect {device ip}:{device port}")
+
 def monitor_device_screen():
     cmd = "adb exec-out screencap -p"
     cv2.namedWindow("$Aview_screen", cv2.WINDOW_NORMAL)
@@ -33,6 +40,10 @@ def monitor_device_screen():
         cv2.putText(img, f"Device Name: {device_name}", (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         cv2.putText(img, f"Device IP: {device_ip}", (10, 110), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         print("======================================================================================>")
+        print("[+] MADE BY AVS")
+        print("[-] BETA VERSION")
+        print("[+] DISCORD: https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw")
+        print("[+] YOUTUBE: https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw")
         print(f"[+] DEVICE DETAILS:{device_info}")
         print(f"[+] DEVICE NAME: {device_name}")
         print(f"[+] DEVICE PRIVATE IP:{device_ip}")
@@ -49,4 +60,5 @@ def monitor_device_screen():
             break
 
     cv2.destroyAllWindows()
+usag()
 monitor_device_screen()
