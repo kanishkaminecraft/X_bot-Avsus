@@ -62,11 +62,11 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 <h3 align="center"><i>DEB INSTALLATION -:</i></h3>
 <p align="left">
   
-  * `https://github.com/kanishkaminecraft/X_bot-Avsus/releases/download/2.1/avs_2.5.deb`
+  * `wget https://github.com/kanishkaminecraft/X_bot-Avsus/releases/download/2.5D/avs_2.5.deb`
   * `sudo dpkg -i avs_2.2.deb  `
   * `avs`
  
-<h3 align="center"><i>OR ELSE ONE WORD INSTALLATION-:</i></h3>
+<h3 align="center"><i>OR ELSE ONE LINE INSTALLATION-:</i></h3>
 <p align="left">
   
   * `echo "[+] STARTING ONE COMMANDS INSTALLER..." && git clone https://github.com/kanishkaminecraft/X_bot-Avsus.git && cd X_bot-Avsus && chmod +x * && ./install.sh && ./X.sh`
