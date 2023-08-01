@@ -3,4 +3,5 @@
   <p align="center">
     <h5>ᴡɪɴᴅᴏᴡs ᴇᴅɪᴛɪᴏɴ</h5>
    <h1 align="center">M&nbsp;O&nbsp;N&nbsp;I&nbsp;T&nbsp;O&nbsp;R&nbsp;&nbsp;&nbsp;A&nbsp;N&nbsp;D&nbsp;R&nbsp;O&nbsp;I&nbsp;D</h1>
- - [DOWNLOAD FOR LINUX](doc/monitor.py)
+
+ - [Windows](doc/monitor.py)
