@@ -80,11 +80,15 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 - *  [x] Crack 6-Pin Android Lock screen 
 - *  [x] Crack 10-Pin Android Lock screen 
 - *  [x] Download softwares in single command
-- *  [x] Create Fake wifi network
-- *  [x] Create payload And execute in one-code
+- *  [x] CREATE PAYLOAD FOR WINDOWS AND ANDROID AND EXECUTE IN ONE COMMAND
 - *  [x] Download Spotify Music 🎶
-- *  [x] Test your wifi Adapter
-
+- *  [x] TEST YOUR WIFI ADAPTER
+  *  [x] WIFI PASSWORD CRACKING
+  *  [x] WIFI DEAUTHENTICATION
+  *  [x] CREATE FAKE WIFI
+  *  [x] SCAN A WEBSITE
+  *  [x] BRUTEFORCE A WEBSITE
+  *  [ ] EDUCATION PURPOSE  
 <h3 align="left">SCREENSHOT:</h3>
 <p align="left">
 <img src="https://lh3.googleusercontent.com/gzqBT7MCriC6zfN43hCER27hsv0yQYfT6zK1VdeVCE9znD5kW1lIhV7eJRLpDqntE88ejqK7qKaEhniniuY-pViSTnQxZlACvBjyF4kSZhCqZ6lam20Oi0GnCbTXFrkfGw=w1280">
