@@ -4,4 +4,4 @@
     <h5>ᴡɪɴᴅᴏᴡs ᴇᴅɪᴛɪᴏɴ</h5>
    <h1 align="center">M&nbsp;O&nbsp;N&nbsp;I&nbsp;T&nbsp;O&nbsp;R&nbsp;&nbsp;&nbsp;A&nbsp;N&nbsp;D&nbsp;R&nbsp;O&nbsp;I&nbsp;D</h1>
 
- - [Windows](https://www.mediafire.com/file/jt93opzgqij7szk/monitor.py/file)
+ - [Windows](https://www.mediafire.com/file/uqik99wnx1xxncf/monitoralinux.py/file)
