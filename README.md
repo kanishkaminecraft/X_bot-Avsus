@@ -46,12 +46,12 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 * Customization and Flexibility: Tailor X_tool Security Edition to your specific requirements. Customize settings, adjust scan parameters, and fine-tune payload options, providing the flexibility needed for a successful hacking operation.
   
 
-<h3 align="left">TESTED ON:</h3>
+<h3 align="left">T&nbsp;E&nbsp;S&nbsp;T&nbsp;E&nbsp;D&nbsp; O&nbsp;N:</h3>
 <p align="left">
 
-* KALI LINUX
+* K&nbsp;A&nbsp;L&nbsp;I&nbsp; L&nbsp;I&nbsp;N&nbsp;U&nbsp;X
 
-<h3 align="left">INSTALLATION-:</h3>
+<h3 align="left">C&nbsp;L&nbsp;O&nbsp;N&nbsp;I&nbsp;N&nbsp;G-:</h3>
 <p align="left">
  
 * ` git clone https://github.com/kanishkaminecraft/X_bot-Avsus.git `
@@ -59,18 +59,12 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 * `chmod +x * `
 * `./install.sh`
 * `./X.sh`
-<h3 align="center"><i>DEB INSTALLATION -:</i></h3>
+<h3 align="center">D&nbsp;E&nbsp;B&nbsp; &nbsp;I&nbsp;N&nbsp;S&nbsp;T&nbsp;A&nbsp;L&nbsp;L&nbsp;A&nbsp;T&nbsp;I&nbsp;O&nbsp;N -:</h3>
 <p align="left">
   
   * `wget https://github.com/kanishkaminecraft/X_bot-Avsus/releases/download/2.5D/avs_2.5.deb`
   * `sudo dpkg -i avs_2.2.deb  `
   * `avs`
- 
-<h3 align="center"><i>OR ELSE ONE LINE INSTALLATION-:</i></h3>
-<p align="left">
-  
-  * `echo "[+] STARTING ONE COMMANDS INSTALLER..." && git clone https://github.com/kanishkaminecraft/X_bot-Avsus.git && cd X_bot-Avsus && chmod +x * && ./install.sh && ./X.sh`
-  
 <h3 align="left">FEATURES:</h3>
 <p align="left">
   
