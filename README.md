@@ -13,7 +13,7 @@
 <div align="center">
   <br>
 </p>
- <h1 align="center">DESCRIPTION </h1>
+ <h1 align="center">D&nbsp;E&nbsp;S&nbsp;C&nbsp;R&nbsp;I&nbsp;P&nbsp;T&nbsp;I&nbsp;O&nbsp;N </h1>
   
   <h3 align="left">INTRODUCTION</h3>
 <p align="left">
@@ -65,6 +65,14 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
   * `wget https://github.com/kanishkaminecraft/X_bot-Avsus/releases/download/2.5D/avs_2.5.deb`
   * `sudo dpkg -i avs_2.2.deb  `
   * `avs`
+
+<br>
+
+## M&nbsp;O&nbsp;N&nbsp;I&nbsp;T&nbsp;O&nbsp;R&nbsp;.&nbsp;P&nbsp;Y
+
+ - [Linux](doc/linux.md)
+ - [Windows](doc/windows.md)
+
 <h3 align="left">FEATURES:</h3>
 <p align="left">
   
