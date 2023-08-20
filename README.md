@@ -43,6 +43,8 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 
 * Enhanced Security Edition: With v2.0, the Security Edition of X_tool has been further fortified with additional features and improvements, guaranteeing optimal performance and reliability in your security testing endeavors.
 
+* DO NOT USE IT FOR MILITARY OR SECRET SERVICE ORGANIZATIONS, OR FOR ILLEGAL
+
 * Customization and Flexibility: Tailor X_tool Security Edition to your specific requirements. Customize settings, adjust scan parameters, and fine-tune payload options, providing the flexibility needed for a successful hacking operation.
   
 
