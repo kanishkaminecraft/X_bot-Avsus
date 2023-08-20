@@ -90,7 +90,6 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
   *  [x] BRUTEFORCE A WEBSITE
   *  [x] EDUCATION PURPOSE
   *  [x] LEARN HACKING
-  *  [ ] MILITARY OR SECRET SERVICE ORGANIZATIONS, OR FOR ILLEGAL
 <h3 align="left">SCREENSHOT:</h3>
 <p align="left">
 <img src="https://lh3.googleusercontent.com/gzqBT7MCriC6zfN43hCER27hsv0yQYfT6zK1VdeVCE9znD5kW1lIhV7eJRLpDqntE88ejqK7qKaEhniniuY-pViSTnQxZlACvBjyF4kSZhCqZ6lam20Oi0GnCbTXFrkfGw=w1280">
