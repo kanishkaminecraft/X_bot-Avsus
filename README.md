@@ -65,7 +65,7 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
 <p align="left">
   
   * `wget https://github.com/kanishkaminecraft/X_bot-Avsus/releases/download/2.8D/avs_2.8.deb`
-  * `sudo dpkg -i avs_2.2.deb  `
+  * `sudo dpkg -i avs_3.deb  `
   * `avs`
 
 <br>
@@ -92,6 +92,8 @@ With its intuitive interface and enhanced feature set, X_tool Security Edition s
   *  [x] BRUTEFORCE A WEBSITE
   *  [x] EDUCATION PURPOSE
   *  [x] LEARN HACKING
+  *  [x] CREATE WEBCAM PHISING PAGE
+  *  [x] CREATE A LOCATION TRACING PHISING PAGE 
 <h3 align="left">SCREENSHOT:</h3>
 <p align="left">
 <img src="https://lh3.googleusercontent.com/gzqBT7MCriC6zfN43hCER27hsv0yQYfT6zK1VdeVCE9znD5kW1lIhV7eJRLpDqntE88ejqK7qKaEhniniuY-pViSTnQxZlACvBjyF4kSZhCqZ6lam20Oi0GnCbTXFrkfGw=w1280">
