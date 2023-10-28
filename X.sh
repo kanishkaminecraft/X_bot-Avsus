@@ -1,45 +1,53 @@
 #!/bin/bash
+lines_of_code="2133"
+name="$ AVSUS"
+version="v3.0"
+about_thisv=" THIS VERSION WILL BE LAST UPDATE OF YEAR 2023"
+nfeatures="
+[ + ] LOCATION TRACKER PHISING PAGE CREATION ADDED
+[ + ] CAMERA HACKING PHISING PAGE TOOL ADDED
+"
+anno=""
+
 
 current_directory=$(pwd)
 
 file_destination=$(dirname $(realpath $0))
 own_ip=$(hostname -I | awk '{ print $1 }')
 NEW_DEVICE_PUBLIC_IP=$(curl -s https://api.ipify.org)
-
-main_banner() {
-clear
 chars="/-\|"
 timeout=3
 start=$(date +%s)
+m="\e[0;31m"   # red
+k="\e[0;33m"   # yellow
+h="\e[0;32m"   # green
+b="\e[0;34m"   # blue
+lm="\e[1;31m"  # pink
+lk="\e[1;33m"  # bright yellow
+lh="\e[1;32m"  # light green
+lb="\e[1;34m"  # blue sky
+n="\e[0m"      # neutral
+w="\e[1;37m"   #thick white	
 
-##############################color
-m="\e[0;31m"      # merah           # red
-k="\e[0;33m"      # kuning          # yellow
-h="\e[0;32m"      # hijau           # green
-b="\e[0;34m"      # biru            # blue
-lm="\e[1;31m"     # merah terang    # pink
-lk="\e[1;33m"     # kuning terang   # bright yellow
-lh="\e[1;32m"     # hijau terang    # light green
-lb="\e[1;34m"     # langit biru     # blue sky
-n="\e[0m"         # netral          # neutral
-w="\e[1;37m"      # putih tebal     #thick white
+sos="$b[ - ]$b"
+pos="$b[ + ]$b"
+
+head() {
+clear
 
 
-###############################give Permissons,if not root user exit
-
-    
-echo -e "\033[34m
+echo -e "$b
 _________________________________________________________________________
 |.                          .                                .           |
 |		  _       ___     ______            .                    |
 |		 | |     / \ \   / / ___| _   _ ___                    . |
 |		/ __)   / _ \ \ / /\___ \| | | / __|                     |
-|	.	\__ \  / ___ \ V /  ___) | |_| \__SERIES         .       |
+|	.	\__ \  / ___ \ V /  ___) | |_| \__SUS            .       |
 |        	(   / /_/   \_\_/  |____/ \__,_|___/                     |
 |  		 |_|                                                     |
 |.                               |            .                     o    |
 |o                       .     --o--                      .              |
-|                                |                                       | \033[0m"
+|                                |                                       | $b"
 echo -e "\033[31m|                                                                        | 
 |.                        .                          o              .    |
 |                                                                        |
@@ -63,13 +71,9 @@ while :; do
     fi
   done
 done
-
-echo -e "\033[34m
-[+] DEVICE INFO:
-└[+] PRIVATE IP: $own_ip
-└[+] PUBLIC IP: $NEW_DEVICE_PUBLIC_IP 
-\033[0m"
-
+[[ `id -u` -eq 0 ]] > /dev/null 2>&1 || { echo -e ${m} "└[+] PLEASE RUN IT AS ROOT${n}"; echo ;echo "PLEASE RUN IT AS ROOT" | festival --tts --pipe; exit 1; }
+}
+depen() {
 packages=("figlet" "wget" "adb" "nmap" "festival")
 
 for package in "${packages[@]}"; do
@@ -97,26 +101,22 @@ if [[ -d /data/data/com.termux ]]; then
         gem install lolcat
     fi
 fi
+}
+body() {
 
-[[ `id -u` -eq 0 ]] > /dev/null 2>&1 || { echo -e ${m} "└[+] PLEASE RUN IT AS ROOT${n}"; echo ;echo "PLEASE RUN IT AS ROOT" | festival --tts --pipe; exit 1; }
-echo -e "${lb}
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|E|N|G|I|N|E| |<=>| |K|A|L|I|
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-${n}" | lolcat
+info
 echo -e "\n\n\n"
 
 
 
-echo -e "\033[31m
+echo -e "$m
 <--------------------------------------------------------------------------->
 | [-] $ AVSUS FRAMEWORK                                                     |
 |                                                                           |
 | [+] DISCORD: https://discord.gg/M45DuEN5nH                                |
-| [+] EMAIL: kanishkasingh0885@gmail.com                                    |
 | [+] YOUTUBE: https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw     |
 <--------------------------------------------------------------------------->
-\033[0m"
+$m"
 
 
 
@@ -151,6 +151,8 @@ echo "[26] SCAN BLUETOOTH NEAR YOU AND CONNECT WITH IT" | lolcat
 echo "[27] DOWNLOAD GDRIVE LINKS QUICKLY" | lolcat
 echo "[28] DOWNLOAD MEGA.nz LINK QUICKLY" | lolcat
 echo "[29] CREATE A PHISING PAGE" | lolcat
+echo "[wcp] CREATE A WEBCAM PHISING PAGE" | lolcat
+echo "[ltp] CREATE A LOCATION TRACKING PAGE" | lolcat
 echo "[phs] PYTHON HTTP SERVER 8080" | lolcat
 echo "[tnl] CREATE A TUNNEL" | lolcat
 echo "[30] WEBSITE BRUTEFORCE" | lolcat
@@ -160,77 +162,308 @@ echo "[raw] RESTORE WIFI ADAPTER" | lolcat
 echo "[32] CAPTURE CAP FILE OF WIFI" | lolcat
 echo "[33] DEAUTH THE WIFI" | lolcat
 echo "[34] CREATE A DEB FILE {SHELL TO PACKAGE}" | lolcat
+echo "[35] WEBSITE DOS ATTACK" | lolcat
+echo "[36] SLOWLORIS DOS ATTACK [ MAY NOT WORK ]" | lolcat
 echo "[edf] EXTRACT .deb FILE" | lolcat
 echo "[rmd] RECORDMYDESKTOP" | lolcat
 echo "[fmp] FORMAT YOUR PENDRIVE" | lolcat
 echo "[99] ADDITIONAL commands" | lolcat
-echo "[avs] ABOUT US" | lolcat
+echo "[37] WAVFR" | lolcat
+echo "[38] BOMBING" | lolcat
+echo "[39] STEGHIDE" | lolcat
+echo "[avs] ABOUT US / UPDATES" | lolcat
 
 }
 
+clr() {
+  if [ "$(uname)" == "Darwin" ]; then
+    clear
+  elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    clear
+  elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
+    cls
+  else
+    echo "Unsupported operating system"
+  fi
+}
+
+format_phone() {
+  num="$1"
+  num=$(echo "$num" | tr -cd '0-9')
+  echo "$num"
+}
+
+
+bann_text() {
+  clr
+  echo -e "
+  $b
+  _    _ _____  ___  ___        ___ _____ ____  
+ | |  | |___ / / _ \| \ \      / / |___ /|  _ \ 
+/ __) | | |_ \| | | | |\ \    / /| | |_ \| |_) |
+\__ \ | |___) | |_| | | \ \  / / | |___) |  _ < 
+(   / | |____/ \___/| |  \_\/_/  | |____/|_| \_|
+ |_|  |_|           |_|          |_| [ BETA MAY NOT WORK ]
+ $b
+  "
+}
+
+get_phone_info() {
+  while true; do
+    target=""
+    cc=$(printf "Enter your country code (Without +): ")
+    cc=$(format_phone "$cc")
+    if [ ! -v "country_codes[$cc]" ]; then
+      echo -e "The country code ($cc) that you have entered is invalid or unsupported"
+      continue
+    fi
+    target=$(printf "Enter the target number: +$cc ")
+    target=$(format_phone "$target")
+    if [ ${#target} -le 6 ] || [ ${#target} -ge 12 ]; then
+      echo -e "The phone number ($target) that you have entered is invalid"
+      continue
+    fi
+    echo "$cc $target"
+    return
+  done
+}
+
+# Define message function
+mesgdcrt() {
+  local mode="$1"
+  local text="$2"
+
+  case "$mode" in
+    "icon")
+      echo -e "$text"
+      ;;
+    "stat")
+      echo -e "$text"
+      ;;
+    "success")
+      echo -e "$text"
+      ;;
+    "section")
+      echo -e "$text"
+      ;;
+    "failure")
+      echo -e "$text"
+      ;;
+    "warning")
+      echo -e "$text"
+      ;;
+    "general")
+      echo -e "$text"
+      ;;
+    "command")
+      echo -e "$text"
+      ;;
+    *)
+      echo -e "$text"
+      ;;
+  esac
+}
+
+selectnode() {
+  mode="$1"
+  mode=$(echo "$mode" | tr 'A-Z' 'a-z')
+  clr
+  bann_text
+
+  max_limit_sms=100
+  max_limit_call=15
+  max_limit_mail=200
+  cc=""
+  target=""
+  if [ "$mode" == "sms" ] || [ "$mode" == "call" ]; then
+    cc_target=($(get_phone_info))
+    cc="${cc_target[0]}"
+    target="${cc_target[1]}"
+    if [ "$cc" != "91" ]; then
+      max_limit_sms=100
+    fi
+  elif [ "$mode" == "mail" ]; then
+    target=$(get_mail_info)
+  else
+    return
+  fi
+
+  limit=""
+  while true; do
+    while [ -z "$limit" ] || [ "$limit" -gt "$max_limit_sms" ] || [ "$limit" -eq 0 ]; do
+      message=$(printf "Enter number of %s to send (Max %d): " "$mode" "$max_limit_sms")
+      read -p "$message" limit
+      if [ "$limit" -gt "$max_limit_sms" ] || [ "$limit" -eq 0 ]; then
+        echo -e "You have requested $limit $mode"
+        echo -e "Automatically capping the value to $max_limit_sms"
+        limit="$max_limit_sms"
+      fi
+    done
+
+    while [ -z "$delay" ] || [ "$delay" -lt 0 ]; do
+      read -p "$(printf "Enter delay time (in seconds): ") " delay
+    done
+
+    max_thread_limit=$((limit / 10))
+    if [ "$max_thread_limit" -gt 0 ]; then
+      max_thread_limit="$max_thread_limit"
+    else
+      max_thread_limit=1
+    fi
+
+    max_threads=""
+    while [ -z "$max_threads" ] || [ "$max_threads" -le 0 ]; do
+      max_thread_message=$(printf "Enter Number of Thread (Recommended: %d): " "$max_thread_limit")
+      read -p "$max_thread_message" max_threads
+      if [ "$max_threads" -le 0 ]; then
+        max_threads="$max_thread_limit"
+      fi
+    done
+
+    if [ "$limit" -lt 0 ] || [ "$delay" -lt 0 ]; then
+      echo -e "Read Instructions Carefully !!!"
+      echo
+    else
+      break
+    fi
+  done
+
+  # workernode "$mode" "$cc" "$target" "$limit" "$delay" "$max_threads"
+  echo "Workernode function called with mode: $mode, cc: $cc, target: $target, limit: $limit, delay: $delay, max_threads: $max_threads"
+}
+
+# Menu for choosing the type of bombing
+main_menu() {
+  while true; do
+    bann_text
+    echo "Choose a bombing type:"
+    echo "[ 1 ] SMS Bombing"
+    echo "[ 2 ] Phone Calls Bombing"
+    echo "[ 3 ] Mail Bombing"
+    echo "[ 4 ] Quit"
+    read -p "Enter your choice: " choice
+    case "$choice" in
+      1)
+        selectnode "sms"
+        ;;
+      2)
+        selectnode "call"
+        ;;
+      3)
+        selectnode "mail"
+        ;;
+      4)
+        echo "Goodbye!"
+        exit 0
+        ;;
+      *)
+        echo "Invalid choice. Please enter a valid option."
+        ;;
+    esac
+  done
+}
+
+# Main script starts here
+
+# Replaced "update" and "check_intr" functions with placeholders
+update() {
+  echo "Update function called"
+}
+
+check_intr() {
+  echo "Check internet function called"
+}
+
+info() {
+  cpu=$(lscpu | grep -m 1 'Model name' | awk -F': ' '{print $2}')
+  cores=$(nproc)
+  user=$(hostname)
+  echo -e "\033[34m
+  [+] DEVICE INFO:
+  [+] PRIVATE IP: $own_ip
+  [+] PUBLIC IP: $NEW_DEVICE_PUBLIC_IP
+  [+] VERSION: $version
+  [+] COMMUNITY ANNOUNCMENT: $anno
+  [+] CPU:
+  [$cpu]
+  [+] TOTAL CORES: $cores
+  [+] USER: $user
+  \033[0m"
+}
+
+
 show_help() {
-    echo "Usage: Avstool [options]"
-    echo "Options:"
-echo -e "\033[31m
+    echo "Usage: avs [options]"
+echo -e "
+
 <--------------------------------------------------------------------------->
 | [-] $ AVSUS FRAMEWORK                                                     |
 |                                                                           |
 | [+] DISCORD: https://discord.gg/M45DuEN5nH                                |
-| [+] EMAIL: kanishkasingh0885@gmail.com                                    |
 | [+] YOUTUBE: https://www.youtube.com/channel/UCFL-IX_rxNY_AIFdYq4QtWw     |
 <--------------------------------------------------------------------------->
 
 Options:
-[+] usr
-[1] 4-PIN BRUTE FORCE ATTACK
-[2] 6-PIN BRUTE FORCE ATTACK
-[3] 10-PIN BRUTE FORCE ATTACK
-[4] DOWNLOAD ADB, SNAP, NMAP, FIGLET, PYTHON3, PIP, LOLCAT
-[5] OPEN 5555 PORT OF CONNECT DEVICE
-[6] IP DETAILS
-[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE
-[8] REMOVE LOCKSCREEN
-[10] INSTALL VS CODE, BLENDER, GOOGLE CHROME, MICROSOFT EDGE
-[11] INSTALL TELEGRAM,SPOTIFY
-[12] INSTALL PACKAGES
-[13] PHONEINFOS
-[14] SCAN A FILE FOR VIRUSES
-[15] SCAN A WEBSTIE FOR PHISING PAGE
-[16] FULL SCAN THIS PC
-[17] CREATE A VIRUS FOR ANDROID
-[18] CREATE A VIRUS FOR WINDOWS
-[19] MAC OS FOR KALI LINUX
-[20] SCAN ALL WIFI NEAR YOU AND CHECK ALL DEVICES CONNECTED WITH YOUR WIFI
-[21] CREATE A FAKE WIFI POINT
-[22] CRACK THE PASSWORD OF WIFICRACK THE PASSWORD OF WIFI
-[23] TEST THE WIFI INTERFACE FOR HACKING
-[24] DOWNLOAD SPOTIFY MUSIC USING URL
-[25] DOWNLOAD YOUTUBE VIDEO
-[26] SCAN BLUETOOTH NEAR YOU AND CONNECT WITH IT
-[27] DOWNLOAD GDRIVE LINKS QUICKLY
-[28] DOWNLOAD MEGA.nz LINK QUICKLY
-[29] CREATE A PHISING PAGE
-[tnl] CREATE A TUNNEL
-[30] WEBSITE BRUTEFORCE
-[mbrute] METASPLOIT WEBSITE BRUTE FORCE
-[31] SETUP WIFI WITH MONITOR MODE
-[raw] RESTORE WIFI ADAPTER
-[32] CAPTURE CAP FILE OF WIFI
-[33] DEAUTH THE WIFI
-[34] CREATE A DEB FILE {SHELL TO PACKAGE}
-[avs q] quiet mode, direcly on work.
-[g] GRAPHICAL
-[edf] EXTRACT .deb FILE
-[phs] PYTHON HTTP SERVER 8080
-[h] help
-[rmd] RECORDMYDESKTOP
-[fmp] FORMAT YOUR PENDRIVE
-[cpdf] COMPRESS PDF
-[pdfpass] SET THE PASSWORD ON PDF
-[itp] IMAGE TO PDF
-[avs] ABOUT US
-[99] HELP
-\033[0m"
+        sudo avs q                [ + ] QUIET MODE          [ - ] starts in quiet mode, without any animations
+        sudo avs g                [ + ] GRAPHICAL MODE      [ - ] show all commands, all animations, and end with fotter
+        sudo avs qs               [ + ] QUITE SUBMERGE MODE [ - ] starts with banner, hide all commands and other details and end with footer
+"
+echo -e "in code options:"
+echo -e "
+		[+] usr											put the input in footer
+		[1] 4-PIN BRUTE FORCE ATTACK								start 4 pin brute force on connected device with adb
+		[2] 6-PIN BRUTE FORCE ATTACK								start 6 pin brute force on connected device with adb
+		[3] 10-PIN BRUTE FORCE ATTACK								start 10 pin brute force on connected device with adb
+		[4] DOWNLOAD ADB, SNAP, NMAP, FIGLET, PYTHON3, PIP, LOLCAT				download packages like adb,snap,nmap,figlet,python3,pip and lolcat in one command
+		[5] OPEN 5555 PORT OF CONNECT DEVICE							open 5555 port in connected device using adb
+		[6] IP DETAILS										get and print the ip and many details of connected device with adb
+		[7] JUMP TO SCRCPY AND MONITOR ON CONNECT DEVICE					start scrcpy
+		[8] REMOVE LOCKSCREEN									remove lock screen of connected device using adb
+		[10] INSTALL VS CODE, BLENDER, GOOGLE CHROME, MICROSOFT EDGE				download and install software like vscode, blender, google chrome and microsoft edge in single command
+		[11] INSTALL TELEGRAM,SPOTIFY								install telegram and spotify in one command
+		[12] INSTALL PACKAGES [0]								install packages like adb,all kali linux wallpapers in one command
+		[13] PHONEINFOS										get the phone number info; requires and api key
+		[14] SCAN A FILE FOR VIRUSES								scan a file, weather file contains a virus or not
+		[15] SCAN A WEBSTIE FOR PHISING PAGE							scan a website, weather the web is suspicious or not
+		[16] FULL SCAN THIS PC									full scan your pc; for any kind of viruses
+		[17] CREATE A VIRUS FOR ANDROID								one command to create a payload for android device and run the virus aswell
+		[18] CREATE A VIRUS FOR WINDOWS								create a payload for windows and run the virus start the payload
+		[19] MAC OS FOR KALI LINUX								download all packages for macos look [only work in gnome kali]
+		[20] SCAN ALL WIFI NEAR YOU AND CHECK ALL DEVICES CONNECTED WITH YOUR WIFI		scan and find all wifi near your device
+		[21] CREATE A FAKE WIFI POINT								create an fake wifi [requires a wifi card which support monitor mode and packet injection]
+		[22] CRACK THE PASSWORD OF WIFICRACK THE PASSWORD OF WIFI				crack the password of wifi using captured file [requires a wifi card which support monitor mode and packet injection]
+		[23] TEST THE WIFI INTERFACE FOR HACKING						test weather your wifi supoort wifi hacking or not
+		[24] DOWNLOAD SPOTIFY MUSIC USING URL							download music of spotify by pasting url
+		[25] DOWNLOAD YOUTUBE VIDEO								download youtube video by pasting url [may noy work]
+		[26] SCAN BLUETOOTH NEAR YOU AND CONNECT WITH IT					scan all bluetooth near you
+		[27] DOWNLOAD GDRIVE LINKS QUICKLY							download a gdrive file without opening it, download file in your pc by just pasting url.
+		[28] DOWNLOAD MEGA.nz LINK QUICKLY							download meganz file without opening it, downlaod file in your pc by just pasting url.
+		[29] CREATE A PHISING PAGE								create a fake phising page that can gather the info of social media,etc [tool used: zphisher]
+		[wcp] CREATE A WEBCAM PHISING PAGE							create a fake phising page to hack webcams of victem [=] camera hacking
+		[ltp] CREATE A LOCATION TRACKING PAGE                                                   create a fake phising page to track location of victem [=] location tracker
+		[tnl] CREATE A TUNNEL									no need of ngrok, create a domain without much effort [port forwarding]
+		[30] WEBSITE BRUTEFORCE									does not really bruteforce the website but simulates the process.
+		[mbrute] METASPLOIT WEBSITE BRUTE FORCE							brute force a website using metasploit [does not work] try to learn burpsuite
+		[31] SETUP WIFI WITH MONITOR MODE							this command setup your connected wifi adapter to monitor mode without any effort
+		[raw] RESTORE WIFI ADAPTER								restore wifi adapter from monitor mode
+		[32] CAPTURE CAP FILE OF WIFI								capture the wpa handshake of a wifi near you
+		[33] DEAUTH THE WIFI									deauth the wifi near you [wifi jamming]
+		[34] CREATE A DEB FILE {SHELL TO PACKAGE}						shell to package. ask for a shell file and convert it into a .deb file
+		[35] WEBSITE DOS ATTACK									website dos attack [does not work just]
+		[36] SLOWLORIS DOS ATTACK [ MAY NOT WORK ]						website dos attack [BETA]
+		[38] BOMBING										sms and call bombing [BETA]
+		[39] STEGHIDE										hide .txt file into image [.jpg file] [ 1 ]
+		[edf] EXTRACT .deb FILE									extract or install .deb files
+		[phs] PYTHON HTTP SERVER 8080								put your files online, like you can accces your file from internet
+		[h] help										show all commands
+		[rmd] RECORDMYDESKTOP									record your screen and convert file into .mp4 file
+		[fmp] FORMAT YOUR PENDRIVE								format your pendrive into your favorite format
+		[cpdf] COMPRESS PDF									compress a pdf
+		[pdfpass] SET THE PASSWORD ON PDF							set password on pendrive
+		[itp] IMAGE TO PDF									convert image to pdf
+		[avs] ABOUT US										about the devloper
+		[99] HELP										show all usable commands
+"
 }
 
 add_commands() {
@@ -264,8 +497,18 @@ done
 # Parse the command line options
 if [[ $1 == "q" ]]; then
     echo ""
+    elif [[ $1 == "qs" ]]; then
+    head
+    elif [[ $1 == "h" ]]; then
+    clear
+    show_help
+    exit 0
+    elif [[ $1 == "g" ]]; then
+    head
+    body
     else
-        main_banner
+    show_help
+    exit 0
 fi
 
 echo -e "\n\n\n"
@@ -396,8 +639,8 @@ format_drive() {
     fi
     echo "Pendrive formatted to $format"
 }
-
 # Function to process user input and provide responses
+
 process_input() {
     user_input=$1
     case "$user_input" in
@@ -517,31 +760,31 @@ process_input() {
 	bluetoothctl connect $mac_address
         ;;
         avs)
-echo -e "\e[92m
+echo -e "$b
 
+[ + ] TOTAL LINES OF CODE:$lines_of_code
+[ + ] DISCLAIMER: PLEASE READ CAREFULLY
 
-[+] DISCLAIMER: PLEASE READ CAREFULLY
-
-[+] ENGLISH DISCLAIMER:
+[ + ] ENGLISH DISCLAIMER:
 
 THIS HACKING TOOL IS INTENDED FOR EDUCATIONAL AND RESEARCH PURPOSES ONLY. BY CHOOSING TO USE THIS TOOL, YOU AGREE TO ABIDE BY THE FOLLOWING TERMS AND CONDITIONS:
 
-[+] 1. EDUCATIONAL PURPOSE ONLY: THIS TOOL IS DESIGNED SOLELY FOR EDUCATIONAL AND ETHICAL PURPOSES, TO HELP USERS UNDERSTAND AND STRENGTHEN CYBERSECURITY. IT IS NOT INTENDED FOR ANY MALICIOUS OR ILLEGAL ACTIVITIES.
+[ + ] 1. EDUCATIONAL PURPOSE ONLY: THIS TOOL IS DESIGNED SOLELY FOR EDUCATIONAL AND ETHICAL PURPOSES, TO HELP USERS UNDERSTAND AND STRENGTHEN CYBERSECURITY. IT IS NOT INTENDED FOR ANY MALICIOUS OR ILLEGAL ACTIVITIES.
 
-[+] 2. LEGAL COMPLIANCE: HACKING, IN ANY FORM, IS ILLEGAL IN MANY JURISDICTIONS AND MAY CARRY SEVERE PENALTIES. IT IS YOUR RESPONSIBILITY TO ENSURE THAT YOU ARE IN FULL COMPLIANCE WITH ALL APPLICABLE LAWS AND REGULATIONS IN YOUR COUNTRY OR JURISDICTION. IF YOU CHOOSE TO USE THIS TOOL FOR ILLEGAL ACTIVITIES, YOU DO SO AT YOUR OWN RISK.
+[ + ] 2. LEGAL COMPLIANCE: HACKING, IN ANY FORM, IS ILLEGAL IN MANY JURISDICTIONS AND MAY CARRY SEVERE PENALTIES. IT IS YOUR RESPONSIBILITY TO ENSURE THAT YOU ARE IN FULL COMPLIANCE WITH ALL APPLICABLE LAWS AND REGULATIONS IN YOUR COUNTRY OR JURISDICTION. IF YOU CHOOSE TO USE THIS TOOL FOR ILLEGAL ACTIVITIES, YOU DO SO AT YOUR OWN RISK.
 
-[+] 3. NO LIABILITY: THE CREATORS AND DISTRIBUTORS OF THIS TOOL ARE NOT RESPONSIBLE FOR ANY ACTIONS TAKEN BY USERS OF THIS TOOL. YOU ARE SOLELY RESPONSIBLE FOR YOUR ACTIONS, AND ANY CONSEQUENCES THAT MAY ARISE AS A RESULT OF USING THIS TOOL.
+[ + ] 3. NO LIABILITY: THE CREATORS AND DISTRIBUTORS OF THIS TOOL ARE NOT RESPONSIBLE FOR ANY ACTIONS TAKEN BY USERS OF THIS TOOL. YOU ARE SOLELY RESPONSIBLE FOR YOUR ACTIONS, AND ANY CONSEQUENCES THAT MAY ARISE AS A RESULT OF USING THIS TOOL.
 
-[+] 4. RESTRICTED USAGE: THIS TOOL SHOULD NOT BE USED IN ANY MILITARY, SECRET SERVICE, OR GOVERNMENT ORGANIZATIONS, OR FOR ANY ACTIVITIES THAT MAY CAUSE HARM, DAMAGE, OR DISRUPTION TO INDIVIDUALS, ORGANIZATIONS, OR SYSTEMS. UNAUTHORIZED ACCESS TO COMPUTER SYSTEMS OR NETWORKS IS STRICTLY PROHIBITED.
+[ + ] 4. RESTRICTED USAGE: THIS TOOL SHOULD NOT BE USED IN ANY MILITARY, SECRET SERVICE, OR GOVERNMENT ORGANIZATIONS, OR FOR ANY ACTIVITIES THAT MAY CAUSE HARM, DAMAGE, OR DISRUPTION TO INDIVIDUALS, ORGANIZATIONS, OR SYSTEMS. UNAUTHORIZED ACCESS TO COMPUTER SYSTEMS OR NETWORKS IS STRICTLY PROHIBITED.
 
-[+] 5. ETHICAL USE: WE STRONGLY ENCOURAGE USERS TO APPLY THE KNOWLEDGE GAINED FROM THIS TOOL IN AN ETHICAL AND RESPONSIBLE MANNER. USE IT TO ENHANCE YOUR CYBERSECURITY SKILLS AND TO PROTECT SYSTEMS AND NETWORKS, RATHER THAN EXPLOITING VULNERABILITIES FOR PERSONAL GAIN.
+[ + ] 5. ETHICAL USE: WE STRONGLY ENCOURAGE USERS TO APPLY THE KNOWLEDGE GAINED FROM THIS TOOL IN AN ETHICAL AND RESPONSIBLE MANNER. USE IT TO ENHANCE YOUR CYBERSECURITY SKILLS AND TO PROTECT SYSTEMS AND NETWORKS, RATHER THAN EXPLOITING VULNERABILITIES FOR PERSONAL GAIN.
 
 BY USING THIS TOOL, YOU ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTOOD THIS DISCLAIMER AND AGREE TO COMPLY WITH ALL APPLICABLE LAWS AND ETHICAL STANDARDS. FAILURE TO DO SO MAY RESULT IN LEGAL CONSEQUENCES. IF YOU DO NOT AGREE WITH THESE TERMS, DO NOT USE THIS TOOL.
+$b
 
-
-
-[ + ] ABOUT ME:
-Hey there, I'm  R  O  N { LET'S KEEP MY REAL NAME A SECRET }, a 13-year-old from India, and I'm really passionate about ethical hacking and gaming.
+$m
+[ + ] ABOUT THE CREATOR:
+Hey there, I'm  R  O  N , a 13-year-old from India, and I'm really passionate about ethical hacking and gaming.
 You know, I've been exploring the fascinating world of ethical hacking, and it's been an incredible journey so far.
 
 One of the coolest things I've done is create a hacking tool that simplifies some aspects of hacking.
@@ -554,8 +797,7 @@ So, my mission is to empower individuals with knowledge and skills so that they 
 
 I truly believe that with the right guidance and a strong ethical foundation, we can create a community of responsible hackers in India who use their skills to enhance cybersecurity and protect against threats. After all, knowledge is power, and with great power comes great responsibility.
 
-J A I   H I N D 🙏
-\e[0m"
+J A I   H I N D 🙏$m"
 
 
         ;;
@@ -585,10 +827,16 @@ J A I   H I N D 🙏
 	gdown "$gdrive_link"
         ;;
         "g")
-        main_banner
+        head
+        body
         ;;
         "graphics")
-        main_banner
+        head
+        body
+        ;;
+        "qs")
+        clear
+        head
         ;;
         "install android studio")
         install_android_studio
@@ -626,6 +874,43 @@ J A I   H I N D 🙏
         fi
         echo "[+] COMMAND ==> ssh -R 80:localhost:8080 nokey@localhost.run "
         ssh -R 80:localhost:8080 nokey@localhost.run
+        ;;
+        "ltp")
+        if [ ! -d "seeker" ]; then
+        echo "[ + ] SEEKER NOT FOUND, DOWNLOADING SEEKER, IF IT IS ALREADY INSTALLED THEN TRY TO PUT IT IN THIS DESTINATION"
+        echo "[+] COMMAND ==> git clone https://github.com/thewhiteh4t/seeker.git "
+        git clone https://github.com/thewhiteh4t/seeker.git
+        fi
+        cd seeker
+        chmod +x *
+        echo ""
+        echo ""
+
+	read -p "[ + ] RUN THE SETUP [Y/N]:" hmm
+
+	if [ "$hmm" == "Y" ] || [ "$hmm" == "y" ]; then
+	    echo "Running install.sh..."
+	    ./install.sh
+	elif [ "$hmm" == "N" ] || [ "$hmm" == "n" ]; then
+	    echo "Executing python3 seeker.py..."
+	    python3 seeker.py
+	else
+	    echo "Invalid input. Please enter either Y or N."
+	fi
+        ;;
+        "wcp")
+        if [ ! -d "CamPhish" ]; then
+        echo "[ :-( ] CAMPHISH NOT FOUND, DOWNLOADING CAMPHISH, IF IT IS ALREADY INSTALLED THEN TRY TO PUT IT IN THIS DESTINATION"
+        echo "[ + ] COMMAND ==> git clone https://github.com/techchipnet/CamPhish.git"
+        git clone https://github.com/techchipnet/CamPhish.git
+        fi
+        cd CamPhish
+        chmod +x *
+        echo ""
+        echo ""
+        echo "[ + ] STARTING CAMPHISH..."
+        read -p "[ + ] CLICK ENTER TO PROCEED:"
+        ./camphish.sh
         ;;
         2)
             echo "[+] STARTING 6-PIN BRUTE FORCE ATTACK"
@@ -1834,7 +2119,7 @@ or downloading a file from an untrusted source. Once malware is installed on a c
 while true; do
   current_directory=$(pwd)
   echo -e "\n\n"
-  echo -e "\033[34m┌──[$ AVSUS㉿$username]-[$current_directory]-[v2.8d]-[PRIMARY]\033[0m"
+  echo -e "\033[34m┌──[$ AVSUS㉿$username]-[$current_directory]-[$version]-[PRIMARY]\033[0m"
   read -p "└──[$] " input 
   process_input "$input"
 
@@ -1842,6 +2127,6 @@ while true; do
   if [ "$current_directory" != "$old_directory" ]; then
     old_directory="$current_directory"
     echo -e "\n\n"
-    echo -e "\033[34m┌──[$ AVSUS㉿$username]-[$current_directory]-[v2.8E]-[SECONDARY]\033[0m"
+    echo -e "\033[34m┌──[$name㉿$username]-[$current_directory]-[$version]-[SECONDARY]\033[0m"
   fi
 done
