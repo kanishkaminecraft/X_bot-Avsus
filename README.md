@@ -3,6 +3,14 @@
           |__|_	 |    |    \/   ____|     ____| |____ |____ .
           ___|_|		   P Y T H O N   E D I T I O N
              | COMING SOON
+             |
+             [ + ] ANSWER BOX
+             [ - ] ERROR BOX
+             [ ! ] EXCLAMATION BOX
+             [ ● ] PROCESS BOX ...
+             [ ⊹ ] TARGET LOCKED
+
+
 
 <div align="center">
   <img border-radius: 15px src="https://www.icegif.com/wp-content/uploads/2022/01/icegif-183.gif" width="500" height="275"/>
