@@ -2,7 +2,7 @@
            __|__	 |____|   \  / |____     |____  |____ |
           |__|_	 |    |    \/   ____|     ____| |____ |____ .
           ___|_|		   P Y T H O N   E D I T I O N
-             | COMING SOON
+             |
              |
              [ + ] ANSWER BOX
              [ - ] ERROR BOX
